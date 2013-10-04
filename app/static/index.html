@@ -14,49 +14,109 @@
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
 <!--<script src="bootstrap_js"></script>-->
 	<script src="static/js/app.js"></script>
+
+	<style type='text/css'>
+        
+    </style>
 	
+	<link rel="stylesheet" type="text/css" href="static/css/bootswatch.css">
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
 	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
+	<link rel="stylesheet" type="text/css" href="static/css/style_bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="static/css/app.css">
 </head>
 
 <body>
 	<div id="parent" ng-controller="parentCtrl">
-		<div id="login" ng-controller="loginCtrl" ng-hide="is_old_user">
-			<br><br><br><br><br><br>
-			Username: <input type="text" ng-model="username" required>
-			Password: <input type="password" ng-model="password" required>
-			<button ng-click="signIn()">Sign In</button>
+		<div class="login" id="login" ng-controller="loginCtrl" ng-hide="is_old_user">
+			<form ng-submit="signIn()">
+				<center>
+				<img class="loginImage" src="static/img/login-icon.png">
+				<h1 class="h_login">Username</h1> <input type="text" name="username" ng-model="username" placeholder="LDAP Username" required><br>
+				<h1 class="h_login">Password</h1> <input type="password" name="password" ng-model="password" placeholder="LDAP Password" required><br><br>
+				<button class="btn btn-custom-signin"><i class="icon-large icon-linkedin"></i></button>
+				</center>
+			</form>
 		</div>
 		
 		<div id="page" ng-controller="pageCtrl" ng-show="is_old_user">
 			<div id="header" ng-controller="headerCtrl">
-				<p>You are logged in as : {{name}}</p>
-				<button ng-click="signOut()">Sign Out</button>
+				<font color=black><p>
+					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</font>
+				<button class="btn btn-custom-signout" ng-click="signOut()">
+					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></p>
+				<p class="app_name" ><a style="color: #071A3C" href=".">Leads' Network!</a></p>
 			</div>
 
 
 			<div id="wrapper" ng-controller="wrapperCtrl">
 				<div id="navigation" ng-controller="navigationCtrl">
-					<br><br>
-					First Name: <input type="text" ng-model="fname" required><br>
-					Last Name: <input type="text" ng-model="lname" required><br><br>
-					<p>Searching for : {{fname}} {{lname}}</p>
-					<button ng-click="people_search()">Search</button>
-					<p>Leads:</p>
-					<ul>
-						<li ng-repeat="lead in leads">{{lead[0]}}</li>
+					<br>
+					<div style="width: 80%; margin: 0 auto;">
+					<form method='GET' ng-submit="people_search()">
+						
+						<h1 class="h1_navigation" align="center">First Name</h1>
+						<input type="text" ng-model="fname" placeholder="First Name" required>
+						
+						<h1 class="h1_navigation" align="center">Last Name</h1>
+						<input type="text" ng-model="lname" placeholder="Last Name" required>
+						
+						<h1 class="h1_navigation" align="center">Company Name</h1>
+						<input type="text" ng-model="cname" placeholder="Company Name" required><br><br>
+						
+						<p ng-show="fname"><!--Searching : --><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
+						<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
+					</form>
+					</div>
+					<br>
+
+					<div class="leads">
+					<p align="center"><font size="5%">Leads</font></p>
+					<ul >
+						<li ng-repeat="lead in leads"><i class="icon-linkedin-sign"></i>    {{lead[1]}}</li>
 					</ul>
+					</div>
+
 				</div>
 
 				<div id="content" ng-controller="contentCtrl">
+					<div class="search_summary">
+					<button class="btn btn-custom-stop" ng-click="stop()">
+						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
 					<p ng-show="fname">Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>
+					<!--<p ng-show="fname">Progress : {{progress}}</p>-->
+
+					</div>
 
 <!--					<p>Response : {{data}}</p>-->
 <!--					<ol>
 						<li ng-repeat="id in people_search_ids">{{id}}</li>
 					</ol>
 -->
+
+					<div class="results" ng-show="fname">
+					<table class="table">
+						<tr>
+							<td>Degree</td>
+							<td>Connected Through</td>
+							<td>Common Connections</td>
+						</tr>
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.all">
+							<td>{{connection.distance}}</td>
+							<td>{{connection.through}}</td>
+							<td>{{connection.relationToViewer.connections._total}}</td>
+						</tr>
+					</table>
+					</div>
+
+<!--					<ol>
+						<p>All Connections : </p>
+						<li ng-repeat="connection in connections.all | orderBy:predicate:connection.distance">{{connection}}</li>
+					</ol>
+-->
+
+<!--
 					<ol>
 						<p>First Degree Connections</p>
 						<li ng-repeat="connection in connections.first">{{connection}}</li>
@@ -68,7 +128,9 @@
 					<ol>
 						<p>Third Degree Connections</p>
 						<li ng-repeat="connection in connections.third">{{connection}}</li>
-					</ol>				
+					</ol>	
+-->
+
 <!--					<p>Through lead {{lead_number}} : {{profile_data}}</p>-->
 				</div>
 			</div>

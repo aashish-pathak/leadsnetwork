@@ -1,7 +1,7 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/dev_guide.mvc.understanding_controller.ngdoc" class="improve-docs btn btn-primary">Improve this doc</a><div class="developer-guide-page developer-guide-about-mvc-in-angular-understanding-the-controller-component-page"><p>In Angular, a controller is a JavaScript function(type/class) that is used to augment instances of
+<div><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/dev_guide.mvc.understanding_controller.ngdoc" class="improve-docs btn btn-primary">Improve this doc</a><p>In Angular, a controller is a JavaScript function(type/class) that is used to augment instances of
 angular <a href="guide/scope">Scope</a>, excluding the root scope.</p>
 
 <p>Use controllers to:</p>
@@ -11,7 +11,7 @@ angular <a href="guide/scope">Scope</a>, excluding the root scope.</p>
 <li>Add behavior to the scope object.</li>
 </ul>
 
-<h1 id="settinguptheinitialstateofascopeobject">Setting up the initial state of a scope object</h2>
+<h2 id="settinguptheinitialstateofascopeobject">Setting up the initial state of a scope object</h1>
 
 <p>Typically, when you create an application you need to set up an initial state for an Angular scope.</p>
 
@@ -22,11 +22,9 @@ constructor). Constructors are always applied to an existing scope object.</p>
 
 <p>You set up the initial state of a scope by creating model properties. For example:</p>
 
-<pre class="prettyprint linenums">
-    function GreetingCtrl($scope) {
-        $scope.greeting = 'Hola!';
-    }
-</pre>
+<p>function GreetingCtrl($scope) {
+ $scope.greeting = 'Hola!';
+}</p>
 
 <p>The <code>GreetingCtrl</code> controller creates a <code>greeting</code> model which can be referred to in a template.</p>
 
@@ -35,18 +33,16 @@ in the global scope. This is only for demonstration purposes - in a real
 application you should use the <code>.controller</code> method of your Angular module for
 your application as follows:</p>
 
-<pre class="prettyprint linenums">
-    var myApp = angular.module('myApp',[]);
+<p>var myApp = angular.module('myApp',[]);</p>
 
-    myApp.controller('GreetingCtrl', ['$scope', function($scope) {
-        $scope.greeting = 'Hola!';
-    }]);
-</pre>
+<p>myApp.controller('GreetingCtrl', ['$scope', function($scope) {
+  $scope.greeting = 'Hola!';
+}]);</p>
 
 <p>Note also that we use the array notation to explicitly specify the dependency
 of the controller on the <code>$scope</code> service provided by Angular.</p>
 
-<h1 id="addingbehaviortoascopeobject">Adding Behavior to a Scope Object</h2>
+<h1 id="addingbehaviortoascopeobject">Adding Behavior to a Scope Object</h1>
 
 <p>Behavior on an Angular scope object is in the form of scope method properties available to the
 template/view. This behavior interacts with and modifies the application model.</p>
@@ -56,7 +52,7 @@ objects (or primitives) assigned to the scope become model properties. Any funct
 the scope are available in the template/view, and can be invoked via angular expressions
 and <code>ng</code> event handler directives (e.g. <a href="api/ng.directive:ngClick"><code>ngClick</code></a>).</p>
 
-<h1 id="usingcontrollerscorrectly">Using Controllers Correctly</h2>
+<h1 id="usingcontrollerscorrectly">Using Controllers Correctly</h1>
 
 <p>In general, a controller shouldn't try to do too much. It should contain only the business logic
 needed for a single view.</p>
@@ -76,15 +72,16 @@ you have to perform your own manual DOM manipulation, encapsulate the presentati
 <a href="guide/directive">directives</a>.</li>
 <li>Input formatting — Use <a href="guide/forms">angular form controls</a> instead.</li>
 <li>Output filtering — Use <a href="guide/dev_guide.templates.filters">angular filters</a> instead.</li>
-<li>Sharing stateless or stateful code across controllers — Use <a href="guide/dev_guide.services">angular services</a> instead.</li>
-<li>Managing the life-cycle of other components (for example, to create service instances).</li>
+<li>To run stateless or stateful code shared across controllers — Use <a href="guide/dev_guide.services">angular services</a> instead.</li>
+<li>To instantiate or manage the life-cycle of other components (for example, to create service
+instances).</li>
 </ul>
 
 <h1 id="associatingcontrollerswithangularscopeobjects">Associating Controllers with Angular Scope Objects</h2>
 
 <p>You can associate controllers with scope objects implicitly via the <a href="api/ng.directive:ngController"><code>ngController directive</code></a> or <a href="api/ng.$route"><code>$route service</code></a>.</p>
 
-<h2 id="controllerconstructorandmethodsexample">Controller Constructor and Methods Example</h3>
+<h3 id="controllerconstructorandmethodsexample">Controller Constructor and Methods Example</h2>
 
 <p>To illustrate how the controller component works in angular, let's create a little app with the
 following components:</p>
@@ -99,7 +96,7 @@ following components:</p>
 string "very". Depending on which button is clicked, the <code>spice</code> model is set to <code>chili</code> or
 <code>jalapeño</code>, and the message is automatically updated by data-binding.</p>
 
-<h2 id="aspicycontrollerexample">A Spicy Controller Example</h3>
+<h2 id="aspicycontrollerexample">A Spicy Controller Example</h2>
 
 <pre class="prettyprint linenums">
 &lt;body ng-controller="SpicyCtrl"&gt;
@@ -144,7 +141,7 @@ the scope.</li>
 <p>Controller methods can also take arguments, as demonstrated in the following variation of the
 previous example.</p>
 
-<h2 id="controllermethodargumentsexample">Controller Method Arguments Example</h3>
+<h2 id="controllermethodargumentsexample">Controller Method Arguments Example</h2>
 
 <pre class="prettyprint linenums">
 &lt;body ng-controller="SpicyCtrl"&gt;
@@ -167,7 +164,7 @@ argument called <code>spice</code>. The template then refers to this controller 
 constant <code>'chili'</code> in the binding for the first button and a model property <code>spice</code> (bound to an
 input box) in the second button.</p>
 
-<h2 id="controllerinheritanceexample">Controller Inheritance Example</h3>
+<h2 id="controllerinheritanceexample">Controller Inheritance Example</h2>
 
 <p>Controller inheritance in Angular is based on <a href="api/ng.$rootScope.Scope"><code>Scope</code></a> inheritance. Let's
 have a look at an example:</p>
@@ -215,7 +212,7 @@ examples, all of the models could be replaced with controller methods that retur
 because as we mentioned earlier, controllers are not instantiated directly by Angular, but rather
 are applied to the scope object.</p>
 
-<h2 id="testingcontrollers">Testing Controllers</h3>
+<h2 id="testingcontrollers">Testing Controllers</h2>
 
 <p>Although there are many ways to test a controller, one of the best conventions, shown below,
 involves injecting the <code>$rootScope</code> and <code>$controller</code></p>
@@ -266,7 +263,7 @@ describe('state', function() {
         var mainCtrl = $controller(MainCtrl, {$scope: mainScope});
         childScope = mainScope.$new();
         var childCtrl = $controller(ChildCtrl, {$scope: childScope});
-        babyScope = childScope.$new();
+        babyScope = childCtrl.$new();
         var babyCtrl = $controller(BabyCtrl, {$scope: babyScope});
     }));
 
@@ -287,4 +284,4 @@ describe('state', function() {
 <li><a href="guide/dev_guide.mvc">About MVC in Angular</a></li>
 <li><a href="guide/dev_guide.mvc.understanding_model">Understanding the Model Component</a></li>
 <li><a href="guide/dev_guide.mvc.understanding_view">Understanding the View Component</a></li>
-</ul></div></div>
+</ul></div>

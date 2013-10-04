@@ -1,7 +1,7 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><a href="http://github.com/angular/angular.js/edit/master/docs/content/tutorial/step_04.ngdoc" class="improve-docs btn btn-primary">Improve this doc</a><div class="tutorial-page tutorial-4-two-way-data-binding-page"><ul doc-tutorial-nav="4"></ul>
+<div><a href="http://github.com/angular/angular.js/edit/master/docs/content/tutorial/step_04.ngdoc" class="improve-docs btn btn-primary">Improve this doc</a><ul doc-tutorial-nav="4"></ul>
 
 <p>In this step, you will add a feature to let your users control the order of the items in the phone
 list. The dynamic ordering is implemented by creating a new model property, wiring it together with
@@ -16,7 +16,7 @@ users to control the order in which the phones are listed.</p>
 <p>The most important differences between Steps 3 and 4 are listed below. You can see the full diff on
 <a href="https://github.com/angular/angular-phonecat/compare/step-3...step-4">GitHub</a>:</p>
 
-<h2 id="template">Template</h3>
+<h3 id="template">Template</h2>
 
 <p><strong><code>app/index.html</code>:</strong>
 <pre class="prettyprint linenums">
@@ -56,7 +56,7 @@ changes (for example because a user changes the order with the select drop down 
 data-binding will cause the view to automatically update. No bloated DOM manipulation code is
 necessary!</p>
 
-<h2 id="controller">Controller</h3>
+<h2 id="controller">Controller</h2>
 
 <p><strong><code>app/js/controllers.js</code>:</strong>
 <pre class="prettyprint linenums">
@@ -160,7 +160,7 @@ shared by all tests in the parent <code>describe</code> block.</p>
 <p>You can now rerun <code>./scripts/e2e-test.sh</code> or refresh the browser tab with the end-to-end test
 <code>runner.html</code> to see the tests run, or you can see them running on <a href="http://angular.github.com/angular-phonecat/step-4/test/e2e/runner.html">Angular's server</a>.</p>
 
-<h1 id="experiments">Experiments</h2>
+<h2 id="experiments">Experiments</h1>
 
 <ul>
 <li><p>In the <code>PhoneListCtrl</code> controller, remove the statement that sets the <code>orderProp</code> value and
@@ -168,7 +168,6 @@ you'll see that Angular will temporarily add a new "unknown" option to the drop-
 ordering will default to unordered/natural order.</p></li>
 <li><p>Add an <code>{{orderProp}}</code> binding into the <code>index.html</code> template to display its current value as
 text.</p></li>
-<li><p>Reverse the sort order by adding a <code>-</code> symbol before the sorting value: <code>&lt;option value="-age"&gt;Oldest&lt;/option&gt;</code></p></li>
 </ul>
 
 <h1 id="summary">Summary</h2>
@@ -176,4 +175,4 @@ text.</p></li>
 <p>Now that you have added list sorting and tested the app, go to <a href="tutorial/step_05">step 5</a> to learn
 about Angular services and how Angular uses dependency injection.</p>
 
-<ul doc-tutorial-nav="4"></ul></div></div>
+<ul doc-tutorial-nav="4"></ul></div>
