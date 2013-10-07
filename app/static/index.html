@@ -72,9 +72,16 @@
 					<br>
 
 					<div class="leads">
-					<p align="center"><font size="5%">Leads</font></p>
-					<ul >
-						<li ng-repeat="lead in leads"><i class="icon-linkedin-sign"></i>    {{lead[1]}}</li>
+					<br><br>
+					<p align="center">
+						<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
+						<font size="5%">Leads</font>
+						<button class="btn btn-mini" ng-click="select_none()"><span class="icon icon-check-empty"></span></button>
+					</p>
+					<ul class="unstyled">
+						<li ng-repeat="lead in leads">
+							<input type="checkbox" ng-model="lead[2]">
+							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
 					</ul>
 					</div>
 

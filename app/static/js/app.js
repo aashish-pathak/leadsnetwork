@@ -10,7 +10,10 @@ myApp.controller('parentCtrl', ['$scope', '$cookies', '$http', '$rootScope', fun
 		$http({method:'GET', url:leads_url})
 		.success(function(data) {
 			$scope.leads = data;
+			for(var i=0; i<$scope.leads.length;i++)
+				$scope.leads[i][2] = true;
 		});
+		
 	};
 
 	$scope.return_leads();
@@ -123,24 +126,59 @@ myApp.controller('navigationCtrl', ['$scope', '$rootScope', function($scope, $ro
 	$scope.fname="";
 	$scope.lname="";
 	$scope.cname="";
+	$scope.leads_empty = false;
 	
 	$scope.people_search = function() {
 		
-		// stop pending http requests
-		$rootScope.safeApply(function() {
-			for(var i=0;i<$rootScope.canceler.length;i++)
-				$rootScope.canceler[i].resolve();
-		});
+		if(! $scope.leads_empty) {
+			// stop pending http requests
+			$rootScope.safeApply(function() {
+				for(var i=0;i<$rootScope.canceler.length;i++)
+					$rootScope.canceler[i].resolve();
+			});
 
-		// clear results
-		$rootScope.connections = {};
+			// clear results
+			$rootScope.connections = {};
+			
+			// assign name to $rootScope
+			$rootScope.fname = $scope.fname;
+			$rootScope.lname = $scope.lname;
+			$rootScope.cname = $scope.cname;
+			$rootScope.fire_query = true;			
+		}
+		else
+			alert("Please select at least one lead!");
 		
-		// assign name to $rootScope
-		$rootScope.fname = $scope.fname;
-		$rootScope.lname = $scope.lname;
-		$rootScope.cname = $scope.cname;
-		$rootScope.fire_query = true;
 	};
+
+	
+	$scope.select_all = function() {
+		for(var i=0;i<$scope.leads.length;i++)
+			$scope.leads[i][2] = true;
+	};
+	
+	$scope.select_none = function() {
+		for(var i=0;i<$scope.leads.length;i++)
+			$scope.leads[i][2] = false;		
+	};
+
+	
+	$scope.$watch(
+		function(){return $scope.leads;},
+		function(){
+			$scope.leads_empty = $scope.is_leads_empty();
+		},
+		true
+	);
+	
+
+	$scope.is_leads_empty = function() {
+		for(var i=0;i<$scope.leads.length; i++) {
+			if($scope.leads[i][2] == true)
+				return false;
+		}
+		return true;
+	}
 	
 }]);
 
@@ -152,6 +190,7 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 	$rootScope.fire_query = false;
 	$scope.people_search_ids=[];
 	$rootScope.progress=0;
+//	$rootScope.selected_leads = 0;
 	$scope.connections={};
 	$scope.connections.all=[];
 	$scope.connections.first=[];
@@ -197,10 +236,10 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 							alert($scope.fname + " " + $scope.lname + " from " + $scope.cname + " is not on LinkedIn....!");
 						//alert("Result count : " + $scope.data.numResults);
 						else{
-							if($scope.data.numResults == 1)
-								alert("There is one person on LinkedIn. Searching through each lead now.");
-							else
-								alert("There are " + $scope.data.numResults + " people on LinkedIn. Searching through each lead now.");
+							//if($scope.data.numResults == 1)
+								//alert("There is one person on LinkedIn. Searching through each lead now.");
+							//else
+								//alert("There are " + $scope.data.numResults + " people on LinkedIn. Searching through each lead now.");
 
 							// limit the number of calls to 25 if more....
 							var numResults = $scope.data.numResults;
@@ -228,9 +267,21 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 							var count=1;
 
 							var total_calls = numResults * total_leads;
+							
+/*							for(lead_number = 0; lead_number < total_leads; lead_number++) {
+								if(leads[i][2] == true)
+									selected_leads++;
+							}
+*/						
+							alert($scope.leads);
 							for(lead_number = 0; lead_number < total_leads; lead_number++) {
 								// for lead = lead_number, fetch profile for each id in people_search_ids
 								for(var i=0;i<numResults;i++) {
+									
+									if($scope.leads[lead_number][2] == false) {
+										//alert($scope.leads[lead_number][1] + " is not selected");
+										continue;
+									}
 	
 									// create canceler
 									$rootScope.canceler.push($q.defer());
@@ -282,6 +333,7 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 				$scope.connections = $rootScope.connections;
 			}
 		);
+
 
 		$scope.stop = function() {
 			$rootScope.safeApply(function() {
