@@ -1,7 +1,7 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><a href="http://github.com/angular/angular.js/edit/master/docs/content/tutorial/step_09.ngdoc" class="improve-docs btn btn-primary">Improve this doc</a><div class="tutorial-page tutorial-9-filters-page"><ul doc-tutorial-nav="9"></ul>
+<div><a href="http://github.com/angular/angular.js/edit/master/docs/content/tutorial/step_09.ngdoc" class="improve-docs btn btn-primary">Improve this doc</a><ul doc-tutorial-nav="9"></ul>
 
 <p>In this step you will learn how to create your own custom display filter.</p>
 
@@ -16,7 +16,7 @@ strings into glyphs: ✓ for "true", and ✘ for "false". Let's see what the fil
 
 <p>The most important changes are listed below. You can see the full diff on <a href="https://github.com/angular/angular-phonecat/compare/step-8...step-9">GitHub</a>:</p>
 
-<h2 id="customfilter">Custom Filter</h3>
+<h3 id="customfilter">Custom Filter</h2>
 
 <p>In order to create a new filter, you are going to create a <code>phonecatFilters</code> module and register
 your custom filter with this module:</p>
@@ -31,7 +31,8 @@ angular.module('phonecatFilters', []).filter('checkmark', function() {
 </pre>
 
 <p>The name of our filter is "checkmark". The <code>input</code> evaluates to either <code>true</code> or <code>false</code>, and we
-return one of the two unicode characters we have chosen to represent true (<code>\u2713</code> -> ✓) or false (<code>\u2718</code> -> ✘).</p>
+return one of two unicode characters we have chosen to represent true or false (<code>\u2713</code> and
+<code>\u2718</code>).</p>
 
 <p>Now that our filter is ready, we need to register the <code>phonecatFilters</code> module as a dependency for
 our main <code>phonecat</code> module.</p>
@@ -43,7 +44,7 @@ angular.module('phonecat', ['phonecatFilters']).
 ...
 </pre>
 
-<h2 id="template">Template</h3>
+<h2 id="template">Template</h2>
 
 <p>Since the filter code lives in the <code>app/js/filters.js</code> file, we need to include this file in our
 layout template.</p>
@@ -105,7 +106,7 @@ our filter tests execute.</p>
 <pre><code>    Chrome 22.0: Executed 4 of 4 SUCCESS (0.034 secs / 0.012 secs)
 </code></pre>
 
-<h1 id="experiments">Experiments</h2>
+<h2 id="experiments">Experiments</h1>
 
 <ul>
 <li><p>Let's experiment with some of the <a href="api/ng.$filter"><code>built-in Angular filters</code></a> and add the
@@ -127,4 +128,4 @@ the following to index.html:</p>
 <p>Now that you have learned how to write and test a custom filter, go to <a href="tutorial/step_10">step 10</a> to
 learn how we can use Angular to enhance the phone details page further.</p>
 
-<ul doc-tutorial-nav="9"></ul></div></div>
+<ul doc-tutorial-nav="9"></ul></div>
