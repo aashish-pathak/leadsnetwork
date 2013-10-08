@@ -1,0 +1,7 @@
+
+from conf import Config
+
+class MySQL(Config):
+    def __init__(self):
+        super(MySQL, self).__init__()
+        
