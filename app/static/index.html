@@ -29,7 +29,7 @@
 
 <body>
 	<div id="parent" ng-controller="parentCtrl">
-		<div class="login" id="login" ng-controller="loginCtrl" ng-hide="is_old_user">
+		<div class="login font" id="login" ng-controller="loginCtrl" ng-hide="is_old_user">
 			<form ng-submit="signIn()">
 				<center>
 				<img class="loginImage" src="static/img/login-icon.png">
@@ -42,7 +42,7 @@
 		
 		<div id="page" ng-controller="pageCtrl" ng-show="is_old_user">
 			<div id="header" ng-controller="headerCtrl">
-				<font color=black><p>
+				<font color=black><p class="font">
 					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</font>
 				<button class="btn btn-custom-signout" ng-click="signOut()">
 					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></p>
@@ -51,19 +51,19 @@
 
 
 			<div id="wrapper" ng-controller="wrapperCtrl">
-				<div id="navigation" ng-controller="navigationCtrl">
+				<div class="font" id="navigation" ng-controller="navigationCtrl">
 					<br>
 					<div style="width: 80%; margin: 0 auto;">
 					<form method='GET' ng-submit="people_search()">
 						
 						<h1 class="h1_navigation" align="center">First Name</h1>
-						<input type="text" ng-model="fname" placeholder="First Name" required>
+						<input class="input_navigation" type="text" ng-model="fname" placeholder="First Name" required>
 						
 						<h1 class="h1_navigation" align="center">Last Name</h1>
-						<input type="text" ng-model="lname" placeholder="Last Name" required>
+						<input class="input_navigation" type="text" ng-model="lname" placeholder="Last Name" required>
 						
 						<h1 class="h1_navigation" align="center">Company Name</h1>
-						<input type="text" ng-model="cname" placeholder="Company Name" required><br><br>
+						<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name" required><br><br>
 						
 						<p ng-show="fname"><!--Searching : --><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
 						<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
@@ -71,7 +71,7 @@
 					</div>
 					<br>
 
-					<div class="leads">
+					<div class="leads font">
 					<br><br>
 					<p align="center">
 						<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
@@ -87,7 +87,7 @@
 
 				</div>
 
-				<div id="content" ng-controller="contentCtrl">
+				<div class="font" id="content" ng-controller="contentCtrl">
 					<div class="search_summary">
 					<button class="btn btn-custom-stop" ng-click="stop()">
 						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
@@ -102,9 +102,9 @@
 					</ol>
 -->
 
-					<div class="results" ng-show="fname">
-					<table class="table">
-						<tr>
+					<div class="results font" ng-show="fname">
+					<table class="table table-hover">
+						<tr class="table_header">
 							<td>Degree</td>
 							<td>Connected Through</td>
 							<td>Common Connections</td>

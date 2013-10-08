@@ -273,7 +273,7 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 									selected_leads++;
 							}
 */						
-							alert($scope.leads);
+							//alert($scope.leads);
 							for(lead_number = 0; lead_number < total_leads; lead_number++) {
 								// for lead = lead_number, fetch profile for each id in people_search_ids
 								for(var i=0;i<numResults;i++) {
