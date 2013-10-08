@@ -14,23 +14,137 @@ background-image: url('/static/img/leads13.jpg');
 background-size: 100% 100&;
 /*background-size: contain;*/
 background-repeat: no-repeat;
-background-position: center;
+background-position: fixed;
 color:#ffffff;
 }
 
+ul {
+	list-style: none inside none; margin: 0;
+}
+
+.table_header {
+	color: #45B9E0;;
+}
+
+tr.t1 td {
+	background-color: #009ACD;
+	color: black;
+}
+
+tr.t2 td {
+	background-color: #42C0FB;
+	color: black;
+}
+
+tr.t3 td {
+	background-color: #BFEFFF;
+	color: black;
+}
 
 /* ----- LOGIN ----- */
 #login {
-width:750px;
+width:50%;
 min-height:300px; /* for modern browsers */
 height:auto !important; /* for modern browsers */
 height:500px; /* for IE5.x and IE6 */
-background-color:#FFFFFF;
-margin-top:250px;
-color:#000000;
+
+/* background-color: rgba(135, 206, 250, 0); */
+margin-left:25%;
+color:#FFFFFF;
 }
 
 /* ----- Complete page ----- */
+
+.font {
+	font-family: 'Hammersmith One', sans-serif;
+}
+
+.input_navigation {
+	width: 100%;
+}
+
+.btn-custom { background-color: hsl(195, 79%, 43%) !important; background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#56c5eb", endColorstr="#1798c4"); background-image: -khtml-gradient(linear, left top, left bottom, from(#56c5eb), to(#1798c4)); background-image: -moz-linear-gradient(top, #56c5eb, #1798c4); background-image: -ms-linear-gradient(top, #56c5eb, #1798c4); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #56c5eb), color-stop(100%, #1798c4)); background-image: -webkit-linear-gradient(top, #56c5eb, #1798c4); background-image: -o-linear-gradient(top, #56c5eb, #1798c4); background-image: linear-gradient(#56c5eb, #1798c4); border-color: #1798c4 #1798c4 hsl(195, 79%, 38%); color: #333 !important; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33); -webkit-font-smoothing: antialiased; }
+.btn-custom-signin { background-color: hsl(0, 69%, 22%) !important; background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b42121", endColorstr="#5e1111"); background-image: -khtml-gradient(linear, left top, left bottom, from(#b42121), to(#5e1111)); background-image: -moz-linear-gradient(top, #b42121, #5e1111); background-image: -ms-linear-gradient(top, #b42121, #5e1111); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b42121), color-stop(100%, #5e1111)); background-image: -webkit-linear-gradient(top, #b42121, #5e1111); background-image: -o-linear-gradient(top, #b42121, #5e1111); background-image: linear-gradient(#b42121, #5e1111); border-color: #5e1111 #5e1111 hsl(0, 69%, 17%); color: #fff !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33); -webkit-font-smoothing: antialiased; }
+.btn-custom-signout { float:right; background-color: hsl(0, 69%, 22%) !important; background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b42121", endColorstr="#5e1111"); background-image: -khtml-gradient(linear, left top, left bottom, from(#b42121), to(#5e1111)); background-image: -moz-linear-gradient(top, #b42121, #5e1111); background-image: -ms-linear-gradient(top, #b42121, #5e1111); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b42121), color-stop(100%, #5e1111)); background-image: -webkit-linear-gradient(top, #b42121, #5e1111); background-image: -o-linear-gradient(top, #b42121, #5e1111); background-image: linear-gradient(#b42121, #5e1111); border-color: #5e1111 #5e1111 hsl(0, 69%, 17%); color: #fff !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33); -webkit-font-smoothing: antialiased; }
+.btn-custom-stop { position:relative; float:right; background-color: hsl(0, 69%, 22%) !important; background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b42121", endColorstr="#5e1111"); background-image: -khtml-gradient(linear, left top, left bottom, from(#b42121), to(#5e1111)); background-image: -moz-linear-gradient(top, #b42121, #5e1111); background-image: -ms-linear-gradient(top, #b42121, #5e1111); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b42121), color-stop(100%, #5e1111)); background-image: -webkit-linear-gradient(top, #b42121, #5e1111); background-image: -o-linear-gradient(top, #b42121, #5e1111); background-image: linear-gradient(#b42121, #5e1111); border-color: #5e1111 #5e1111 hsl(0, 69%, 17%); color: #fff !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33); -webkit-font-smoothing: antialiased; }
+
+
+
+.btn-mini {
+	background-color: hsl(195, 79%, 43%) !important; background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#56c5eb", endColorstr="#1798c4"); background-image: -khtml-gradient(linear, left top, left bottom, from(#56c5eb), to(#1798c4)); background-image: -moz-linear-gradient(top, #56c5eb, #1798c4); background-image: -ms-linear-gradient(top, #56c5eb, #1798c4); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #56c5eb), color-stop(100%, #1798c4)); background-image: -webkit-linear-gradient(top, #56c5eb, #1798c4); background-image: -o-linear-gradient(top, #56c5eb, #1798c4); background-image: linear-gradient(#56c5eb, #1798c4); border-color: #1798c4 #1798c4 hsl(195, 79%, 38%); color: #333 !important; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33); -webkit-font-smoothing: antialiased;
+	padding: 2px 6px;
+	font-size: @baseFontSize - 2px;
+	line-height: @baseLineHeight - 4px;
+}
+
+
+.loginImage
+{
+opacity:1;
+}
+
+.h1_header {
+	margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-size: 18px;
+	line-height: 20px;
+	font-weight: normal;
+	font-family: 'Orienta', sans-serif;
+}
+
+.h_login {
+	margin: 1em 0 .6em 0;
+	font-weight: normal;
+	color: black;
+	font-family: 'Hammersmith One', sans-serif;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+	position: relative;
+	font-size: 18px;
+	line-height: 20px;
+	font-family: 'Questrial', sans-serif;
+}
+
+.h1_navigation {
+	margin: 1em 0 .6em 0;
+	font-weight: normal;
+	color: #45B9E0;
+	font-family: 'Hammersmith One', sans-serif;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+	position: relative;
+	font-size: 18px;
+	line-height: 20px;
+	font-family: 'Questrial', sans-serif;
+}
+
+.app_name {
+    color: #343434;
+    font-weight: normal;
+	font-family: 'Ultra', sans-serif;  
+	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    font-size: 36px;
+    font-size: 500%;
+    line-height: 42px;
+    text-transform: uppercase;
+    text-shadow: 0 2px white, 0 3px #777;
+    margin-top: 7%;
+}
+
+.leads {
+	font-family: 'Hammersmith One', sans-serif;
+	font-size: 90%;
+	color: #45B9E0;
+	margin-left: -10%;
+}
+
+.results {
+	font-family: 'Hammersmith One', sans-serif;
+	color: black;
+}
+
+.search_summary {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	color: #45B9E0;
+}
 
 #parent {
 
@@ -43,13 +157,17 @@ color:#000000;
 /* ----- HEADER ----- */
 #header {
 width:750px;
+
 height:150px;
 background-color:#333333;
+/* background-image: url('/static/img/h1.jpg'); */
+/* background-color : rgba(0, 255, 255, 0.1); */
+background-color : transparent;
 }
 /* FAUX LAYOUT WRAPPER */
 /* 
 This div is optional: When you delete it the navigation bar and the content block won't have the same size when one of them has a larger height then the other. I recommend you to leave this faux layout wrapper here.
-IMPORTANT: In order to make this work you have to download http://csseasy.com/layouts/fixed/background_3.gif (copy past in your address bar) and place it in the same folder as this html file. DON'T HOTLINK to this file.
+IMPORTANT: In order to make this work you have to download http://csseasy.com/layousts/fixed/background_3.gif (copy past in your address bar) and place it in the same folder as this html file. DON'T HOTLINK to this file.
 */
 
 #wrapper{
@@ -65,8 +183,9 @@ width:200px;
 min-height:500px; /* for modern browsers */
 height:auto !important; /* for modern browsers */
 height:500px; /* for IE5.x and IE6 */
-background-color:#333333;
 float:left;
+overflow: hidden;
+background-color: rgba(51, 51, 51, 0.95);
 }
 /* ----- MAIN CONTENT ----- */
 #content { 
@@ -76,12 +195,14 @@ min-height:500px; /* for modern browsers */
 height:auto !important; /* for modern browsers */
 height:500px; /* for IE5.x and IE6 */
 background-color:#333333;
+background-color: rgba(51, 51, 51, 0.95);
 /*---------margin-top:10px---------*/;
 }
 /* ----- FOOTER ----- */
 #footer { 
 margin-top:10px;
 width:750px;
+
 height:100px;
 background-color:#333333;
 }

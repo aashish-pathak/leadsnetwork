@@ -3,7 +3,7 @@
 )</span>
 </h1>
 <div><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary">Improve this doc</a><h2 id="Description">Description</h2>
-<div class="description"><div class="ngmocke2e-httpbackend-page"><p>Fake HTTP backend implementation suitable for end-to-end testing or backend-less development of
+<div class="description"><p>Fake HTTP backend implementation suitable for end-to-end testing or backend-less development of
 applications that use the <a href="api/ng.$http"><code>$http service</code></a>.</p>
 
 <p><em>Note</em>: For fake http backend implementation suitable for unit testing please see
@@ -37,30 +37,18 @@ on the <code>ngMockE2E</code> and your application modules and defines the fake 
 
     // adds a new phone to the phones array
     $httpBackend.whenPOST('/phones').respond(function(method, url, data) {
-      phones.push(angular.fromJson(data));
+      phones.push(angular.fromJSON(data));
     });
     $httpBackend.whenGET(/^\/templates\//).passThrough();
     //...
   });
 </pre>
 
-<p>Afterwards, bootstrap your app with this new module.</p></div></div>
+<p>Afterwards, bootstrap your app with this new module.</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
 <ul class="methods"><li><h3 id="when">when(method, url, data, headers)</h3>
-<div class="when"><div class="ngmocke2e-httpbackend-when-page"><p>Creates a new backend definition.</p></div><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">method – {string} – </code>
-<div class="ngmocke2e-httpbackend-when-page"><p>HTTP method.</p></div></li>
-<li><code ng:non-bindable="">url – {string|RegExp} – </code>
-<div class="ngmocke2e-httpbackend-when-page"><p>HTTP url.</p></div></li>
-<li><code ng:non-bindable="">data<i>(optional)</i> – {(string|RegExp)=} – </code>
-<div class="ngmocke2e-httpbackend-when-page"><p>HTTP request body.</p></div></li>
-<li><code ng:non-bindable="">headers<i>(optional)</i> – {(Object|function(Object))=} – </code>
-<div class="ngmocke2e-httpbackend-when-page"><p>HTTP headers or function that receives http header
-object and returns true if the headers match the current definition.</p></div></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{requestHandler}</code>
-– <div class="ngmocke2e-httpbackend-when-page"><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
+<div class="when"><p>Creates a new backend definition.</p><h5 id="parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>method</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><p>HTTP method.</p></td></tr><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP url.</p></td></tr><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP request body.</p></td></tr><tr><td>headers <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a></td><td><p>HTTP headers or function that receives http header
+object and returns true if the headers match the current definition.</p></td></tr></tbody></table><h5 id="returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td><td><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
 control how a matched request is handled.</p>
 
 <ul>
@@ -71,103 +59,35 @@ an array containing response status (number), response data (string) and respons
 <li>passThrough – <code>{function()}</code> – Any request matching a backend definition with <code>passThrough</code>
 handler, will be pass through to the real backend (an XHR request will be made to the
 server.</li>
-</ul></div></div>
-</div>
+</ul></td></tr></table></div>
 </li>
 <li><h3 id="whenDELETE">whenDELETE(url, headers)</h3>
-<div class="whendelete"><div class="ngmocke2e-httpbackend-whendelete-page"><p>Creates a new backend definition for DELETE requests. For more info see <code>when()</code>.</p></div><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">url – {string|RegExp} – </code>
-<div class="ngmocke2e-httpbackend-whendelete-page"><p>HTTP url.</p></div></li>
-<li><code ng:non-bindable="">headers<i>(optional)</i> – {(Object|function(Object))=} – </code>
-<div class="ngmocke2e-httpbackend-whendelete-page"><p>HTTP headers.</p></div></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{requestHandler}</code>
-– <div class="ngmocke2e-httpbackend-whendelete-page"><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
-control how a matched request is handled.</p></div></div>
-</div>
+<div class="whendelete"><p>Creates a new backend definition for DELETE requests. For more info see <code>when()</code>.</p><h5 id="parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP url.</p></td></tr><tr><td>headers <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a></td><td><p>HTTP headers.</p></td></tr></tbody></table><h5 id="returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td><td><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
+control how a matched request is handled.</p></td></tr></table></div>
 </li>
 <li><h3 id="whenGET">whenGET(url, headers)</h3>
-<div class="whenget"><div class="ngmocke2e-httpbackend-whenget-page"><p>Creates a new backend definition for GET requests. For more info see <code>when()</code>.</p></div><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">url – {string|RegExp} – </code>
-<div class="ngmocke2e-httpbackend-whenget-page"><p>HTTP url.</p></div></li>
-<li><code ng:non-bindable="">headers<i>(optional)</i> – {(Object|function(Object))=} – </code>
-<div class="ngmocke2e-httpbackend-whenget-page"><p>HTTP headers.</p></div></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{requestHandler}</code>
-– <div class="ngmocke2e-httpbackend-whenget-page"><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
-control how a matched request is handled.</p></div></div>
-</div>
+<div class="whenget"><p>Creates a new backend definition for GET requests. For more info see <code>when()</code>.</p><h5 id="parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP url.</p></td></tr><tr><td>headers <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a></td><td><p>HTTP headers.</p></td></tr></tbody></table><h5 id="returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td><td><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
+control how a matched request is handled.</p></td></tr></table></div>
 </li>
 <li><h3 id="whenHEAD">whenHEAD(url, headers)</h3>
-<div class="whenhead"><div class="ngmocke2e-httpbackend-whenhead-page"><p>Creates a new backend definition for HEAD requests. For more info see <code>when()</code>.</p></div><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">url – {string|RegExp} – </code>
-<div class="ngmocke2e-httpbackend-whenhead-page"><p>HTTP url.</p></div></li>
-<li><code ng:non-bindable="">headers<i>(optional)</i> – {(Object|function(Object))=} – </code>
-<div class="ngmocke2e-httpbackend-whenhead-page"><p>HTTP headers.</p></div></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{requestHandler}</code>
-– <div class="ngmocke2e-httpbackend-whenhead-page"><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
-control how a matched request is handled.</p></div></div>
-</div>
+<div class="whenhead"><p>Creates a new backend definition for HEAD requests. For more info see <code>when()</code>.</p><h5 id="parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP url.</p></td></tr><tr><td>headers <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a></td><td><p>HTTP headers.</p></td></tr></tbody></table><h5 id="returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td><td><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
+control how a matched request is handled.</p></td></tr></table></div>
 </li>
 <li><h3 id="whenJSONP">whenJSONP(url)</h3>
-<div class="whenjsonp"><div class="ngmocke2e-httpbackend-whenjsonp-page"><p>Creates a new backend definition for JSONP requests. For more info see <code>when()</code>.</p></div><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">url – {string|RegExp} – </code>
-<div class="ngmocke2e-httpbackend-whenjsonp-page"><p>HTTP url.</p></div></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{requestHandler}</code>
-– <div class="ngmocke2e-httpbackend-whenjsonp-page"><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
-control how a matched request is handled.</p></div></div>
-</div>
+<div class="whenjsonp"><p>Creates a new backend definition for JSONP requests. For more info see <code>when()</code>.</p><h5 id="parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP url.</p></td></tr></tbody></table><h5 id="returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td><td><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
+control how a matched request is handled.</p></td></tr></table></div>
 </li>
 <li><h3 id="whenPATCH">whenPATCH(url, data, headers)</h3>
-<div class="whenpatch"><div class="ngmocke2e-httpbackend-whenpatch-page"><p>Creates a new backend definition for PATCH requests.  For more info see <code>when()</code>.</p></div><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">url – {string|RegExp} – </code>
-<div class="ngmocke2e-httpbackend-whenpatch-page"><p>HTTP url.</p></div></li>
-<li><code ng:non-bindable="">data<i>(optional)</i> – {(string|RegExp)=} – </code>
-<div class="ngmocke2e-httpbackend-whenpatch-page"><p>HTTP request body.</p></div></li>
-<li><code ng:non-bindable="">headers<i>(optional)</i> – {(Object|function(Object))=} – </code>
-<div class="ngmocke2e-httpbackend-whenpatch-page"><p>HTTP headers.</p></div></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{requestHandler}</code>
-– <div class="ngmocke2e-httpbackend-whenpatch-page"><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
-control how a matched request is handled.</p></div></div>
-</div>
+<div class="whenpatch"><p>Creates a new backend definition for PATCH requests.  For more info see <code>when()</code>.</p><h5 id="parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP url.</p></td></tr><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP request body.</p></td></tr><tr><td>headers <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a></td><td><p>HTTP headers.</p></td></tr></tbody></table><h5 id="returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td><td><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
+control how a matched request is handled.</p></td></tr></table></div>
 </li>
 <li><h3 id="whenPOST">whenPOST(url, data, headers)</h3>
-<div class="whenpost"><div class="ngmocke2e-httpbackend-whenpost-page"><p>Creates a new backend definition for POST requests. For more info see <code>when()</code>.</p></div><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">url – {string|RegExp} – </code>
-<div class="ngmocke2e-httpbackend-whenpost-page"><p>HTTP url.</p></div></li>
-<li><code ng:non-bindable="">data<i>(optional)</i> – {(string|RegExp)=} – </code>
-<div class="ngmocke2e-httpbackend-whenpost-page"><p>HTTP request body.</p></div></li>
-<li><code ng:non-bindable="">headers<i>(optional)</i> – {(Object|function(Object))=} – </code>
-<div class="ngmocke2e-httpbackend-whenpost-page"><p>HTTP headers.</p></div></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{requestHandler}</code>
-– <div class="ngmocke2e-httpbackend-whenpost-page"><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
-control how a matched request is handled.</p></div></div>
-</div>
+<div class="whenpost"><p>Creates a new backend definition for POST requests. For more info see <code>when()</code>.</p><h5 id="parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP url.</p></td></tr><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP request body.</p></td></tr><tr><td>headers <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a></td><td><p>HTTP headers.</p></td></tr></tbody></table><h5 id="returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td><td><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
+control how a matched request is handled.</p></td></tr></table></div>
 </li>
 <li><h3 id="whenPUT">whenPUT(url, data, headers)</h3>
-<div class="whenput"><div class="ngmocke2e-httpbackend-whenput-page"><p>Creates a new backend definition for PUT requests.  For more info see <code>when()</code>.</p></div><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">url – {string|RegExp} – </code>
-<div class="ngmocke2e-httpbackend-whenput-page"><p>HTTP url.</p></div></li>
-<li><code ng:non-bindable="">data<i>(optional)</i> – {(string|RegExp)=} – </code>
-<div class="ngmocke2e-httpbackend-whenput-page"><p>HTTP request body.</p></div></li>
-<li><code ng:non-bindable="">headers<i>(optional)</i> – {(Object|function(Object))=} – </code>
-<div class="ngmocke2e-httpbackend-whenput-page"><p>HTTP headers.</p></div></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{requestHandler}</code>
-– <div class="ngmocke2e-httpbackend-whenput-page"><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
-control how a matched request is handled.</p></div></div>
-</div>
+<div class="whenput"><p>Creates a new backend definition for PUT requests.  For more info see <code>when()</code>.</p><h5 id="parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP url.</p></td></tr><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a></td><td><p>HTTP request body.</p></td></tr><tr><td>headers <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a></td><td><p>HTTP headers.</p></td></tr></tbody></table><h5 id="returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td><td><p>Returns an object with <code>respond</code> and <code>passThrough</code> methods that
+control how a matched request is handled.</p></td></tr></table></div>
 </li>
 </ul>
 </div>
