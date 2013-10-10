@@ -121,7 +121,7 @@ myApp.controller('wrapperCtrl', ['$scope', '$http', function($scope, $http) {
 
 }]);
 
-myApp.controller('navigationCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+myApp.controller('navigationCtrl', ['$scope', '$rootScope', '$http', '$window', '$location', function($scope, $rootScope, $http, $window, $location) {
 	
 	$scope.fname="";
 	$scope.lname="";
@@ -151,6 +151,25 @@ myApp.controller('navigationCtrl', ['$scope', '$rootScope', function($scope, $ro
 		
 	};
 
+	$scope.add_account = function() {
+
+		var add_account_url = "/add_account";
+		
+		$http({method:'GET', url:add_account_url})
+		.success(function(data, status, headers, config) {
+			$scope.status = status;
+			$scope.data = data;
+			$scope.headers = headers;
+			$scope.config = config;
+			
+			$window.location.href = $scope.data;
+
+		})
+		.error(function() {
+			alert("HTTP Error....!");
+		});
+		
+	};
 	
 	$scope.select_all = function() {
 		for(var i=0;i<$scope.leads.length;i++)

@@ -1,10 +1,10 @@
 #!flask/bin/python
 
-from flask import Flask, jsonify, abort, request, make_response, send_file, json
+from flask import Flask, jsonify, abort, request, make_response, send_file, json, redirect, session
 import oauth2 as oauth
 import time
 import ConfigParser
-
+from linkedin import *
 
 Config = ConfigParser.ConfigParser()
 Config.read('conf/app.conf')
@@ -19,8 +19,8 @@ url_search = str(Config.get("LinkedIn","url_search"))
 
 consumer_key = Config.get("LinkedIn","consumer_key")
 consumer_secret = Config.get("LinkedIn","consumer_secret")
-oauth_token_key = ""
-oauth_token_secret = ""
+oauth_token_key = "3ca90774-1d55-4a9d-be55-073e176d3f00"
+oauth_token_secret = "4aaaa49b-582f-41da-8e66-09f6aa7a356f"
 
 #oauth_token_key    = "8ad3a274-0438-4224-ac72-8866f977bdf4"
 #oauth_token_secret = "30d86c51-5898-4f76-bc61-309e3bb0da8b"
@@ -114,23 +114,7 @@ def return_leads():
 			lead = [row[0], row[1]]
 			leads.append(lead)
 
-	#	print leads
-#		print json.dumps(leads)
 		return json.dumps(leads)
-#		return leads
-"""
-		for name in names:
-			pass
-	#		print name	
-
-		for key in token_keys:
-			pass
-	#		print key		
-
-		for secret in token_secrets:
-			pass
-	#		print secret
-"""
 
 ############################__LOG IN__##################################
 
@@ -180,6 +164,75 @@ def login():
 	else:
 		return jsonify({'response':False})
 """
+
+############################__ADD ACCOUNT__#############################
+
+@app.route('/add_account')
+def add_account():
+	
+	l = LinkedinAPI(api_key='l1p7t6tnzjwi',
+					api_secret='YJX1CKQeGGXsUyOF',
+					callback_url='http://localhost:5000/callback',
+					permissions=["r_network"])
+	
+	auth_props = l.get_authentication_tokens()
+	auth_url = auth_props['auth_url']
+
+	#Store this token in a session or something for later use in the next step.
+	oauth_token_secret = auth_props['oauth_token_secret']
+
+	session['oauth_token_secret'] = oauth_token_secret
+#	session['linkedin_session_keys']['oauth_token_secret'] = oauth_token_secret
+
+	print 'Connect with LinkedIn via: %s' % auth_url
+	
+	return auth_url
+
+############################__CALLBACK__################################
+
+@app.route('/callback')
+def callback():
+		
+	print request.args.get('oauth_token')
+	print request.args.get('oauth_verifier')
+	
+	access_token_url = 'https://api.linkedin.com/uas/oauth/accessToken'
+	oauth_token = request.args.get('oauth_token')
+	oauth_verifier = request.args.get('oauth_verifier')
+
+	consumer_key = Config.get("LinkedIn","consumer_key")
+	consumer_secret = Config.get("LinkedIn","consumer_secret")
+#	oauth_token_key = "8ad3a274-0438-4224-ac72-8866f977bdf4"
+#	oauth_token_secret = "30d86c51-5898-4f76-bc61-309e3bb0da8b"
+
+
+	#Initiate the LinkedIn class in your callback.
+	l = LinkedinAPI(api_key=consumer_key,
+				  api_secret=consumer_secret,
+				  oauth_token=oauth_token,
+				  oauth_token_secret=session['oauth_token_secret'])
+
+	authorized_tokens = l.get_access_token(oauth_verifier)
+
+	print authorized_tokens
+
+	
+	"""
+	consumer = oauth.Consumer(
+		 key=consumer_key,
+		 secret=consumer_secret)
+		 
+	token = oauth.Token(
+		 key=oauth_token_key,
+		 secret=oauth_token_secret)
+
+	client = oauth.Client(consumer, token)
+	
+	resp, content = client.request('%s?oauth_verifier=%s' % (access_token_url, oauth_verifier), 'POST')
+	print dict(parse_qsl(content))
+	"""
+	return make_response(open('static/index.html').read())
+
 ########################__PEOPLE SEARCH API__###########################
 
 # /search?fname=sangram&lname=kapre
@@ -281,13 +334,11 @@ def fetch_profile():
 
 @app.route('/')
 def index():
+
 	return make_response(open('static/index.html').read())
 	
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'	
+
 if __name__ == '__main__':
-	
-	try:
-		app.run(debug = True, host='0.0.0.0', port=5000)
-	except socket.error, e:
-		print e
-		app.run(debug = True, host='0.0.0.0', port=5000)
+	app.run(debug = True, host='0.0.0.0', port=5000)
 

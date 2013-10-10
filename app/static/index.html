@@ -74,15 +74,18 @@
 					<div class="leads font">
 					<br><br>
 					<p align="center">
+						<button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	Add Account</button><br><br>
 						<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
 						<font size="5%">Leads</font>
 						<button class="btn btn-mini" ng-click="select_none()"><span class="icon icon-check-empty"></span></button>
 					</p>
-					<ul class="unstyled">
-						<li ng-repeat="lead in leads">
-							<input type="checkbox" ng-model="lead[2]">
-							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
-					</ul>
+						<div class="leads_list">
+						<ul class="unstyled">
+							<li ng-repeat="lead in leads">
+								<input type="checkbox" ng-model="lead[2]">
+								<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
+						</ul>
+						</div>
 					</div>
 
 				</div>
@@ -91,7 +94,7 @@
 					<div class="search_summary">
 					<button class="btn btn-custom-stop" ng-click="stop()">
 						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
-					<p ng-show="fname">Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>
+					<p ng-show="fname">	Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>
 					<!--<p ng-show="fname">Progress : {{progress}}</p>-->
 
 					</div>
