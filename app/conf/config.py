@@ -1,11 +1,12 @@
 #!flask/bin/python
-
 import ConfigParser
 import oauth2 as oauth
-
+import os
 
 class Config(object):
-    def __init__(self, cfgfile='app.conf'):
+	
+    def __init__(self,
+				 cfgfile=os.path.dirname(os.path.abspath(__file__))+'/app.conf'):
         self.cfgfile = cfgfile
         self.__parse_cfgfile()
         

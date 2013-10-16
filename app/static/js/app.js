@@ -2,7 +2,7 @@
 
 var myApp = angular.module('myApp', ['ui.bootstrap', 'ngCookies']);
 
-myApp.controller('parentCtrl', ['$scope', '$cookies', '$http', '$rootScope', function($scope, $cookies, $http, $rootScope) {
+myApp.controller('parentCtrl', ['$scope', '$cookies', '$http', '$rootScope', '$location', '$window', function($scope, $cookies, $http, $rootScope, $location, $window) {
 
 	$scope.leads="";
 	$scope.return_leads = function() {
@@ -33,10 +33,21 @@ myApp.controller('parentCtrl', ['$scope', '$cookies', '$http', '$rootScope', fun
 	$rootScope.canceler = [];
 	$rootScope.connections = {};
 	$rootScope.connections.first = [];
+
+	$scope.current_path = $location.absUrl();
 	
+	$scope.$watch(
+		function() {return $location.absUrl();},
+		function() {
+			if($location.absUrl().indexOf("#") != -1) {
+				$window.location.href = "http://localhost:5000/";
+			}
+		}
+	);
+
 }]);
 
-myApp.controller('loginCtrl', ['$scope', '$cookies', '$http', function($scope, $cookies, $http) {
+myApp.controller('loginCtrl', ['$scope', '$cookies', '$http', '$rootScope', function($scope, $cookies, $http, $rootScope) {
 
 	$scope.data="";
 	// STORE COOKIE IN $SCOPE
@@ -51,10 +62,11 @@ myApp.controller('loginCtrl', ['$scope', '$cookies', '$http', function($scope, $
 	$scope.password="";
 
 	$scope.signInSuccess = function(data) {
-		alert("Welcome " + data.name);
+		//alert("Welcome " + data.name);
 		$cookies.myApp = $scope.username;
 		$scope.username="";
 		$scope.password="";
+		
 	};
 
 	$scope.signIn = function() {
@@ -114,6 +126,7 @@ myApp.controller('headerCtrl', ['$scope', '$cookies', '$window', '$rootScope', f
 		// delete Cookie
 		// $window.location.reload();
 		delete $cookies.myApp;
+		
 	};
 }]);
 
@@ -121,7 +134,7 @@ myApp.controller('wrapperCtrl', ['$scope', '$http', function($scope, $http) {
 
 }]);
 
-myApp.controller('navigationCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+myApp.controller('navigationCtrl', ['$scope', '$rootScope', '$http', '$window', '$location', function($scope, $rootScope, $http, $window, $location) {
 	
 	$scope.fname="";
 	$scope.lname="";
@@ -151,6 +164,25 @@ myApp.controller('navigationCtrl', ['$scope', '$rootScope', function($scope, $ro
 		
 	};
 
+	$scope.add_account = function() {
+
+		var add_account_url = "/add_account";
+		
+		$http({method:'GET', url:add_account_url})
+		.success(function(data, status, headers, config) {
+			$scope.status = status;
+			$scope.data = data;
+			$scope.headers = headers;
+			$scope.config = config;
+			
+			$window.location.href = $scope.data;
+
+		})
+		.error(function() {
+			alert("HTTP Error....!");
+		});
+
+	};
 	
 	$scope.select_all = function() {
 		for(var i=0;i<$scope.leads.length;i++)
@@ -302,11 +334,11 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 									.success(function(data) {
 										if(data.distance >= 1 && data.distance <=3)
 										{
-											//console.log(data);
 											count++;
 											$scope.connections.all.push(data);
+											console.log(data);
 										}
-
+										
 										if(data.distance <= 3) {
 											if(data.distance == 1)
 												$scope.connections.first.push(data);
@@ -342,6 +374,26 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 			});
 		};
 	}
+
+	$scope.view_profile = function (connection) {
+		window.$windowScope = $scope;
+		window.open(connection.publicProfileUrl,
+					'frame',
+					'resizeable,top=200,left=200,height=500,width=700');
+	};
+	
+	$scope.view_connections = function (connection) {
+		var common_connections = [];
+		var count = connection.relationToViewer.connections._total;
+		if(count > 10)
+			count = 10;
+			
+		for(var i=0; i<count; i++)
+			common_connections.push(connection.relationToViewer.connections.values[i].person.firstName + " " + connection.relationToViewer.connections.values[i].person.lastName);
+			
+		alert(common_connections);
+	};
+
 }]);
 
 myApp.controller('footerCtrl', ['$scope', function($scope) {

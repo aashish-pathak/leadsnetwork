@@ -42,56 +42,84 @@
 		
 		<div id="page" ng-controller="pageCtrl" ng-show="is_old_user">
 			<div id="header" ng-controller="headerCtrl">
-				<font color=black><p class="font">
-					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</font>
-				<button class="btn btn-custom-signout" ng-click="signOut()">
-					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></p>
-				<p class="app_name" ><a style="color: #071A3C" href=".">Leads' Network!</a></p>
+				<br>
+				<div class="header_contents">
+					<!--  
+				<span class="user_name">
+					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</span>
+					-->
+<!--				<img src="static/img/gslab_logo.png" class="gslab_logo"/>    -->
+				<span class="app_name" align="center"><a style="color: hsl(195, 79%, 43%)" href=".">Leads' Network!</a></span>
+				<!--
+				<span class="signout_button"><button class="btn btn-custom-signout" ng-click="signOut()">
+					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></span>	-->
+					<!-- Dropdown logout link -->
+					<div class="settings_button user_button">
+						<span class="btn-group">
+						  <button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown">
+							  <span class="glyphicon glyphicon-user"></span>
+								{{name | uppercase}}  <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu">
+							<li><a ng-click="signOut()">Sign Out</a></li>
+						  </ul>
+						</span>
+					</div>
+				</div>
 			</div>
 
 
 			<div id="wrapper" ng-controller="wrapperCtrl">
 				<div class="font" id="navigation" ng-controller="navigationCtrl">
-					<br>
-					<div style="width: 80%; margin: 0 auto;">
-					<form method='GET' ng-submit="people_search()">
-						
-						<h1 class="h1_navigation" align="center">First Name</h1>
-						<input class="input_navigation" type="text" ng-model="fname" placeholder="First Name" required>
-						
-						<h1 class="h1_navigation" align="center">Last Name</h1>
-						<input class="input_navigation" type="text" ng-model="lname" placeholder="Last Name" required>
-						
-						<h1 class="h1_navigation" align="center">Company Name</h1>
-						<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name" required><br><br>
-						
-						<p ng-show="fname"><!--Searching : --><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
-						<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
-					</form>
-					</div>
-					<br>
+					<div class="navigation_contents">
+						<div class="search_form">
+						<form method='GET' ng-submit="people_search()">
+							
+							<h1 class="h1_navigation" align="center">First Name</h1>
+							<input class="input_navigation" type="text" ng-model="fname" placeholder="First Name" required>
+							
+							<h1 class="h1_navigation" align="center">Last Name</h1>
+							<input class="input_navigation" type="text" ng-model="lname" placeholder="Last Name" required>
+							
+							<h1 class="h1_navigation" align="center">Company Name</h1>
+							<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name"><br>
+							
+							<p ng-show="fname"><!--Searching : --><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
+							<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
+						</form>
+						</div>
+						<br>
 
-					<div class="leads font">
-					<br><br>
-					<p align="center">
-						<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
-						<font size="5%">Leads</font>
-						<button class="btn btn-mini" ng-click="select_none()"><span class="icon icon-check-empty"></span></button>
-					</p>
-					<ul class="unstyled">
-						<li ng-repeat="lead in leads">
-							<input type="checkbox" ng-model="lead[2]">
-							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
-					</ul>
+						<div class="leads_info">
+							<div class="leads font">
+							<br><br>
+							<p align="center">
+								<button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	Add Account</button><br><br>
+							</p>
+							<p align="center">
+								<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
+								<font size="5%">Leads</font>
+								<button class="btn btn-mini" ng-click="select_none()"><span class="icon icon-check-empty"></span></button>
+							</p>
+								<div class="leads_list">
+								<ul class="unstyled">
+									<li ng-repeat="lead in leads">
+										<input type="checkbox" ng-model="lead[2]">
+										<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
+								</ul>
+								</div>
+							</div>
+						</div>
 					</div>
-
 				</div>
 
 				<div class="font" id="content" ng-controller="contentCtrl">
+					<br><br>
 					<div class="search_summary">
-					<button class="btn btn-custom-stop" ng-click="stop()">
+					<button class="btn btn-custom-stop" ng-click="stop()" ng-show="fname">
 						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
-					<p ng-show="fname">Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>
+					<!--<p ng-show="fname">	Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>-->
+					<p ng-show="fname">	Search results for {{fname | uppercase}} {{lname | uppercase}}.</p>
 					<!--<p ng-show="fname">Progress : {{progress}}</p>-->
 
 					</div>
@@ -110,12 +138,13 @@
 							<td>Common Connections</td>
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.all">
-							<td>{{connection.distance}}</td>
-							<td>{{connection.through}}</td>
-							<td>{{connection.relationToViewer.connections._total}}</td>
+							<td ng-click="view_profile(connection)">{{connection.distance}}</td>
+							<td ng-click="view_profile(connection)">{{connection.through}}</td>
+							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
 						</tr>
 					</table>
 					</div>
+					
 
 <!--					<ol>
 						<p>All Connections : </p>
