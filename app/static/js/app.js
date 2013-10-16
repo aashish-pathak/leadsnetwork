@@ -388,10 +388,17 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 		if(count > 10)
 			count = 10;
 			
-		for(var i=0; i<count; i++)
-			common_connections.push(connection.relationToViewer.connections.values[i].person.firstName + " " + connection.relationToViewer.connections.values[i].person.lastName);
+		for(var i=0; i<count; i++) {
+			var first_name = connection.relationToViewer.connections.values[i].person.firstName;
+			var last_name = connection.relationToViewer.connections.values[i].person.lastName;
+			if(first_name != "private" || last_name != "private")
+				common_connections.push(first_name + " " + last_name);
+		}
 			
-		alert(common_connections);
+		if(common_connections.length == 0)
+			alert("Names of common connections are private!");
+		else
+			alert(common_connections);
 	};
 
 }]);

@@ -3,7 +3,6 @@
 <html ng-app="myApp">
 <head>
 	
-<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
 	<meta charset="utf-8">
 	<title>Leads' Network!</title>
 	
@@ -12,7 +11,6 @@
 	<script src="static/lib/angular/angular-cookies.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
-<!--<script src="bootstrap_js"></script>-->
 	<script src="static/js/app.js"></script>
 
 	<style type='text/css'>
@@ -44,15 +42,7 @@
 			<div id="header" ng-controller="headerCtrl">
 				<br>
 				<div class="header_contents">
-					<!--  
-				<span class="user_name">
-					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</span>
-					-->
-				<img src="static/img/gslab_logo.png" class="gslab_logo"/>				
 				<span class="app_name" align="center"><a style="color: hsl(195, 79%, 43%)" href=".">Leads' Network!</a></span>
-				<!--
-				<span class="signout_button"><button class="btn btn-custom-signout" ng-click="signOut()">
-					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></span>	-->
 					<!-- Dropdown logout link -->
 					<div class="settings_button user_button">
 						<span class="btn-group">
@@ -82,7 +72,7 @@
 							<input class="input_navigation" type="text" ng-model="lname" placeholder="Last Name" required>
 							
 							<h1 class="h1_navigation" align="center">Company Name</h1>
-							<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name">
+							<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name"><br>
 							
 							<p ng-show="fname"><!--Searching : --><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
 							<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
@@ -90,7 +80,6 @@
 						</div>
 						<br>
 
-						<hr class="hr_style">
 						<div class="leads_info">
 							<div class="leads font">
 							<br><br>
@@ -114,26 +103,16 @@
 					</div>
 				</div>
 
-				<div id="content_alt" ng-hide="fname">
-					
-				</div>
-				<div class="font" id="content" ng-controller="contentCtrl"  ng-show="fname">
+				<div class="font" id="content" ng-controller="contentCtrl">
 					<br><br>
-					
 					<div class="search_summary">
-					<button class="btn btn-custom-stop" ng-click="stop()">
+					<button class="btn btn-custom-stop" ng-click="stop()" ng-show="fname">
 						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
 					<!--<p ng-show="fname">	Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>-->
 					<p ng-show="fname">	Search results for {{fname | uppercase}} {{lname | uppercase}}.</p>
 					<!--<p ng-show="fname">Progress : {{progress}}</p>-->
 
 					</div>
-
-<!--					<p>Response : {{data}}</p>-->
-<!--					<ol>
-						<li ng-repeat="id in people_search_ids">{{id}}</li>
-					</ol>
--->
 
 					<div class="results font" ng-show="fname">
 					<table class="table table-hover">
@@ -149,36 +128,12 @@
 						</tr>
 					</table>
 					</div>
-					
-
-<!--					<ol>
-						<p>All Connections : </p>
-						<li ng-repeat="connection in connections.all | orderBy:predicate:connection.distance">{{connection}}</li>
-					</ol>
--->
-
-<!--
-					<ol>
-						<p>First Degree Connections</p>
-						<li ng-repeat="connection in connections.first">{{connection}}</li>
-					</ol>
-					<ol>
-						<p>Second Degree Connections</p>
-						<li ng-repeat="connection in connections.second">{{connection}}</li>
-					</ol>	
-					<ol>
-						<p>Third Degree Connections</p>
-						<li ng-repeat="connection in connections.third">{{connection}}</li>
-					</ol>	
--->
 
 <!--					<p>Through lead {{lead_number}} : {{profile_data}}</p>-->
 				</div>
 			</div>
 			
 			<div id="footer" ng-controller="footerCtrl">
-				<br>
-				<p align="center" style="color:black">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.</p>
 			</div>
 		</div>
 
