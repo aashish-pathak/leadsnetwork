@@ -48,8 +48,8 @@
 				<span class="user_name">
 					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</span>
 					-->
-				<img src="static/img/gslab_logo.png" class="gslab_logo"/>				
-				<span class="app_name" align="center"><a style="color: hsl(195, 79%, 43%)" href=".">Leads' Network!</a></span>
+				<a style="color: hsl(195, 79%, 43%)" target="_new" href="http://www.gslab.com"><img src="static/img/gslab_logo.png" class="gslab_logo"/></a>
+				<span class="app_name" align="center"><a style="color: hsl(195, 79%, 43%)" href="reload()">Leads' Network!</a></span>
 				<!--
 				<span class="signout_button"><button class="btn btn-custom-signout" ng-click="signOut()">
 					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></span>	-->
@@ -61,7 +61,7 @@
 								{{name | uppercase}}  <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-							<li><a ng-click="signOut()">Sign Out</a></li>
+							<li style="cursor: pointer"><a ng-click="signOut()">Sign Out</a></li>
 						  </ul>
 						</span>
 					</div>
@@ -84,19 +84,16 @@
 							<h1 class="h1_navigation" align="center">Company Name</h1>
 							<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name">
 							
-							<p ng-show="fname"><!--Searching : --><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
+							<p ng-show="fname"><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
 							<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
 						</form>
 						</div>
-						<br>
+						
 
 						<hr class="hr_style">
 						<div class="leads_info">
 							<div class="leads font">
-							<br><br>
-							<p align="center">
-								<button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	Add Account</button><br><br>
-							</p>
+							<p align="center"><button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	Add Account</button><br></p>
 							<p align="center">
 								<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
 								<font size="5%">Leads</font>
@@ -124,6 +121,7 @@
 					<button class="btn btn-custom-stop" ng-click="stop()">
 						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
 					<!--<p ng-show="fname">	Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>-->
+					<p ng-show="fname">	Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</p>
 					<p ng-show="fname">	Search results for {{fname | uppercase}} {{lname | uppercase}}.</p>
 					<!--<p ng-show="fname">Progress : {{progress}}</p>-->
 

@@ -113,7 +113,6 @@ height:500px; /* for IE5.x and IE6 */
 
 background-image: url('/static/img/networking_trans.jpg'); 
 background-size: 100% 100%;
-background-size: cover;
 /*background-size: contain;*/
 
 /*---------margin-top:10px---------*/;
@@ -149,7 +148,7 @@ background-color: rgba(51, 51, 51, 0.5);
 }
 
 .gslab_logo {
-	margin-left: 2%;
+	margin-left: 15%;
 	float: left;
 	width: 6%;
 	height: 3%;
@@ -176,11 +175,11 @@ background-color: rgba(51, 51, 51, 0.5);
 	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
 	font-weight: bold;
     font-size: 36px;
-    font-size: 300%;
-    line-height: 42px;
+    font-size: 270%;
+    line-height: 30px;
     text-transform: uppercase;
-	margin-left: 7%;
-	margin-top: 2%;
+	margin-left: 15%;
+	margin-top: 3%;
 }
 
 .navigation_contents {
@@ -203,12 +202,13 @@ background-color: rgba(51, 51, 51, 0.5);
 	font-family: 'Hammersmith One', sans-serif;
 	font-size: 90%;
 	color: #45B9E0;
-	margin-left: -10%;
 }
 
 ul {
-	list-style: none inside none; margin: 0;
-	font-size: 130%;
+	width: 100%;
+	list-style: none inside none;
+	margin: 0;
+	font-size: 120%;
 }
 
 .table_header {

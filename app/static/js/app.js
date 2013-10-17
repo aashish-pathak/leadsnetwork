@@ -120,6 +120,9 @@ myApp.controller('headerCtrl', ['$scope', '$cookies', '$window', '$rootScope', f
 				$rootScope.canceler[i].resolve();
 		});
 
+		// clear fname
+		$rootScope.fname = "";
+
 		// clear results
 		$rootScope.connections = {};
 
@@ -127,6 +130,10 @@ myApp.controller('headerCtrl', ['$scope', '$cookies', '$window', '$rootScope', f
 		// $window.location.reload();
 		delete $cookies.myApp;
 		
+	};
+	
+	$scope.reload = function() {sig
+		$window.location.reload();
 	};
 }]);
 
