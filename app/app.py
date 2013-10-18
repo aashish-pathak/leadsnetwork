@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, abort, request, make_response, send_file, json, redirect, session, render_template
 
 app = Flask(__name__)
-
+app.debug = True
 
 @app.route('/test')
 def test():
