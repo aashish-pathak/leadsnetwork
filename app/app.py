@@ -2,6 +2,11 @@ from flask import Flask, jsonify, abort, request, make_response, send_file, json
 
 app = Flask(__name__)
 
+
+@app.route('/test')
+def test():
+  return "Server is OK!"
+
 #########################__RETURN_LEADS__###############################
 @app.route('/return_leads')
 def return_leads():
