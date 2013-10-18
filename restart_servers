@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd ~/leadsnetwork/app
+uwsgi -s /tmp/leadsnetwork.sock --module app --callable app --daemonize app.log --processes 4 --threads 4
+
+service nginx restart
