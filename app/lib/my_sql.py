@@ -31,7 +31,7 @@ class MySQL(Config):
 			self.cursor.execute("""insert into people (name, linkedin_id, access_token, access_secret) values (%s,%s,%s,%s);""",(name, linkedin_id, access_token_key, access_token_secret))
 			print "insert_into_people()"
 		except Exception as e:
-			print "unable to insert.........!!!!!!!!!!!!!!!!!!!!!!!"
+			print "unable to insert !!!!!!!!!!!!!!!!!!!!!!"
 			print e
 
 	def fetch_all(self, sql):

@@ -4,6 +4,12 @@ var myApp = angular.module('myApp', ['ui.bootstrap', 'ngCookies']);
 
 myApp.controller('parentCtrl', ['$scope', '$cookies', '$http', '$rootScope', '$location', '$window', function($scope, $cookies, $http, $rootScope, $location, $window) {
 
+	$scope.comparator = function(a,b) {
+		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
+		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
+		return 0;
+	};
+
 	$scope.leads="";
 	$scope.return_leads = function() {
 		var leads_url = '/return_leads';
@@ -12,12 +18,14 @@ myApp.controller('parentCtrl', ['$scope', '$cookies', '$http', '$rootScope', '$l
 			$scope.leads = data;
 			for(var i=0; i<$scope.leads.length;i++)
 				$scope.leads[i][2] = true;
+				
+			$scope.leads = $scope.leads.sort($scope.comparator);
 		});
 		
 	};
-
-	$scope.return_leads();
 	
+	$scope.return_leads();
+		
 	$rootScope.safeApply = function(fn) {
 		var phase = this.$root.$$phase;
 		if(phase == '$apply' || phase == '$digest') {
@@ -93,7 +101,14 @@ myApp.controller('loginCtrl', ['$scope', '$cookies', '$http', '$rootScope', func
 			}
 		})
 		.error(function() {
-			alert("HTTP Error....!");
+				$( "#http_error" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$(this).dialog( "close" );
+					}
+				}
+			});
 		});
 	};
 	
@@ -167,8 +182,14 @@ myApp.controller('navigationCtrl', ['$scope', '$rootScope', '$http', '$window', 
 			$rootScope.fire_query = true;			
 		}
 		else
-			alert("Please select at least one lead!");
-		
+			$( "#at_least_one_lead" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+							$(this).dialog( "close" );
+						}
+					}
+			});
 	};
 
 	$scope.add_account = function() {
@@ -183,12 +204,17 @@ myApp.controller('navigationCtrl', ['$scope', '$rootScope', '$http', '$window', 
 			$scope.config = config;
 			
 			$window.location.href = $scope.data;
-
 		})
 		.error(function() {
-			alert("HTTP Error....!");
+			$( "#add_account_http_error" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$(this).dialog( "close" );
+					}
+				}
+			});
 		});
-
 	};
 	
 	$scope.select_all = function() {
@@ -235,6 +261,7 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 	$scope.connections.first=[];
 	$scope.connections.second=[];
 	$scope.connections.third=[];	
+	$scope.common_connections = [];
 	
 	// WATCH on $rootScope's first name and last name and fire_query parameters
 	// WATCH on $rootScope's connections
@@ -271,10 +298,29 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 					$http({method:'GET', url:search_url})
 					.success(function(data) {
 						$scope.data = data;
-						if(!$scope.data.numResults)
-							alert($scope.fname + " " + $scope.lname + " from " + $scope.cname + " is not on LinkedIn....!");
-						//alert("Result count : " + $scope.data.numResults);
-						else{
+						if(!$scope.data.numResults) {
+							if($scope.cname == '') {
+								$( "#not_on_linkedin_without_cname" ).dialog({
+									modal: true,
+									buttons: {
+										Ok: function() {
+											$(this).dialog( "close" );
+										}
+									}
+								});
+							}
+							else {
+								$( "#not_on_linkedin_with_cname" ).dialog({
+									modal: true,
+										buttons: {
+											Ok: function() {
+												$(this).dialog( "close" );
+											}
+										}
+								});
+							}
+						}
+						else {
 							//if($scope.data.numResults == 1)
 								//alert("There is one person on LinkedIn. Searching through each lead now.");
 							//else
@@ -390,7 +436,7 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 	};
 	
 	$scope.view_connections = function (connection) {
-		var common_connections = [];
+		$scope.common_connections = [];
 		var count = connection.relationToViewer.connections._total;
 		if(count > 10)
 			count = 10;
@@ -399,13 +445,21 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 			var first_name = connection.relationToViewer.connections.values[i].person.firstName;
 			var last_name = connection.relationToViewer.connections.values[i].person.lastName;
 			if(first_name != "private" || last_name != "private")
-				common_connections.push(first_name + " " + last_name);
+				$scope.common_connections.push(first_name + " " + last_name);
 		}
-			
-		if(common_connections.length == 0)
+
+		if($scope.common_connections.length == 0)
 			alert("Names of common connections are private!");
-		else
-			alert(common_connections);
+		else {
+			$( "#common_connections" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$(this).dialog( "close" );
+					}
+				}
+			});
+		}
 	};
 
 }]);
