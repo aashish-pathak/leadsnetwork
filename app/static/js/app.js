@@ -71,7 +71,7 @@ myApp.controller('loginCtrl', ['$scope', '$cookies', '$http', '$rootScope', func
 
 	$scope.signInSuccess = function(data) {
 		//alert("Welcome " + data.name);
-		$cookies.myApp = $scope.username;
+		$cookies.myApp = data.name;
 		$scope.username="";
 		$scope.password="";
 		

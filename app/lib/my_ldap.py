@@ -21,7 +21,8 @@ class MyLDAP(Config):
 		self.password = password
 		print "authenticate()"
 		try:
-			l = ldap.open(self.gslab_url_main)
+			#l = ldap.open(self.gslab_url_main)
+			l = ldap.initialize(self.gslab_url_test)
 			l.protocol_version = ldap.VERSION3
 			l.simple_bind_s(self.username, self.password)
 			l.unbind_s()
@@ -68,7 +69,7 @@ class MyLDAP(Config):
 						result_set.append(result_data)
 			
 			# get employee name
-			name = result_set[0][0][1]['cn']
+			name = result_set[0][0][1]['cn'][0]
 			print name
 			l.unbind_s()
 			return jsonify({'response':True, 'name':name})
