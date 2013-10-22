@@ -85,13 +85,13 @@
 			<div id="searchForm" class="unit one-of-three" ng-hide="searching">
 				<form method='GET' ng-submit="theSearch()">
 					First Name
-					<input type="text" ng-model="fname" placeholder="First Name" required>
+					<input type="text" ng-model="fname" placeholder="First Name" required><br>
 					Lase Name
-					<input type="text" ng-model="lname" placeholder="Last Name" required>
+					<input type="text" ng-model="lname" placeholder="Last Name" required><br>
 					Company Name
-					<input type="text" ng-model="cname" placeholder="Company Name">
+					<input type="text" ng-model="cname" placeholder="Company Name"><br>
 					
-					{{fname | uppercase}} {{lname | uppercase}}
+					{{fname | uppercase}} {{lname | uppercase}}<br>
 					<button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button>
 				</form>
 			</div>
@@ -99,14 +99,24 @@
 			<div id="results" class="unit two-of-three" ng-show="searching">
 				
 				
-				<button class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search Again</button>
+				<button class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
 					<table class="table table-hover">
 						<tr class="table_header">
 							<td>Degree</td>
 							<td>Connected Through</td>
 							<td>Common Connections</td>
 						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.all">
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first">
+							<td ng-click="view_profile(connection)">{{connection.distance}}</td>
+							<td ng-click="view_profile(connection)">{{connection.through}}</td>
+							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
+						</tr>
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second">
+							<td ng-click="view_profile(connection)">{{connection.distance}}</td>
+							<td ng-click="view_profile(connection)">{{connection.through}}</td>
+							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
+						</tr>
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third">
 							<td ng-click="view_profile(connection)">{{connection.distance}}</td>
 							<td ng-click="view_profile(connection)">{{connection.through}}</td>
 							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
