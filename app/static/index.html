@@ -60,7 +60,7 @@
 	
 	<div class="container" ng-controller="containerCtrl">
 		<div class="unit span-grid">
-			<button class="btn btn-custom-signin" style="background: transparent"><i class="icon-large icon-group"></i></button>
+			<button class="btn btn-custom-signin" style="background: transparent" ng-click="selectLeads()"><i class="icon-large icon-group"></i></button>
 			<span>Leads' Network</span>
 			<span class="btn-group" ng-show="is_logged_in" style="float: right">
 				<button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown" style="background: transparent">
@@ -102,9 +102,9 @@
 			</div>
 
 			<div id="results" class="unit two-of-three" ng-show="searching">
-				
-				
-				<button class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
+
+				<button style="float:left" class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
+				<button style="float:right" class="btn btn-custom" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>		Stop</button>
 					<table class="table table-hover">
 						<tr class="table_header">
 							<td>Degree</td>

@@ -1,8 +1,14 @@
-// search_with_UI/app.js
+/*	Leads' Network
+ *	
+ *	main module : leadsApp
+ *	
+ *	controllers  : containerCtrl
+ *	
+ */
 
 var leadsApp = angular.module('myApp', ['ui.bootstrap', 'ngCookies']);
 
-leadsApp.controller('containerCtrl', ['$scope', '$http', '$cookies', '$window', '$q', function($scope, $http, $cookies, $window, $q) {
+leadsApp.controller('containerCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', function($scope, $rootScope, $http, $cookies, $window, $q) {
 
 	$scope.login_name = '';
 	$scope.login_password = '';
@@ -11,19 +17,53 @@ leadsApp.controller('containerCtrl', ['$scope', '$http', '$cookies', '$window', 
 	$scope.ldap_name;
 
 	$scope.leads_list = '';
+	$scope.leads_empty = false;
+	$scope.selected_leads_count = 0;
 	
 	$scope.fname = '';
 	$scope.lname = '';
 	$scope.cname = '';
-	$scope.leads_empty = false;
 	
 	$scope.connections={};
 	$scope.connections.all=[];
 	$scope.connections.first=[];
 	$scope.connections.second=[];
-	$scope.connections.third=[];	
-
+	$scope.connections.third=[];
 	
+	$scope.canceler = [];
+
+	/* ************************* Safe Apply ***************************/
+
+	$rootScope.safeApply = function(fn) {
+		var phase = this.$root.$$phase;
+		if(phase == '$apply' || phase == '$digest') {
+			if(fn && (typeof(fn) === 'function')) {
+				fn();
+			}
+		}
+		else {
+			this.$apply(fn);
+		}
+	};
+
+	/* ************************ Select Leads **************************/
+	$scope.selectLeads = function() {
+		alert("select leads");
+	};
+
+
+	/* *********************** Stop Requests **************************/
+
+	$scope.stopRequests = function() {
+		$scope.safeApply(function() {
+			for(var i=0;i<$scope.canceler.length;i++)
+				$scope.canceler[i].resolve();
+		});
+		
+		$scope.canceler = [];
+	};
+
+
 	/* *********************** Return Leads ***************************/
 
 	// compare between two string (needed for alphabetical sorting)
@@ -133,8 +173,6 @@ leadsApp.controller('containerCtrl', ['$scope', '$http', '$cookies', '$window', 
 	};
 
 	/* ************************* The Search ***************************/
-	
-	// function for searching a person on linkedin through multiple leads
 	$scope.theSearch = function() {
 		
 		// list of selected list must not be empty
@@ -146,8 +184,8 @@ leadsApp.controller('containerCtrl', ['$scope', '$http', '$cookies', '$window', 
 			alert("please select at least one lead..!");
 		}
 	};
-	
-	// function for searching a person with fname, lname and cname
+
+	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
 		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
 		$http({method:'GET', url:search_url})
@@ -181,6 +219,8 @@ leadsApp.controller('containerCtrl', ['$scope', '$http', '$cookies', '$window', 
 		});
 	};
 	
+	/* ********************** Find Connections ************************/
+
 	$scope.findConnections = function() {
 		// limit the number of calls to 25 if more....
 		var numResults = $scope.data.numResults;
@@ -192,36 +232,27 @@ leadsApp.controller('containerCtrl', ['$scope', '$http', '$cookies', '$window', 
 		for(var i=0;i<numResults;i++)
 			$scope.people_search_ids.push($scope.data.people.values[i].id);
 		
-		// call http-request to fetch profile for all leads and all profile ids....!
-		// test http-call through lead one for first profile id
 		var profile_id="";
 		var fetch_profile_url="";
 		var total_leads = $scope.leads_list.length;
 		var total_calls = total_leads * numResults;
 		$scope.current_lead="";
-		//alert("Total calls = " + total_calls);
 		$scope.connections.all=[];
 		$scope.connections.first=[];
 		$scope.connections.second=[];
 		$scope.connections.third=[];
 		var lead_number=1;
 
-	
-		//alert($scope.leads);
 		for(lead_number = 0; lead_number < total_leads; lead_number++) {
-			// for lead = lead_number, fetch profile for each id in people_search_ids
 			for(var i=0;i<numResults;i++) {
 				
 				if($scope.leads_list[lead_number][2] == false) {
-					//alert($scope.leads[lead_number][1] + " is not selected");
+					// current lead is not selected
 					continue;
 				}
 
 				// create canceler
 				$scope.canceler.push($q.defer());
-
-				
-				//alert("progress : " + $scope.progress);
 
 				var lead_number_str = $scope.leads_list[lead_number][0];
 				//var lead_number_str = lead_number.toString();
@@ -233,7 +264,6 @@ leadsApp.controller('containerCtrl', ['$scope', '$http', '$cookies', '$window', 
 				.success(function(data) {
 					if(data.distance >= 1 && data.distance <=3)
 					{
-						//count++;
 						$scope.connections.all.push(data);
 					}
 					
