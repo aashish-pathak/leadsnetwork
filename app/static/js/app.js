@@ -1,6 +1,265 @@
 // search_with_UI/app.js
 
-var myApp = angular.module('myApp', ['ui.bootstrap', 'ngCookies']);
+var leadsApp = angular.module('myApp', ['ui.bootstrap', 'ngCookies']);
+
+leadsApp.controller('containerCtrl', ['$scope', '$http', '$cookies', '$window', '$q', function($scope, $http, $cookies, $window, $q) {
+
+	$scope.login_name = '';
+	$scope.login_password = '';
+	$scope.is_logged_in = false;
+	
+	$scope.ldap_name;
+
+	$scope.leads_list = '';
+	
+	$scope.fname = '';
+	$scope.lname = '';
+	$scope.cname = '';
+	$scope.leads_empty = false;
+	
+	$scope.connections={};
+	$scope.connections.all=[];
+	$scope.connections.first=[];
+	$scope.connections.second=[];
+	$scope.connections.third=[];	
+
+	
+	/* *********************** Return Leads ***************************/
+
+	// compare between two string (needed for alphabetical sorting)
+	$scope.comparator = function(a,b) {
+		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
+		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
+		return 0;
+	};
+
+	// get the list of leads from backend DB
+	$scope.returnLeads = function() {
+		
+		var leads_url = '/return_leads';
+		$http({method:'GET', url:leads_url})
+		.success(function(data) {
+			$scope.leads_list = data;
+			for(var i=0; i<$scope.leads_list.length;i++)
+				$scope.leads_list[i][2] = true;
+				
+			$scope.leads_list = $scope.leads_list.sort($scope.comparator);
+		});
+	};
+	
+	// function for getting list of leads from database
+	$scope.returnLeads();
+
+	/* *********************** Check Cookie ***************************/
+	
+	// function for checking cookie for leadsApp
+	$scope.checkCookie = function() {
+		if(!$cookies.leadsApp)
+			$scope.is_logged_in = false;
+		else {
+			$scope.is_logged_in = true;
+			$scope.ldap_name = $cookies.leadsApp;
+		}
+	};
+
+	// calling checkCookie() at each refresh
+	$scope.checkCookie();
+
+	// call checkCookie() whenever cookie is changed
+	$scope.$watch(
+		function(){ return $cookies.leadsApp;},
+		function(){$scope.checkCookie();}
+	);
+
+	/* *********************** Page Refresh ***************************/
+	
+	// reloads the entire page
+	$scope.refresh = function(url) {
+		if(url == 'reload')
+			$window.location.reload();
+	};
+
+	/* ************************** Sign In *****************************/
+
+	$scope.signIn = function() {
+				
+		var login_url = "/login";
+		
+		var post_data = new Object();
+		post_data.username = $scope.username;
+		post_data.password = $scope.password;
+		
+		var content_type = 'application/x-www-form-urlencoded';
+
+		$http({method:'POST', url:login_url, data:post_data, headers: {'Content-Type':content_type}})
+		.success(function(data, status, headers, config) {
+			$scope.login_response = data
+			
+			// successful login
+			if($scope.login_response.response == true) {
+				$cookies.leadsApp = $scope.login_response.name;
+				$scope.login_username = '';
+				$scope.login_password = '';
+				$scope.is_logged_in = true;
+			}
+			
+			// unsuccessful login
+			else if($scope.login_response.response == false){
+				alert($scope.login_response.name);
+			}
+		})
+		.error(function() {
+				$( "#http_error" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$(this).dialog( "close" );
+					}
+				}
+			});
+		});
+	};
+
+	/* ************************** Sign Out ****************************/
+	
+	$scope.signOut = function() {
+		// delete cookie
+		$cookies.leadsApp = '';
+	};
+
+	/* ************************ Search Again **************************/
+	$scope.searchAgain = function() {
+		$scope.searching = false;
+	};
+
+	/* ************************* The Search ***************************/
+	
+	// function for searching a person on linkedin through multiple leads
+	$scope.theSearch = function() {
+		
+		// list of selected list must not be empty
+		if(!$scope.leads_empty) {
+			$scope.peopleSearch();
+			$scope.searching = true;
+		}
+		else {
+			alert("please select at least one lead..!");
+		}
+	};
+	
+	// function for searching a person with fname, lname and cname
+	$scope.peopleSearch = function() {
+		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
+		$http({method:'GET', url:search_url})
+		.success(function(data) {
+			$scope.data = data;
+			if(!$scope.data.numResults) {
+				if($scope.cname == '') {
+					$( "#not_on_linkedin_without_cname" ).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$(this).dialog( "close" );
+							}
+						}
+					});
+				}
+				else {
+					$( "#not_on_linkedin_with_cname" ).dialog({
+						modal: true,
+							buttons: {
+								Ok: function() {
+									$(this).dialog( "close" );
+								}
+							}
+					});
+				}
+			}
+			else {
+				$scope.findConnections();
+			}			
+		});
+	};
+	
+	$scope.findConnections = function() {
+		// limit the number of calls to 25 if more....
+		var numResults = $scope.data.numResults;
+		if (numResults > 25)
+			numResults = 25;
+
+		$scope.people_search_ids=[];
+		$scope.canceler = [];
+		for(var i=0;i<numResults;i++)
+			$scope.people_search_ids.push($scope.data.people.values[i].id);
+		
+		// call http-request to fetch profile for all leads and all profile ids....!
+		// test http-call through lead one for first profile id
+		var profile_id="";
+		var fetch_profile_url="";
+		var total_leads = $scope.leads_list.length;
+		var total_calls = total_leads * numResults;
+		$scope.current_lead="";
+		//alert("Total calls = " + total_calls);
+		$scope.connections.all=[];
+		$scope.connections.first=[];
+		$scope.connections.second=[];
+		$scope.connections.third=[];
+		var lead_number=1;
+
+	
+		//alert($scope.leads);
+		for(lead_number = 0; lead_number < total_leads; lead_number++) {
+			// for lead = lead_number, fetch profile for each id in people_search_ids
+			for(var i=0;i<numResults;i++) {
+				
+				if($scope.leads_list[lead_number][2] == false) {
+					//alert($scope.leads[lead_number][1] + " is not selected");
+					continue;
+				}
+
+				// create canceler
+				$scope.canceler.push($q.defer());
+
+				
+				//alert("progress : " + $scope.progress);
+
+				var lead_number_str = $scope.leads_list[lead_number][0];
+				//var lead_number_str = lead_number.toString();
+				$scope.lead_number = lead_number_str;
+				profile_id = $scope.people_search_ids[i];
+				fetch_profile_url = "/fetch_profile?lead_number=" + lead_number_str + "&profile_id=" + profile_id;
+				
+				$http({method:'GET', url:fetch_profile_url, timeout: $scope.canceler[i].promise})
+				.success(function(data) {
+					if(data.distance >= 1 && data.distance <=3)
+					{
+						//count++;
+						$scope.connections.all.push(data);
+					}
+					
+					if(data.distance <= 3) {
+						if(data.distance == 1)
+							$scope.connections.first.push(data);
+						if(data.distance == 2)
+							$scope.connections.second.push(data);
+						if(data.distance == 3)
+							$scope.connections.third.push(data);
+					}
+				});
+			}
+		}
+	};
+}]);
+
+
+
+
+
+
+
+
+
+/*
 
 myApp.controller('parentCtrl', ['$scope', '$cookies', '$http', '$rootScope', '$location', '$window', function($scope, $cookies, $http, $rootScope, $location, $window) {
 
@@ -353,11 +612,11 @@ myApp.controller('contentCtrl', ['$scope', '$rootScope', '$http', '$q', function
 
 							var total_calls = numResults * total_leads;
 							
-/*							for(lead_number = 0; lead_number < total_leads; lead_number++) {
-								if(leads[i][2] == true)
-									selected_leads++;
-							}
-*/						
+//							for(lead_number = 0; lead_number < total_leads; lead_number++) {
+//								if(leads[i][2] == true)
+//									selected_leads++;
+//							}
+						
 							//alert($scope.leads);
 							for(lead_number = 0; lead_number < total_leads; lead_number++) {
 								// for lead = lead_number, fetch profile for each id in people_search_ids
@@ -468,3 +727,4 @@ myApp.controller('footerCtrl', ['$scope', function($scope) {
 	
 }]);
 
+*/

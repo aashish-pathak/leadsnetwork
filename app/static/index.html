@@ -3,7 +3,6 @@
 <html ng-app="myApp">
 <head>
 	
-<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
 	<meta charset="utf-8">
 	<title>Leads' Network!</title>
 	
@@ -13,13 +12,9 @@
 	<script src="static/lib/angular/angular-cookies.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
-<!--<script src="bootstrap_js"></script>-->
 	<script src="static/js/app.js"></script>
-
-	<style type='text/css'>
-        
-    </style>
 	
+	<link rel="stylesheet" type="text/css" href="static/css/toast.css">
 	<link rel="stylesheet" type="text/css" href="static/css/bootswatch.css">
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.css">
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
@@ -55,123 +50,56 @@
 		HTTP Error. Unable to connect to server.
 		</p>
 	</div>
-	<!------------------->
 	
+	<!----------------------------------------------------------------->
 	
-	
-	
-	<div id="parent" ng-controller="parentCtrl">
-		<div class="login font" id="login" ng-controller="loginCtrl" ng-hide="is_old_user">
-			<form ng-submit="signIn()">
-				<center>
-				<img class="loginImage" src="static/img/login-icon.png">
-				<h1 class="h_login">Username</h1> <input type="text" name="username" ng-model="username" placeholder="LDAP Username" required><br>
-				<h1 class="h_login">Password</h1> <input type="password" name="password" ng-model="password" placeholder="LDAP Password" required><br><br>
-				<button class="btn btn-custom-signin"><i class="icon-large icon-linkedin"></i></button>
-				</center>
-			</form>
+	<div class="container" ng-controller="containerCtrl">
+		<div class="unit span-grid">
+			<button class="btn btn-custom-signin" style="background: transparent"><i class="icon-large icon-group"></i></button>
+			<span>Leads' Network</span>
+			<span class="btn-group" ng-show="is_logged_in" style="float: right">
+				<button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown" style="background: transparent">
+					<span class="glyphicon glyphicon-user"></span>
+					  <!--<span class="caret"></span>-->
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li style="cursor: pointer"><a ng-click="signOut()">Sign Out</a></li>
+				</ul>
+			</span>
+			<br><br><br><br>
 		</div>
 		
-		<div id="page" ng-controller="pageCtrl" ng-show="is_old_user">
-			<div id="header" ng-controller="headerCtrl">
-				<br>
-				<div class="header_contents">
-					<!--  
-				<span class="user_name">
-					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</span>
-					-->
-				<a style="color: hsl(195, 79%, 43%)" target="_new" href="http://www.gslab.com"><img src="static/img/gslab_logo.png" class="gslab_logo"/></a>
-				<span class="app_name" align="center"><a style="color: hsl(195, 79%, 43%)" href="reload()">Leads' Network!</a></span>
-				<!--
-				<span class="signout_button"><button class="btn btn-custom-signout" ng-click="signOut()">
-					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></span>	-->
+		<div class="unit span-grid" ng-hide="is_logged_in">
+			<form ng-submit="signIn()">
+				<center>
+					<img class="loginImage" src="static/img/login-icon.png"><br>
+					Username <input type="text" name="username" ng-model="username" placeholder="LDAP Username" required><br>
+					Password <input type="password" name="password" ng-model="password" placeholder="LDAP Password" required><br><br>
+					<button class="btn btn-custom-signin"><i class="icon-large icon-linkedin"></i></button>
+				</center>
+			</form>		
+		</div>
 
-					<!-- Dropdown logout link -->
-					<div class="settings_button user_button">
-						<span class="btn-group">
-						  <button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown">
-							  <span class="glyphicon glyphicon-user"></span>
-								{{name | uppercase}}  <span class="caret"></span>
-						  </button>
-						  <ul class="dropdown-menu" role="menu">
-							<li style="cursor: pointer"><a ng-click="signOut()">Sign Out</a></li>
-						  </ul>
-						</span>
-					</div>
-				</div>
+		<div class="unit span-grid" ng-show="is_logged_in">
+
+			<div id="searchForm" class="unit one-of-three" ng-hide="searching">
+				<form method='GET' ng-submit="theSearch()">
+					First Name
+					<input type="text" ng-model="fname" placeholder="First Name" required>
+					Lase Name
+					<input type="text" ng-model="lname" placeholder="Last Name" required>
+					Company Name
+					<input type="text" ng-model="cname" placeholder="Company Name">
+					
+					{{fname | uppercase}} {{lname | uppercase}}
+					<button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button>
+				</form>
 			</div>
 
-
-			<div id="wrapper" ng-controller="wrapperCtrl">
-				<div class="font" id="navigation" ng-controller="navigationCtrl">
-					<div class="navigation_contents">
-						<div class="search_form">
-						<form method='GET' ng-submit="people_search()">
-							
-							<h1 class="h1_navigation" align="center">First Name</h1>
-							<input class="input_navigation" type="text" ng-model="fname" placeholder="First Name" required>
-							
-							<h1 class="h1_navigation" align="center">Last Name</h1>
-							<input class="input_navigation" type="text" ng-model="lname" placeholder="Last Name" required>
-							
-							<h1 class="h1_navigation" align="center">Company Name</h1>
-							<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name">
-							
-							<p ng-show="fname"><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
-							<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
-						</form>
-						</div>
-						
-
-						<hr class="hr_style">
-						<div class="leads_info">
-							<div class="leads font">
-							<p align="center"><button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	Add Account</button><br></p>
-							<p align="center">
-								<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
-								<font size="5%">Leads</font>
-								<button class="btn btn-mini" ng-click="select_none()"><span class="icon icon-check-empty"></span></button>
-							</p>
-								<div class="leads_list">
-								<ul class="unstyled">
-									<li ng-repeat="lead in leads | orderBy:alphabetical">
-										<input type="checkbox" ng-model="lead[2]">
-										<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
-								</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="content_alt" ng-hide="fname">
-					
-				</div>
-				<div class="font" id="content" ng-controller="contentCtrl"  ng-show="fname">
-					<br><br>
-					
-					<div class="search_summary">
-					<button class="btn btn-custom-stop" ng-click="stop()">
-						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
-					<!--<p ng-show="fname">	Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>-->
-					<p ng-show="fname">	Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</p>
-					<!-- <p ng-show="fname">	Search results for {{fname | uppercase}} {{lname | uppercase}}.</p> -->
-					<!--<p ng-show="fname">Progress : {{progress}}</p>-->
-
-					</div>
-
-					<div class="results font" ng-show="fname">
-						
-							<!-- JQuery Dialog -->
-							<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
-								<p><span class="icon-large icon-group" style="float: left; margin: 0 7px 50px 0;"></span>
-								<b>The following connections are common with "{{fname}} {{lname}}" :</b></p>
-								<ol>
-									<li ng-repeat="c in common_connections"> {{c}} </li>
-								</ol>
-							</div>
-							<!------------------->
-							
+			<div id="results" class="unit two-of-three" ng-show="searching">
+				
+				
+				<button class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search Again</button>
 					<table class="table table-hover">
 						<tr class="table_header">
 							<td>Degree</td>
@@ -184,41 +112,36 @@
 							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
 						</tr>
 					</table>
-					</div>
-					
 
-<!--					<ol>
-						<p>All Connections : </p>
-						<li ng-repeat="connection in connections.all | orderBy:predicate:connection.distance">{{connection}}</li>
-					</ol>
--->
-
-<!--
-					<ol>
-						<p>First Degree Connections</p>
-						<li ng-repeat="connection in connections.first">{{connection}}</li>
-					</ol>
-					<ol>
-						<p>Second Degree Connections</p>
-						<li ng-repeat="connection in connections.second">{{connection}}</li>
-					</ol>	
-					<ol>
-						<p>Third Degree Connections</p>
-						<li ng-repeat="connection in connections.third">{{connection}}</li>
-					</ol>	
--->
-
-<!--					<p>Through lead {{lead_number}} : {{profile_data}}</p>-->
-				</div>
 			</div>
 			
-			<div id="footer" ng-controller="footerCtrl">
-				<br>
-				<p align="center" style="color:black">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.</p>
-			</div>
+		</div>
+
+		<div class="unit span-grid">
+			Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.
 		</div>
 
 	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!------------------------------------------------------------------->
+
+
+
 </body>
 
 </html>
