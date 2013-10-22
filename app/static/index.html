@@ -21,6 +21,7 @@
     </style>
 	
 	<link rel="stylesheet" type="text/css" href="static/css/bootswatch.css">
+	<link rel="stylesheet" type="text/css" href="static/css/toast.css">
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.css">
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
 	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
@@ -55,10 +56,7 @@
 		HTTP Error. Unable to connect to server.
 		</p>
 	</div>
-	<!------------------->
-	
-	
-	
+	<!------------------->	
 	
 	<div id="parent" ng-controller="parentCtrl">
 		<div class="login font" id="login" ng-controller="loginCtrl" ng-hide="is_old_user">
@@ -72,7 +70,7 @@
 			</form>
 		</div>
 		
-		<div id="page" ng-controller="pageCtrl" ng-show="is_old_user">
+		<div id="page" ng-controller="pageCtrl" ng-show="is_old_user" class="container">
 			<div id="header" ng-controller="headerCtrl">
 				<br>
 				<div class="header_contents">
@@ -102,8 +100,8 @@
 			</div>
 
 
-			<div id="wrapper" ng-controller="wrapperCtrl">
-				<div class="font" id="navigation" ng-controller="navigationCtrl">
+			<div id="wrapper" ng-controller="wrapperCtrl" class="grid">
+				<div class="font one-of-four" id="navigation" ng-controller="navigationCtrl">
 					<div class="navigation_contents">
 						<div class="search_form">
 						<form method='GET' ng-submit="people_search()">
@@ -144,10 +142,10 @@
 					</div>
 				</div>
 
-				<div id="content_alt" ng-hide="fname">
+				<div id="content_alt" ng-hide="fname" class="three-of-four">
 					
 				</div>
-				<div class="font" id="content" ng-controller="contentCtrl"  ng-show="fname">
+				<div class="font three-of-four" id="content" ng-controller="contentCtrl"  ng-show="fname">
 					<br><br>
 					
 					<div class="search_summary">
