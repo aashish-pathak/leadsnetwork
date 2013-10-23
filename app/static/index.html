@@ -30,7 +30,7 @@
 </head>
 
 <body>
-	
+
 	<!-- JQuery Dialogs -->
 	<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
 		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
@@ -55,11 +55,11 @@
 		HTTP Error. Unable to connect to server.
 		</p>
 	</div>
-	
+
 	<!----------------------------------------------------------------->
-	
-	<div class="container" ng-controller="containerCtrl">
-		<div class="unit span-grid">
+
+	<div ng-controller="mainCtrl">
+		<div id="header_div" class="fow-fluid" ng-show="show_always">
 			<button class="btn btn-custom-signin" style="background: transparent" ng-click="selectLeads()"><i class="icon-large icon-group"></i></button>
 			<span>Leads' Network</span>
 			<span class="btn-group" ng-show="is_logged_in" style="float: right">
@@ -73,8 +73,8 @@
 			</span>
 			<br><br><br><br>
 		</div>
-		
-		<div class="unit span-grid" ng-hide="is_logged_in">
+
+		<div id="login_div" class="fow-fluid" ng-hide="is_logged_in">
 			<form ng-submit="signIn()">
 				<center>
 					<img class="loginImage" src="static/img/login-icon.png"><br>
@@ -82,80 +82,66 @@
 					Password <input type="password" name="password" ng-model="password" placeholder="LDAP Password" required><br><br>
 					<button class="btn btn-custom-signin"><i class="icon-large icon-linkedin"></i></button>
 				</center>
-			</form>		
+			</form>
 		</div>
 
-		<div class="unit span-grid" ng-show="is_logged_in">
+		<div id="search_div" class="fow-fluid" ng-show="is_logged_in && show_search_form && !show_results && !show_leads">
+			<form method='GET' ng-submit="theSearch()">
+				First Name
+				<input type="text" ng-model="fname" placeholder="First Name" required><br>
+				Lase Name
+				<input type="text" ng-model="lname" placeholder="Last Name" required><br>
+				Company Name
+				<input type="text" ng-model="cname" placeholder="Company Name"><br>
+				
+				{{fname | uppercase}} {{lname | uppercase}}<br>
+				<button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button>
+			</form>
+		</div>
 
-			<div id="searchForm" class="unit one-of-three" ng-hide="searching">
-				<form method='GET' ng-submit="theSearch()">
-					First Name
-					<input type="text" ng-model="fname" placeholder="First Name" required><br>
-					Lase Name
-					<input type="text" ng-model="lname" placeholder="Last Name" required><br>
-					Company Name
-					<input type="text" ng-model="cname" placeholder="Company Name"><br>
-					
-					{{fname | uppercase}} {{lname | uppercase}}<br>
-					<button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button>
-				</form>
-			</div>
-
-			<div id="results" class="unit two-of-three" ng-show="searching">
-
+		<div id="results_div" class="fow-fluid" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+			<div id="results_header">
 				<button style="float:left" class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
+				Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}
 				<button style="float:right" class="btn btn-custom" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>		Stop</button>
-					<table class="table table-hover">
-						<tr class="table_header">
-							<td>Degree</td>
-							<td>Connected Through</td>
-							<td>Common Connections</td>
-						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first">
-							<td ng-click="view_profile(connection)">{{connection.distance}}</td>
-							<td ng-click="view_profile(connection)">{{connection.through}}</td>
-							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
-						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second">
-							<td ng-click="view_profile(connection)">{{connection.distance}}</td>
-							<td ng-click="view_profile(connection)">{{connection.through}}</td>
-							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
-						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third">
-							<td ng-click="view_profile(connection)">{{connection.distance}}</td>
-							<td ng-click="view_profile(connection)">{{connection.through}}</td>
-							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
-						</tr>
-					</table>
-
 			</div>
-			
+			<br><br>
+			<div id="results_table">
+				<table class="table table-hover">
+					<tr class="table_header">
+						<td>Degree</td>
+						<td>Connected Through</td>
+						<td>Common Connections</td>
+					</tr>
+					<tr ng-class="connection.row_type" ng-repeat="connection in connections.first">
+						<td ng-click="view_profile(connection)">{{connection.distance}}</td>
+						<td ng-click="view_profile(connection)">{{connection.through}}</td>
+						<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
+					</tr>
+					<tr ng-class="connection.row_type" ng-repeat="connection in connections.second">
+						<td ng-click="view_profile(connection)">{{connection.distance}}</td>
+						<td ng-click="view_profile(connection)">{{connection.through}}</td>
+						<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
+					</tr>
+					<tr ng-class="connection.row_type" ng-repeat="connection in connections.third">
+						<td ng-click="view_profile(connection)">{{connection.distance}}</td>
+						<td ng-click="view_profile(connection)">{{connection.through}}</td>
+						<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 
-		<div class="unit span-grid">
+		<div id="leads_div" class="fow-fluid" ng-show="is_logged_in && show_leads">
+			<p>I am leads div.</p>
+		</div>
+
+		<div id="footer_div" class="fow-fluid" ng-show="show_always">
 			Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.
 		</div>
-
-	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	</div>	
+	
 <!------------------------------------------------------------------->
-
-
 
 </body>
 

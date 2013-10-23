@@ -8,11 +8,19 @@
 
 var leadsApp = angular.module('myApp', ['ui.bootstrap', 'ngCookies']);
 
-leadsApp.controller('containerCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', function($scope, $rootScope, $http, $cookies, $window, $q) {
+
+
+
+leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', function($scope, $rootScope, $http, $cookies, $window, $q, $modal) {
+
+	$scope.show_always = true;
+	$scope.is_logged_in = false;
+	$scope.show_search_form = true;
+	$scope.show_results = false;
+	$scope.show_leads = false;
 
 	$scope.login_name = '';
 	$scope.login_password = '';
-	$scope.is_logged_in = false;
 	
 	$scope.ldap_name;
 
@@ -47,11 +55,43 @@ leadsApp.controller('containerCtrl', ['$scope', '$rootScope', '$http', '$cookies
 	};
 
 	/* ************************ Select Leads **************************/
+
+/*
 	$scope.selectLeads = function() {
 		alert("select leads");
+		var modalInstance = $modal.open({
+			templateUrl: 'myModalContent.html',
+			controller: ModalInstanceCtrl,
+				resolve: {
+					items: function () {
+					return $scope.leads_list;
+				}
+			}
+		});
+
+		modalInstance.result.then(function (selectedItem) {
+				$scope.selected = selectedItem;
+			}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
 	};
+	
+	var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
 
+		$scope.leads_list = items;
+		$scope.selected = {
+			item: $scope.leads_list[0]
+		};
 
+		$scope.ok = function () {
+			$modalInstance.close($scope.selected.item);
+		};
+
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+	};
+*/
 	/* *********************** Stop Requests **************************/
 
 	$scope.stopRequests = function() {
@@ -165,11 +205,14 @@ leadsApp.controller('containerCtrl', ['$scope', '$rootScope', '$http', '$cookies
 	$scope.signOut = function() {
 		// delete cookie
 		$cookies.leadsApp = '';
+		$scope.show_search_form = true;
+		$scope.show_results = false;
 	};
 
 	/* ************************ Search Again **************************/
 	$scope.searchAgain = function() {
-		$scope.searching = false;
+		$scope.show_search_form = true;
+		$scope.show_results = false;
 	};
 
 	/* ************************* The Search ***************************/
@@ -178,7 +221,6 @@ leadsApp.controller('containerCtrl', ['$scope', '$rootScope', '$http', '$cookies
 		// list of selected list must not be empty
 		if(!$scope.leads_empty) {
 			$scope.peopleSearch();
-			$scope.searching = true;
 		}
 		else {
 			alert("please select at least one lead..!");
@@ -222,6 +264,9 @@ leadsApp.controller('containerCtrl', ['$scope', '$rootScope', '$http', '$cookies
 	/* ********************** Find Connections ************************/
 
 	$scope.findConnections = function() {
+		$scope.show_search_form = false;
+		$scope.show_results = true;
+
 		// limit the number of calls to 25 if more....
 		var numResults = $scope.data.numResults;
 		if (numResults > 25)
@@ -280,13 +325,6 @@ leadsApp.controller('containerCtrl', ['$scope', '$rootScope', '$http', '$cookies
 		}
 	};
 }]);
-
-
-
-
-
-
-
 
 
 /*
