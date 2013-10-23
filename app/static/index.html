@@ -61,12 +61,12 @@
 		<!----------------------------------------------------------------->
 
 		<div id="header_div" class="fow-fluid" ng-show="show_always">
-			<button class="btn btn-custom-signin" style="background: transparent" ng-click="leadsDiv()"><i class="icon-large icon-group"></i></button>
+			<button class="btn btn-custom-signin" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+				<i class="icon-large icon-group"></i></button>
 			<span>Leads' Network</span>
 			<span class="btn-group" ng-show="is_logged_in" style="float: right">
 				<button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown" style="background: transparent">
-					<span class="glyphicon glyphicon-user"></span>
-					  <!--<span class="caret"></span>-->
+					<span class="glyphicon glyphicon-user"></span>	{{ldap_name | uppercase}}	<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
 					<li style="cursor: pointer"><a ng-click="signOut()">Sign Out</a></li>
@@ -135,12 +135,12 @@
 
 		<div id="leads_div" class="fow-fluid" ng-show="is_logged_in && show_leads">
 			<div id="leads_add_account_header">
-				<button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	New Account</button>
+				<button class="btn btn-custom" ng-click="addAccount()"><span class="icon-large icon-plus"></span>	Add Account</button>
 			</div>
 			<div id="leads_select_header">
-				<button class="btn btn-mini" ng-click="selectAll()"><span class="icon icon-check"></span>	Select All</button>
+				<button class="btn btn-mini" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
 				<span>Leads</span>
-				<button class="btn btn-mini" ng-click="selectNone()"><span class="icon icon-check-empty"></span>	Select None</button>
+				<button class="btn btn-mini" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
 			</div>
 			<div id="leads_list">
 				<ul class="unstyled">
@@ -150,8 +150,7 @@
 				</ul>
 			</div>
 			<div id="leads_decide_footer">
-				<button class="btn btn-custom" ng-click="selectOk()"><span class="icon-large icon-thumbs-up-alt"></span>	Ok</button>
-				<button class="btn btn-custom" ng-click="selectCancle()"><span class="icon-large icon-thumbs-down-alt"></span>	Cancel</button>
+				<button class="btn btn-custom" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
 			</div>
 		</div>
 

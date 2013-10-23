@@ -11,13 +11,15 @@ var leadsApp = angular.module('myApp', ['ui.bootstrap', 'ngCookies']);
 
 
 
-leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', function($scope, $rootScope, $http, $cookies, $window, $q, $modal) {
+leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', '$location', function($scope, $rootScope, $http, $cookies, $window, $q, $modal, $location) {
 
 	$scope.show_always = true;
 	$scope.is_logged_in = false;
 	$scope.show_search_form = true;
 	$scope.show_results = false;
 	$scope.show_leads = false;
+
+	$scope.homepage = 'http://localhost:5000/';
 
 	$scope.login_name = '';
 	$scope.login_password = '';
@@ -76,13 +78,43 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 
 	
-	$scope.selectOk = function() {
+	$scope.selectBack = function() {
 		$scope.show_leads = false;
 	};
 	
-	$scope.selectCancle = function() {
-		$scope.show_leads = false;		
+	/* ************************* Add Account **************************/
+	
+	$scope.addAccount = function() {
+
+		var add_account_url = "/add_account";
+		
+		$http({method:'GET', url:add_account_url})
+		.success(function(data, status, headers, config) {
+			$scope.linkedin_url = data;
+			$window.location.href = $scope.linkedin_url;
+		})
+		.error(function() {
+			$( "#add_account_http_error" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$(this).dialog( "close" );
+					}
+				}
+			});
+		});
 	};
+	
+	// reload after adding account
+	$scope.$watch(
+		function() {return $location.absUrl();},
+		function() {
+			if($location.absUrl().indexOf("#") != -1) {
+				$scope.goTo($scope.homepage);
+			}
+		}
+	);
+
 	/* *********************** Stop Requests **************************/
 
 	$scope.stopRequests = function() {
@@ -145,9 +177,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* *********************** Page Refresh ***************************/
 	
 	// reloads the entire page
-	$scope.refresh = function(url) {
+	$scope.goTo = function(url) {
 		if(url == 'reload')
 			$window.location.reload();
+		else
+			$window.location.href = url;
 	};
 
 	/* ************************** Sign In *****************************/
