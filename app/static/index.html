@@ -2,10 +2,12 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
 <head>
-	
-	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=2.0, width=device-width, height=device-height" charset="utf-8">
 	<title>Leads' Network!</title>
 	
+<!--	<script src="static/js/jquery-mobile.js" ></script>	-->
 	<script src="static/js/jquery.js" ></script>
 	<script src="static/js/jquery-ui-leads.js" ></script>
 	<script src="static/lib/angular/angular.js"></script>
@@ -14,17 +16,17 @@
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
 	<script src="static/js/app.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="static/css/toast.css">
-<!--	<link rel="stylesheet" type="text/css" href="static/css/bootswatch.css">-->
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.css">
-	<!-- twitter bootstrap -->
-	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
-	<!-- responsive -->
-	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
 	<!-- buttons -->
 	<link rel="stylesheet" type="text/css" href="static/css/style_bootstrap.css">
 	<!-- icons -->
 	<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.css">
+	<!-- responsive -->
+	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
+	<!-- twitter bootstrap -->
+	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
+	<!-- jquery mobile -->
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-mobile.css">
 	<!-- main css -->
 	<link rel="stylesheet" type="text/css" href="static/css/app.css">
 </head>
@@ -32,6 +34,8 @@
 <body>
 
 	<div ng-controller="mainCtrl">
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 		<!-- JQuery Dialogs -->
 		<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
@@ -59,103 +63,137 @@
 		</div>
 
 		<!----------------------------------------------------------------->
-
-		<div id="header_div" class="fow-fluid" ng-show="show_always">
-			<button class="btn btn-custom-signin" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+		
+		<div id="header_div" class="row-fluid center" ng-show="show_always">
+			
+			<center><span id="header_center">Leads' Network</span></center>
+			
+			<span id="header_left">
+				<button class="btn btn-custom-signin" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
 				<i class="icon-large icon-group"></i></button>
-			<span>Leads' Network</span>
-			<span class="btn-group" ng-show="is_logged_in" style="float: right">
+			</span>
+			
+			<span id="header_right">
+				<span class="btn-group" ng-show="is_logged_in" style="float: right">
 				<button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown" style="background: transparent">
 					<span class="glyphicon glyphicon-user"></span>	{{ldap_name | uppercase}}	<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
 					<li style="cursor: pointer"><a ng-click="signOut()">Sign Out</a></li>
 				</ul>
+				</span>
 			</span>
-			<br><br><br><br>
 		</div>
 
-		<div id="login_div" class="fow-fluid" ng-hide="is_logged_in">
-			<form ng-submit="signIn()">
+		<div id="main_div" class="center">
+			<div id="login_div" class="center" ng-hide="is_logged_in">
+				<form ng-submit="signIn()">
+					<center><img class="login_image" src="static/img/login-icon.png"><br><br></center>
+						<div class="span4 center">
+							<input type="text" class="form-control" name="username" ng-model="login_username" placeholder="LDAP Username" required>
+						</div>
+						<br>
+						<div class="span4 center">
+							<input type="password" class="form-control" name="password" ng-model="login_password" placeholder="LDAP Password" required>
+						</div>
+						<br>
+						<center><button class="btn btn-custom center"><i class="icon-large icon-linkedin"></i></button></center>
+				</form>
+			</div>
+
+			<div id="search_div" class="center" ng-show="is_logged_in && show_search_form && !show_results && !show_leads">
 				<center>
-					<img class="loginImage" src="static/img/login-icon.png"><br>
-					Username <input type="text" name="username" ng-model="username" placeholder="LDAP Username" required><br>
-					Password <input type="password" name="password" ng-model="password" placeholder="LDAP Password" required><br><br>
-					<button class="btn btn-custom-signin"><i class="icon-large icon-linkedin"></i></button>
+				<br>
+				<form method='GET' ng-submit="theSearch()">
+					 <br>
+					<input type="text" class="form-control" ng-model="fname" placeholder="First Name" required><br>
+					 <br>
+					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name" required><br>
+					 <br>
+					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br><br>
+					
+					{{fname | uppercase}} {{lname | uppercase}}<br><br>
+					<button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button>
+				</form>
 				</center>
-			</form>
-		</div>
+			</div>
 
-		<div id="search_div" class="fow-fluid" ng-show="is_logged_in && show_search_form && !show_results && !show_leads">
-			<form method='GET' ng-submit="theSearch()">
-				First Name
-				<input type="text" ng-model="fname" placeholder="First Name" required><br>
-				Lase Name
-				<input type="text" ng-model="lname" placeholder="Last Name" required><br>
-				Company Name
-				<input type="text" ng-model="cname" placeholder="Company Name"><br>
-				
-				{{fname | uppercase}} {{lname | uppercase}}<br>
-				<button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button>
-			</form>
-		</div>
+			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+				<div id="results_header">
+					<center>Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</center>
+					<button style="float:left" class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
+					<button style="float:right" class="btn btn-custom" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>		Stop</button>
+				</div>
+				<br><br>
+				<div id="results_table">					
+					<!-- JQuery Dialog -->
+					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
+						<p><span class="icon-large icon-group" style="float: left; margin: 0 7px 50px 0;"></span>
+						<b>The following connections are common with "{{fname}} {{lname}}" :</b></p>
+						<ul>
+							<li ng-repeat="c in common_connections"> {{c}} </li>
+						</ul>
+					</div>
+					<!------------------->
+					
+					<table class="table table-hover">
+						<tr>
+							<td>Degree</td>
+							<td>Connected Through</td>
+							<td>Common Connections</td>
+						</tr>
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first">
+							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
+							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
+							<td ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+						</tr>
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second">
+							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
+							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
+							<td ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+						</tr>
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third">
+							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
+							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
+							<td ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 
-		<div id="results_div" class="fow-fluid" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
-			<div id="results_header">
-				<button style="float:left" class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
-				Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}
-				<button style="float:right" class="btn btn-custom" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>		Stop</button>
+			<div id="leads_div" class="center" ng-show="is_logged_in && show_leads">
+				<br><br>
+				<center>
+				<div id="leads_add_account_header">
+					<button class="btn btn-custom" ng-click="addAccount()" style="width=100%" ><span class="icon-large icon-plus"></span>	Add Account</button>
+				</div>
+				<br><br>
+				<div id="leads_select_header" class="row-fluid">
+					<button style="float:left" class="btn btn-mini" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
+					<button style="float:right" class="btn btn-mini" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
+				</div>
+				<br><br><br><br>
+				</center>
+				<div id="leads_list">
+					<ul class="unstyled center">
+						<li ng-repeat="lead in leads_list | orderBy:alphabetical">
+							<input type="checkbox" ng-model="lead[2]">
+							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
+					</ul>
+				</div>
+				<center>
+				<br><br><br>
+				<div id="leads_decide_footer">
+					<button class="btn btn-custom" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
+				</div>
+				</center>
+				<br><br>
 			</div>
-			<br><br>
-			<div id="results_table">
-				<table class="table table-hover">
-					<tr class="table_header">
-						<td>Degree</td>
-						<td>Connected Through</td>
-						<td>Common Connections</td>
-					</tr>
-					<tr ng-class="connection.row_type" ng-repeat="connection in connections.first">
-						<td ng-click="view_profile(connection)">{{connection.distance}}</td>
-						<td ng-click="view_profile(connection)">{{connection.through}}</td>
-						<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
-					</tr>
-					<tr ng-class="connection.row_type" ng-repeat="connection in connections.second">
-						<td ng-click="view_profile(connection)">{{connection.distance}}</td>
-						<td ng-click="view_profile(connection)">{{connection.through}}</td>
-						<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
-					</tr>
-					<tr ng-class="connection.row_type" ng-repeat="connection in connections.third">
-						<td ng-click="view_profile(connection)">{{connection.distance}}</td>
-						<td ng-click="view_profile(connection)">{{connection.through}}</td>
-						<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
-					</tr>
-				</table>
-			</div>
-		</div>
 
-		<div id="leads_div" class="fow-fluid" ng-show="is_logged_in && show_leads">
-			<div id="leads_add_account_header">
-				<button class="btn btn-custom" ng-click="addAccount()"><span class="icon-large icon-plus"></span>	Add Account</button>
-			</div>
-			<div id="leads_select_header">
-				<button class="btn btn-mini" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
-				<span>Leads</span>
-				<button class="btn btn-mini" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
-			</div>
-			<div id="leads_list">
-				<ul class="unstyled">
-					<li ng-repeat="lead in leads_list | orderBy:alphabetical">
-						<input type="checkbox" ng-model="lead[2]">
-						<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
-				</ul>
-			</div>
-			<div id="leads_decide_footer">
-				<button class="btn btn-custom" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
-			</div>
 		</div>
-
-		<div id="footer_div" class="fow-fluid" ng-show="show_always">
-			Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.
+		<div id="footer_div" class="center" ng-show="show_always">
+			<div class="span6 center" style="text-align:center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.
+			</div>
 		</div>
 	</div>	
 	

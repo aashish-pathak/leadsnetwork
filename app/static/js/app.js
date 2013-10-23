@@ -21,7 +21,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	$scope.homepage = 'http://localhost:5000/';
 
-	$scope.login_name = '';
+	$scope.login_username = '';
 	$scope.login_password = '';
 	
 	$scope.ldap_name;
@@ -39,6 +39,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.connections.first=[];
 	$scope.connections.second=[];
 	$scope.connections.third=[];
+	$scope.common_connections = [];
 	
 	$scope.canceler = [];
 
@@ -191,8 +192,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var login_url = "/login";
 		
 		var post_data = new Object();
-		post_data.username = $scope.username;
-		post_data.password = $scope.password;
+		post_data.username = $scope.login_username;
+		post_data.password = $scope.login_password;
 		
 		var content_type = 'application/x-www-form-urlencoded';
 
@@ -229,10 +230,24 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	$scope.signOut = function() {
 		// delete cookie
-		$cookies.leadsApp = '';
+		delete $cookies.leadsApp;
 		$scope.show_search_form = true;
 		$scope.show_results = false;
 		$scope.show_leads = false;
+		
+		$scope.login_username = '';
+		$scope.login_password = '';
+		$scope.fname = '';
+		$scope.lname = '';
+		$scope.cname = '';
+		$scope.connections = {};		
+		
+		// stop pending http requests
+		$rootScope.safeApply(function() {
+			for(var i=0;i<$scope.canceler.length;i++)
+				$scope.canceler[i].resolve();
+		});
+
 	};
 
 	/* ************************ Search Again **************************/
@@ -350,6 +365,46 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			}
 		}
 	};
+	
+	/* ************************* View Profile *************************/
+	
+	$scope.viewProfile = function (connection) {
+		window.$windowScope = $scope;
+		window.open(connection.publicProfileUrl,
+					'frame',
+					'resizeable,top=200,left=200,height=500,width=700');
+	};
+	
+	/* ********************** View Connections ************************/
+
+	$scope.viewConnections = function (connection) {
+		$scope.common_connections = [];
+		var count = connection.relationToViewer.connections._total;
+		if(count > 10)
+			count = 10;
+			
+		for(var i=0; i<count; i++) {
+			var first_name = connection.relationToViewer.connections.values[i].person.firstName;
+			var last_name = connection.relationToViewer.connections.values[i].person.lastName;
+			if(first_name != "private" || last_name != "private")
+				$scope.common_connections.push(first_name + " " + last_name);
+		}
+
+		if($scope.common_connections.length == 0)
+			alert("Names of common connections are private!");
+		else {
+			$( "#common_connections" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$(this).dialog( "close" );
+					}
+				}
+			});
+		}
+	};
+	
+
 }]);
 
 
