@@ -24,7 +24,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	$scope.ldap_name;
 
-	$scope.leads_list = '';
+	$scope.leads_list = [];
 	$scope.leads_empty = false;
 	$scope.selected_leads_count = 0;
 	
@@ -56,42 +56,33 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ************************ Select Leads **************************/
 
-/*
-	$scope.selectLeads = function() {
-		alert("select leads");
-		var modalInstance = $modal.open({
-			templateUrl: 'myModalContent.html',
-			controller: ModalInstanceCtrl,
-				resolve: {
-					items: function () {
-					return $scope.leads_list;
-				}
-			}
-		});
+	$scope.leadsDiv = function() {
+		// check for multiple clicks and copy after first click only
+		if(!$scope.show_leads) {
+			
+		}
 
-		modalInstance.result.then(function (selectedItem) {
-				$scope.selected = selectedItem;
-			}, function () {
-			$log.info('Modal dismissed at: ' + new Date());
-		});
+		$scope.show_leads = true;
 	};
 	
-	var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
-
-		$scope.leads_list = items;
-		$scope.selected = {
-			item: $scope.leads_list[0]
-		};
-
-		$scope.ok = function () {
-			$modalInstance.close($scope.selected.item);
-		};
-
-		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
-		};
+	$scope.selectAll = function() {
+		for(var i=0;i<$scope.leads_list.length;i++)
+			$scope.leads_list[i][2] = true;
 	};
-*/
+	
+	$scope.selectNone = function() {
+		for(var i=0;i<$scope.leads_list.length;i++)
+			$scope.leads_list[i][2] = false;		
+	};
+
+	
+	$scope.selectOk = function() {
+		$scope.show_leads = false;
+	};
+	
+	$scope.selectCancle = function() {
+		$scope.show_leads = false;		
+	};
 	/* *********************** Stop Requests **************************/
 
 	$scope.stopRequests = function() {
@@ -207,6 +198,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$cookies.leadsApp = '';
 		$scope.show_search_form = true;
 		$scope.show_results = false;
+		$scope.show_leads = false;
 	};
 
 	/* ************************ Search Again **************************/
