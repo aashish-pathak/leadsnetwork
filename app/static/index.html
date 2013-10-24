@@ -150,23 +150,22 @@
 							<td>Connected Through</td>
 							<td>Common Connections</td>
 						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first">
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'">
 							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
 							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
 							<td ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
 						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second">
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second | orderBy:'-relationToViewer.connections._total'">
 							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
 							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
 							<td ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
 						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third">
+						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third | orderBy:'-relationToViewer.connections._total'">
 							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
 							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
 							<td ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
 						</tr>
 					</table>
-					<br><br>
 				</div>
 				<div id="results_footer">
 					<button class="btn btn-blue" ng-click="goBack()" style="display: block; width: 100%;"><span class="icon-large icon-mail-reply"></span>	Back</button>
@@ -189,7 +188,7 @@
 				</center>
 				<div id="leads_list">
 					<ul class="unstyled center">
-						<li ng-repeat="lead in leads_list | orderBy:alphabetical">
+						<li ng-repeat="lead in leads_list">
 							<input type="checkbox" ng-model="lead[2]">
 							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
 					</ul>
@@ -205,6 +204,7 @@
 
 		</div>
 		<div id="footer_div" class="center" ng-show="show_always">
+			<br>
 			<div class="span6 center" style="text-align:center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.
 			</div>
 		</div>

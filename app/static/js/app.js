@@ -164,7 +164,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* *********************** Return Leads ***************************/
 
 	// compare between two string (needed for alphabetical sorting)
-	$scope.comparator = function(a,b) {
+	$scope.comparatorAlphabetical = function(a,b) {
 		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
 		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
 		return 0;
@@ -180,7 +180,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			for(var i=0; i<$scope.leads_list.length;i++)
 				$scope.leads_list[i][2] = true;
 				
-			$scope.leads_list = $scope.leads_list.sort($scope.comparator);
+			$scope.leads_list = $scope.leads_list.sort($scope.comparatorAlphabetical);
 		});
 	};
 	
@@ -369,6 +369,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 					if(data.distance <= 3) {
 						if(data.distance == 1)
 							$scope.connections.first.push(data);
+							console.log(data);
 						if(data.distance == 2)
 							$scope.connections.second.push(data);
 						if(data.distance == 3)
@@ -409,6 +410,22 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.createDialog("#common_connections");
 		}
 	};
+
+
+
+	/* ********************** Sort Connections ************************/
+
+	// create a watch on result list and sort whenever it changes
 	
+	// compare between two numbers (needed for numerical sorting)
+	$scope.comparatorNumerical = function(a,b) {
+		if (a < b) return -1;
+		if (a > b) return 1;
+		return 0;
+	};
+
+	$scope.sortConnections = function (connections) {
+		//connections = connections.sort($scope.comparatorNumerical);
+	};
 
 }]);
