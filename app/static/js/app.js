@@ -369,7 +369,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 					if(data.distance <= 3) {
 						if(data.distance == 1)
 							$scope.connections.first.push(data);
-							console.log(data);
 						if(data.distance == 2)
 							$scope.connections.second.push(data);
 						if(data.distance == 3)
