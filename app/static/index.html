@@ -3,8 +3,7 @@
 <html ng-app="leadsApp">
 <head>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=2.0, width=device-width, height=device-height" charset="utf-8">
+	<meta name="viewport" content="user-scalable=0, width=device-width, height=device-height" charset="utf-8">
 	<title>Leads' Network!</title>
 	
 <!--	<script src="static/js/jquery-mobile.js" ></script>	-->
@@ -28,16 +27,13 @@
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
 	<!-- main css -->
 	<link rel="stylesheet" type="text/css" href="static/css/app.css">
+
+	
 </head>
 
 <body>
 	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$.backstretch("/static/img/gradient_wall.jpg");
-		});
-	</script>
-
+<!--	<img id="background_image" src="/static/img/wooden_wall.jpg">    -->
 
 	<div ng-controller="mainCtrl">
 
@@ -95,11 +91,11 @@
 				<form ng-submit="signIn()">
 					<center><img class="login_image" src="static/img/login-icon.png"><br><br></center>
 						<div class="span4 center">
-							<input type="text" class="center form-control max_width_element" name="username" ng-model="login_username" placeholder="LDAP Username" required>
+							<input type="text" class="center form-control input" name="username" ng-model="login_username" placeholder="LDAP Username" required>
 						</div>
 						<br>
 						<div class="span4 center">
-							<input type="password" class="center form-control max_width_element" name="password" ng-model="login_password" placeholder="LDAP Password" required>
+							<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="LDAP Password" required>
 						</div>
 						<br>
 						<center><button class="btn btn-red center">
@@ -112,14 +108,14 @@
 				<br>
 				<form method='GET' ng-submit="theSearch()">
 					 <br>
-					<input type="text" class="form-control max_width_element" ng-model="fname" placeholder="First Name" required><br>
+					<input type="text" class="form-control" ng-model="fname" placeholder="First Name" required><br>
 					 <br>
-					<input type="text" class="form-control max_width_element" ng-model="lname" placeholder="Last Name" required><br>
+					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name" required><br>
 					 <br>
-					<input type="text" class="form-control max_width_element" ng-model="cname" placeholder="Company Name"><br><br>
-					
-					{{fname | uppercase}} {{lname | uppercase}}<br><br>
-					<button class="btn btn-blue max_width_element" style="display: block; width: 100%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
+					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br><br>
+					<span style="color: white">
+					{{fname | uppercase}} {{lname | uppercase}}</span><br><br>
+					<button class="btn btn-blue" style="display: block; width: 100%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
 				</form>
 				</center>
 			</div>
@@ -127,9 +123,9 @@
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 				<div id="results_header">
 					<br>
-					<div class="well well-sm" style="background: transparent">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</b></div>
+					<div id="no_of_users" class="well well-sm" style="background: transparent">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</b></div>
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
-					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button>
+					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
 				</div>
 				<br><br>
 				<div id="results_table">					
@@ -196,7 +192,7 @@
 				<center>
 				<br>
 				<div id="leads_decide_footer">
-					<button class="btn btn-blue" ng-click="selectBack()" style="display: block; width: 100%;"><span class="icon-large icon-mail-reply"></span>	Back</button>
+					<button style="display: block; width: 100%;" class="btn btn-blue" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
 				</div>
 				</center>
 				<br><br>
@@ -207,12 +203,13 @@
 			<br>
 			<div class="span6 center" style="text-align:center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.
 			</div>
+			<br>
 		</div>
 	</div>
 	</div>
 	
 <!------------------------------------------------------------------->
-
+</img>
 </body>
 
 </html>

@@ -13,6 +13,7 @@ var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies']);
 
 leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', '$location', function($scope, $rootScope, $http, $cookies, $window, $q, $modal, $location) {
 
+
 	$scope.show_always = true;
 	$scope.is_logged_in = false;
 	$scope.show_search_form = true;
