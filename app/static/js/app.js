@@ -153,6 +153,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.canceler = [];
 	};
 
+	/* ************************** Go Back *****************************/
+
+	$scope.goBack = function() {
+		$scope.stopRequests();
+		$scope.searchAgain();
+	};
+
 
 	/* *********************** Return Leads ***************************/
 
