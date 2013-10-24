@@ -1,6 +1,6 @@
 <!-- Leads' Network : index.html -->
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="leadsApp">
 <head>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,7 @@
 	
 <!--	<script src="static/js/jquery-mobile.js" ></script>	-->
 	<script src="static/js/jquery.js" ></script>
+	<script src="static/js/jquery-backstretch.js" ></script>
 	<script src="static/js/jquery-ui-leads.js" ></script>
 	<script src="static/lib/angular/angular.js"></script>
 	<script src="static/lib/angular/angular-cookies.js"></script>
@@ -30,6 +31,13 @@
 </head>
 
 <body>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$.backstretch("/static/img/gradient_wall.jpg");
+		});
+	</script>
+
 
 	<div ng-controller="mainCtrl">
 

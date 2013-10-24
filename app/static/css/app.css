@@ -1,5 +1,5 @@
 body {
-	background-image:url('/static/img/gradient_wall.jpg');
+/*	background-image:url('/static/img/gradient_wall.jpg');  */
 	background-repeat:no-repeat;
 	background-size:cover;
 	background-position:fixed;
@@ -94,5 +94,5 @@ tr:first-child:hover {
 }
 
 #footer_div {
-	color: white;
+	color: black;
 }
