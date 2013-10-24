@@ -5,6 +5,7 @@ body {
 	background-position:fixed;
 	height: 100%;
 	width: 100%;
+	font-family: 'Questrial',sans-serif;
 }
 
 .center {
@@ -34,9 +35,11 @@ body {
 
 tr:hover {
     background-color: black;
+    cursor: pointer;
 }
 tr:first-child:hover {
     background-color: transparent;
+    cursor: default;
 }
 
 /* DIVs : header, footer, login, search, results, leads */

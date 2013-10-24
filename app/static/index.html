@@ -126,7 +126,8 @@
 
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 				<div id="results_header">
-					<center>Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</center><br>
+					<br>
+					<div class="well well-sm" style="background: transparent">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</b></div>
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
 					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button>
 				</div>
