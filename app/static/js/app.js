@@ -42,9 +42,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	$scope.canceler = [];
 	
+	$scope.progressBar = {};
 	$scope.progress = 0;
 	$scope.total_xhr = 0;
 	$scope.current_xhr = 0;
+	$scope.progressBar.value = 0;
+	$scope.progressBar.type = 'danger';
 
 	/* ************************* Safe Apply ***************************/
 
@@ -149,8 +152,14 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	$scope.stopRequests = function() {
 		$scope.safeApply(function() {
+			
+			// abort requests
 			for(var i=0;i<$scope.canceler.length;i++)
 				$scope.canceler[i].resolve();
+				
+			// complete progress
+			$scope.progress = 100;
+			$scope.setProgressBar();							
 		});
 		
 		$scope.canceler = [];
@@ -352,7 +361,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 		// find total number of http requests
 		$scope.total_xhr = $scope.calculateTotalCalls();
-		alert("total calls : " + $scope.total_xhr);
 
 		for(lead_number = 0; lead_number < total_leads; lead_number++) {
 			for(var i=0;i<numResults;i++) {
@@ -379,6 +387,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 					$scope.safeApply(function() {
 						$scope.current_xhr++;
 						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
+						$scope.setProgressBar();						
 					});
 
 					if(data.distance >= 1 && data.distance <=3)
@@ -452,8 +461,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				selected_leads++;
 		}
 		
-		alert("selected leads: " + selected_leads);
-		
 		var numResults = $scope.data.numResults;
 		if (numResults > 25)
 			numResults = 25;
@@ -461,4 +468,26 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		return selected_leads * numResults;
 	};
 
+	/* ************************* Progress Bar *************************/
+
+	$scope.setProgressBar = function() {
+		
+		var value = $scope.progress;
+
+		if (value < 25) {
+		  type = 'danger';
+		} else if (value < 50) {
+		  type = 'warning';
+		} else if (value < 75) {
+		  type = 'info';
+		} else {
+		  type = 'success';
+		}
+
+		$scope.progressBar = {
+			value: value,
+			type: type
+		};
+
+	};
 }]);

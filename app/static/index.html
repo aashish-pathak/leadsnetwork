@@ -23,7 +23,7 @@
 	<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.css">
 	<!-- responsive -->
 	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
-	<!-- twitter bootstrap -->
+	<!-- twitter bootstrap 3.0-->
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
 	<!-- main css -->
 	<link rel="stylesheet" type="text/css" href="static/css/app.css">
@@ -123,7 +123,9 @@
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 				<div id="results_header">
 					<br>
-					<div id="no_of_users" class="well well-sm" style="background: transparent">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}. Progress (in percentage) : {{progress}}</b></div>
+					<div id="no_of_users" class="well well-sm" style="background: transparent">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}. </b></div>
+					<progress percent="progressBar" class="progress-striped active"></progress>
+					
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
 					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
 				</div>
