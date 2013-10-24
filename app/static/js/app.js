@@ -9,8 +9,6 @@
 var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies']);
 
 
-
-
 leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', '$location', function($scope, $rootScope, $http, $cookies, $window, $q, $modal, $location) {
 
 
@@ -43,6 +41,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.common_connections = [];
 	
 	$scope.canceler = [];
+	
+	$scope.progress = 0;
+	$scope.total_xhr = 0;
+	$scope.current_xhr = 0;
 
 	/* ************************* Safe Apply ***************************/
 
@@ -318,10 +320,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* ********************** Find Connections ************************/
 
-	$scope.findConnections = function() {
+	$scope.findConnections = function() {		
+		
 		$scope.show_search_form = false;
 		$scope.show_results = true;
 
+		$scope.progress = 0;
+		$scope.total_xhr = 0;
+		$scope.current_xhr = 0;
+		
 		// limit the number of calls to 25 if more....
 		var numResults = $scope.data.numResults;
 		if (numResults > 25)
@@ -343,6 +350,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.connections.third=[];
 		var lead_number=1;
 
+		// find total number of http requests
+		$scope.total_xhr = $scope.calculateTotalCalls();
+		alert("total calls : " + $scope.total_xhr);
+
 		for(lead_number = 0; lead_number < total_leads; lead_number++) {
 			for(var i=0;i<numResults;i++) {
 				
@@ -360,8 +371,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				profile_id = $scope.people_search_ids[i];
 				fetch_profile_url = "/fetch_profile?lead_number=" + lead_number_str + "&profile_id=" + profile_id;
 				
+				// calculate progress before each http request
+				
 				$http({method:'GET', url:fetch_profile_url, timeout: $scope.canceler[i].promise})
 				.success(function(data) {
+					
+					$scope.safeApply(function() {
+						$scope.current_xhr++;
+						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
+					});
+
 					if(data.distance >= 1 && data.distance <=3)
 					{
 						$scope.connections.all.push(data);
@@ -424,8 +443,22 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		return 0;
 	};
 
-	$scope.sortConnections = function (connections) {
-		//connections = connections.sort($scope.comparatorNumerical);
+	/* ********************** Calculate Progress **********************/
+	$scope.calculateTotalCalls = function() {
+		
+		var selected_leads = 0;
+		for(var i = 0; i < $scope.leads_list.length; i++){
+			if($scope.leads_list[i][2] == true)
+				selected_leads++;
+		}
+		
+		alert("selected leads: " + selected_leads);
+		
+		var numResults = $scope.data.numResults;
+		if (numResults > 25)
+			numResults = 25;
+		
+		return selected_leads * numResults;
 	};
 
 }]);

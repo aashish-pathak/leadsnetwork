@@ -123,7 +123,7 @@
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 				<div id="results_header">
 					<br>
-					<div id="no_of_users" class="well well-sm" style="background: transparent">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</b></div>
+					<div id="no_of_users" class="well well-sm" style="background: transparent">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}. Progress (in percentage) : {{progress}}</b></div>
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
 					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
 				</div>
@@ -182,13 +182,16 @@
 				</div>
 				<br><br>
 				</center>
+				
 				<div id="leads_list">
 					<ul class="unstyled center">
+						
 						<li ng-repeat="lead in leads_list">
-							<input type="checkbox" ng-model="lead[2]">
-							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
+							<label><input type="checkbox" ng-model="lead[2]">
+							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</label></li>
 					</ul>
 				</div>
+				
 				<center>
 				<br>
 				<div id="leads_decide_footer">

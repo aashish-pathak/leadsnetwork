@@ -53,6 +53,14 @@ body {
 	color: white;
 }
 
+.true {
+	background: transparent;
+}
+
+.false {
+
+}
+
 /*
 tr.t1 td {
 	background-color: #009ACD;
