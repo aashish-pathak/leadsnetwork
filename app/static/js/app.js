@@ -80,7 +80,19 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	
 	$scope.selectBack = function() {
-		$scope.show_leads = false;
+		// check that at least one lead is selected
+		var none = true;
+		for(var i=0;i<$scope.leads_list.length;i++) {
+			if($scope.leads_list[i][2] == true) {
+				none = false;
+				break;
+			}
+		}
+		
+		if( none == true)
+			alert("Please select at least one lead !");
+		else
+			$scope.show_leads = false;
 	};
 	
 	/* ************************* Add Account **************************/

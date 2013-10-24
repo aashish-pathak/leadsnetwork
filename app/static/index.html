@@ -25,8 +25,6 @@
 	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
 	<!-- twitter bootstrap -->
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
-	<!-- jquery mobile -->
-	<link rel="stylesheet" type="text/css" href="static/css/jquery-mobile.css">
 	<!-- main css -->
 	<link rel="stylesheet" type="text/css" href="static/css/app.css">
 </head>
@@ -34,8 +32,6 @@
 <body>
 
 	<div ng-controller="mainCtrl">
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 		<!-- JQuery Dialogs -->
 		<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
@@ -64,18 +60,19 @@
 
 		<!----------------------------------------------------------------->
 		
+		<div id="container_div">
 		<div id="header_div" class="row-fluid center" ng-show="show_always">
 			
 			<center><span id="header_center">Leads' Network</span></center>
 			
 			<span id="header_left">
-				<button class="btn btn-custom-signin" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+				<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
 				<i class="icon-large icon-group"></i></button>
 			</span>
 			
 			<span id="header_right">
 				<span class="btn-group" ng-show="is_logged_in" style="float: right">
-				<button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown" style="background: transparent">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background: transparent">
 					<span class="glyphicon glyphicon-user"></span>	{{ldap_name | uppercase}}	<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
@@ -97,7 +94,8 @@
 							<input type="password" class="form-control" name="password" ng-model="login_password" placeholder="LDAP Password" required>
 						</div>
 						<br>
-						<center><button class="btn btn-custom center"><i class="icon-large icon-linkedin"></i></button></center>
+						<center><button class="btn btn-red center">
+							<i class="icon-large icon-linkedin"></i></button></center>
 				</form>
 			</div>
 
@@ -106,23 +104,23 @@
 				<br>
 				<form method='GET' ng-submit="theSearch()">
 					 <br>
-					<input type="text" class="form-control" ng-model="fname" placeholder="First Name" required><br>
+					<input type="text" class="form-control max_width_element" ng-model="fname" placeholder="First Name" required><br>
 					 <br>
-					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name" required><br>
+					<input type="text" class="form-control max_width_element" ng-model="lname" placeholder="Last Name" required><br>
 					 <br>
-					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br><br>
+					<input type="text" class="form-control max_width_element" ng-model="cname" placeholder="Company Name"><br><br>
 					
 					{{fname | uppercase}} {{lname | uppercase}}<br><br>
-					<button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button>
+					<button class="btn btn-blue max_width_element" style="display: block; width: 100%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
 				</form>
 				</center>
 			</div>
 
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 				<div id="results_header">
-					<center>Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</center>
-					<button style="float:left" class="btn btn-custom" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
-					<button style="float:right" class="btn btn-custom" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>		Stop</button>
+					<center>Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</center><br>
+					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
+					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button>
 				</div>
 				<br><br>
 				<div id="results_table">					
@@ -130,14 +128,14 @@
 					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
 						<p><span class="icon-large icon-group" style="float: left; margin: 0 7px 50px 0;"></span>
 						<b>The following connections are common with "{{fname}} {{lname}}" :</b></p>
-						<ul>
+						<ol>
 							<li ng-repeat="c in common_connections"> {{c}} </li>
-						</ul>
+						</ol>
 					</div>
 					<!------------------->
 					
-					<table class="table table-hover">
-						<tr>
+					<table class="table">
+						<tr class="tr_th">
 							<td>Degree</td>
 							<td>Connected Through</td>
 							<td>Common Connections</td>
@@ -158,6 +156,7 @@
 							<td ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
 						</tr>
 					</table>
+					<br><br>
 				</div>
 			</div>
 
@@ -165,14 +164,14 @@
 				<br><br>
 				<center>
 				<div id="leads_add_account_header">
-					<button class="btn btn-custom" ng-click="addAccount()" style="width=100%" ><span class="icon-large icon-plus"></span>	Add Account</button>
+					<button class="btn btn-blue full-button" ng-click="addAccount()" style="display: block; width: 100%;"><span class="icon-large icon-plus"></span>	Add Account</button>
+				</div>
+				<br>
+				<div id="leads_select_header" class="row-fluid">
+					<button style="float: left; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
+					<button style="float: right; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
 				</div>
 				<br><br>
-				<div id="leads_select_header" class="row-fluid">
-					<button style="float:left" class="btn btn-mini" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
-					<button style="float:right" class="btn btn-mini" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
-				</div>
-				<br><br><br><br>
 				</center>
 				<div id="leads_list">
 					<ul class="unstyled center">
@@ -182,9 +181,9 @@
 					</ul>
 				</div>
 				<center>
-				<br><br><br>
+				<br>
 				<div id="leads_decide_footer">
-					<button class="btn btn-custom" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
+					<button class="btn btn-blue" ng-click="selectBack()" style="display: block; width: 100%;"><span class="icon-large icon-mail-reply"></span>	Back</button>
 				</div>
 				</center>
 				<br><br>
@@ -195,7 +194,8 @@
 			<div class="span6 center" style="text-align:center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.
 			</div>
 		</div>
-	</div>	
+	</div>
+	</div>
 	
 <!------------------------------------------------------------------->
 
