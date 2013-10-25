@@ -256,18 +256,18 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			
 			// unsuccessful login
 			else if($scope.login_response.response == false){
-				alert($scope.login_response.name);
+				var error = $scope.login_response.name;
+				if(error == 'Invalid Username!')
+					$scope.createDialog("#invalid_username");
+				else if(error == 'Invalid Password!')
+					$scope.createDialog("#invalid_password");
+				else
+					alert($scope.login_response.name);
+				
 			}
 		})
 		.error(function() {
-				$( "#http_error" ).dialog({
-				modal: true,
-				buttons: {
-					Ok: function() {
-						$(this).dialog( "close" );
-					}
-				}
-			});
+				$scope.createDialog("#http_error");
 		});
 	};
 
@@ -298,7 +298,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************ Search Again **************************/
 	$scope.searchAgain = function() {
 		$scope.show_search_form = true;
-		$scope.show_results = false;
+		$scope.show_results = false;		
+		$scope.resetProgressBar();
 	};
 
 	/* ************************* The Search ***************************/
@@ -490,4 +491,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		};
 
 	};
+	
+	/* ********************* Reset ProgressBar ************************/
+	
+	$scope.resetProgressBar = function() {
+		$scope.safeApply(function() {
+			
+			// reset progress
+			$scope.progress = 0;
+			$scope.setProgressBar();							
+		});
+	};
+	
 }]);

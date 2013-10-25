@@ -1,25 +1,9 @@
 body {
-	background-image:url('/static/img/repeatable.jpg');
+	background-image:url('/static/img/linkedin_background.png');
 	background-color: #f1f1f1;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: relative;
-
-	height: 100%;
-	width: 100%;
-	
+	background-position: fixed;
+	background-size: 100px, 100px;
 	font-family: 'Questrial',sans-serif;
-}
-
-#background_image {
-	position:absolute;
-	left:0px;
-	top:0px;
-	min-height:10000px;
-	min-width:10000px;
-	height: 100%;
-	width: 100%;
-	z-index:-1;
 }
 
 .center {
@@ -50,7 +34,7 @@ body {
 
 .tr_th {
 	font-weight: bold;
-	color: white;
+	/*color: white;*/
 }
 
 .true {
@@ -78,11 +62,13 @@ tr.t3 td {
 }
 */
 tr:hover {
-    background-color: black;
+    background-color: #BBBBBB;
+    
     cursor: pointer;
 }
 tr:first-child:hover {
     background-color: transparent;
+    color: black;
     cursor: default;
 }
 
@@ -90,22 +76,30 @@ tr:first-child:hover {
 
 #container_div {
 	background: transparent;
-	color: white;
+	color: black;
 }
 
 #header_div {
+	background: -moz-linear-gradient(center top , #555555 0%, #515151 18%, #373737 85%, #333333 100%) repeat scroll 0 0 #333333;
+
 	height: auto;
-	min-height: 60px;
-	max-height: 60px;
+
+	
+position: fixed;
+top: 0;
+left: 0;
+z-index: 999;
+box-shadow: 5px 5px 5px #888888;
 }
 
 #header_left {
 	float: left;
-	max-width: 30%;
+	max-width: 30%
 }
 
 #header_center {
-	max-width: 30%;
+
+	text-align: center;
 }
 
 #header_right {
@@ -130,9 +124,11 @@ tr:first-child:hover {
 	max-width: 95%;
 }
 
+/*
 #no_of_users {
 	color: white;
 }
+*/
 
 #leads_div {
 
@@ -145,7 +141,7 @@ tr:first-child:hover {
 }
 
 #footer_div {
-	color: white;
+
 }
 
 /******************** PROGRESS BAR ********************/
