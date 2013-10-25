@@ -80,12 +80,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************ Select Leads **************************/
 
 	$scope.leadsDiv = function() {
-		// check for multiple clicks and copy after first click only
-		if(!$scope.show_leads) {
-			
-		}
-
-		$scope.show_leads = true;
+		// $scope.show_leads = true;
+		$scope.show_leads = !$scope.show_leads;
 	};
 	
 	$scope.selectAll = function() {

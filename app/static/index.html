@@ -84,7 +84,6 @@
 			Leads' Network
 		</div>
 
-
 		<div id="header_left" class="span3">
 			<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
 			<i class="icon-large icon-group" style="color: #BBBBBB"></i></button>
@@ -92,6 +91,7 @@
 
 		<div id="header_right" class="span3">
 			<span class="btn-group" ng-show="is_logged_in" style="float: right">
+			<span class="glyphicon glyphicon-user" style="color: #BBBBBB"></span>
 			<a class="dropdown-toggle" style="cursor: pointer; color: #BBBBBB">{{ldap_name | uppercase}}</a>
 			<ul class="dropdown-menu" role="menu">
 				<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
@@ -184,7 +184,7 @@
 					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
 				</div>
 				<br><br>
-				<div id="results_table">					
+				<div id="results_table" style="background: #CCCCCC">					
 				
 					<!-- JQuery Dialog -->
 					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
@@ -196,7 +196,7 @@
 					</div>
 					<!------------------->
 					
-					<table class="table">
+					<table class="table myTable">
 						<tr class="tr_th">
 							<td>Degree</td>
 							<td>Connected Through</td>
