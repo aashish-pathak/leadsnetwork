@@ -36,6 +36,10 @@ body {
 	font-weight: bold;
 }
 
+td {
+	text-align: center;
+}
+
 /*
 tr.t1 td {
 	background-color: #009ACD;
@@ -121,7 +125,7 @@ box-shadow: 5px 5px 5px #888888;
 */
 
 #leads_div {
-
+	max-width: 95%;
 }
 
 #leads_list {
@@ -131,7 +135,7 @@ box-shadow: 5px 5px 5px #888888;
 }
 
 #footer_div {
-
+	color: #666666;
 }
 
 /******************** PROGRESS BAR ********************/

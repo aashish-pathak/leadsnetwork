@@ -14,6 +14,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	$scope.show_always = true;
 	$scope.is_logged_in = false;
+	$scope.is_admin = false;
 	$scope.show_search_form = true;
 	$scope.show_results = false;
 	$scope.show_leads = false;
@@ -199,11 +200,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	// function for checking cookie for leadsApp
 	$scope.checkCookie = function() {
-		if(!$cookies.leadsApp)
+		if(!$cookies.leadsApp) {
 			$scope.is_logged_in = false;
+			$scope.is_admin = false;
+		}
 		else {
 			$scope.is_logged_in = true;
 			$scope.ldap_name = $cookies.leadsApp;
+			if($scope.ldap_name == 'Admin')
+				$scope.is_admin = true;
 		}
 	};
 
@@ -248,6 +253,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.login_username = '';
 				$scope.login_password = '';
 				$scope.is_logged_in = true;
+				if($scope.login_response.response == 'Admin')
+					$scope.is_admin = true;
 			}
 			
 			// unsuccessful login

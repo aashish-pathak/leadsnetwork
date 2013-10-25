@@ -94,6 +94,7 @@
 			<span class="glyphicon glyphicon-user" style="color: #BBBBBB"></span>
 			<a class="dropdown-toggle" style="cursor: pointer; color: #BBBBBB">{{ldap_name | uppercase}}</a>
 			<ul class="dropdown-menu" role="menu">
+				<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings</a></li>
 				<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
 			</ul>
 			
@@ -102,43 +103,6 @@
 		</div>	
 		</div>
 		<br><br><br><br>
-		
-		
-		
-		
-		
-		
-		
-<!--		
-		<div id="header_div" class="row-fluid center" ng-show="show_always">
-			
-			<center><span id="header_center">Leads' Network</span></center>
-			
-			<span id="header_left">
-				<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
-				<i class="icon-large icon-group" style="color: #BBBBBB"></i></button>
-			</span>
-			
-			<span id="header_right">
-				<span class="btn-group" ng-show="is_logged_in" style="float: right">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background: #BBBBBB">
-					<span class="glyphicon glyphicon-user"></span>	{{ldap_name | uppercase}}	<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
-				</ul>
-				</span>
-			</span>
-		</div>
-		<br><br><br><br>
--->		
-		
-		
-		
-		
-		
-		
-		
 		
 		<div id="main_div" class="center">
 			<div id="login_div" class="center" ng-hide="is_logged_in">
