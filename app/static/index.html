@@ -3,10 +3,9 @@
 <html ng-app="leadsApp">
 <head>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" charset="utf-8" />
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" charset="utf-8" />
 	<title>Leads' Network!</title>
 	
-<!--	<script src="static/js/jquery-mobile.js" ></script>	-->
 	<script src="static/js/jquery.js" ></script>
 	<script src="static/js/jquery-backstretch.js" ></script>
 	<script src="static/js/jquery-ui-leads.js" ></script>
@@ -75,9 +74,19 @@
 		</div>
 
 		<!----------------------------------------------------------------->
-		
+		<!----------------------------------------------------------------->
+		<!----------------------------------------------------------------->
+	
 		<div id="container_div">
-
+		
+		<div id="header_div" class="row-fluid" ng-show="show_always">
+			<center><span id="header_center" class="center app_name">
+				<a style="color: hsl(195, 79%, 43%)" href="reload()">Leads' Network!</a>
+			</span></center>		
+		</div>
+		<br><br><br>
+		<!----------------------------Header--------------------------->
+		<!--
 		<div id="header_div" class="row-fluid" ng-show="show_always">
 
 		<div id="header_center" class="center">
@@ -103,8 +112,34 @@
 		</div>	
 		</div>
 		<br><br><br><br>
-		
+		-->
+
+		<!---------------------------Main DIV-------------------------->
 		<div id="main_div" class="center">
+		
+			<!------------------------Sub-Header----------------------->
+			
+			<center>
+			<div id="sub_header">
+				<div class="sub_header_left">
+					<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+					<i class="icon-large icon-group" style="color: #666666"></i></button>
+				</div>
+				
+				<div class="sub_header_right">
+					<span class="btn-group" ng-show="is_logged_in" style="float: right">
+					<span class="glyphicon glyphicon-user" style="color: #666666"></span>
+					<a class="dropdown-toggle" style="cursor: pointer; color: #666666">{{ldap_name | uppercase}}</a>
+					<ul class="dropdown-menu pull-right" role="menu">
+						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings </a></li>
+						<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
+					</ul>
+					</span>
+				</div>
+			</div>
+			</center>
+			<br><br>
+			<!---------------------------LOG IN------------------------>
 			<div id="login_div" class="center" ng-hide="is_logged_in">
 				<form ng-submit="signIn()">
 					<center><img class="login_image" src="static/img/login-icon.png"><br><br></center>
@@ -120,7 +155,8 @@
 							<i class="icon-large icon-linkedin"></i></button></center>
 				</form>
 			</div>
-
+			
+			<!-------------------------Search Form--------------------->
 			<div id="search_div" class="center" ng-show="is_logged_in && show_search_form && !show_results && !show_leads">
 				<center>
 				<br>
@@ -137,7 +173,8 @@
 				</form>
 				</center>
 			</div>
-
+			
+			<!-------------------------Results DIV--------------------->
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 				<div id="results_header">
 					<br>
@@ -188,7 +225,8 @@
 				</div>
 
 			</div>
-
+			
+			<!--------------------------Leads DIV---------------------->
 			<div id="leads_div" class="center" ng-show="is_logged_in && show_leads">
 				<br><br>
 				<center>
@@ -221,6 +259,7 @@
 				<br><br>
 			</div>
 
+		<!-----------------------------Footer-------------------------->
 		</div>
 		<div id="footer_div" class="center" ng-show="show_always">
 			<br>

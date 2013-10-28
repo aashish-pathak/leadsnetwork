@@ -73,6 +73,7 @@ tr:first-child:hover {
 }
 
 #header_div {
+	background-color: #333333;
 	background: -moz-linear-gradient(center top , #555555 0%, #515151 18%, #373737 85%, #333333 100%) repeat scroll 0 0 #333333;
 	color: white;
 	height: auto;
@@ -87,23 +88,63 @@ box-shadow: 5px 5px 5px #888888;
 #header_left {
 	float: left;
 	max-width: 30%;
-	margin-left: 10%;
+	width: 20%;
+	height: 100%;
+	display: inline-block ;
+}
+
+.leads_button {
+	float: right;
 }
 
 #header_center {
-
 	text-align: center;
+	width: 60%;
+	height: 100%;
+	display: inline-block;
+}
+
+.app_name {
+	text-align: center;
+	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+	font-weight: bold;
+    font-size: 150%;
+    line-height: 50px;
+    text-transform: uppercase;
 }
 
 #header_right {
 	float: right;
 	max-width: 30%;
-	margin-right: 10%;
+	width: 20%;
+	height: 100%;
+	margin: auto;
+	display: inline-block;
 }
 
+.settings_button {
+	float: left;
+	height: 100%;
+}
+
+#sub_header {
+	max-width: 95%;
+	color: #666666;
+}
+
+.sub_header_left {
+	max-width: 50%;
+	float: left;
+}
+
+.sub_header_right {
+	max-width: 50%;
+	margin-top: 1%;
+	float: right;
+}
 
 #login_div {
-	max-width: 30%;
+	max-width: 50%;
 }
 
 #main_div {
@@ -117,12 +158,6 @@ box-shadow: 5px 5px 5px #888888;
 #results_div {
 	max-width: 95%;
 }
-
-/*
-#no_of_users {
-	color: white;
-}
-*/
 
 #leads_div {
 	max-width: 95%;

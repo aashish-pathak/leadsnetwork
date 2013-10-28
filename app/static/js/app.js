@@ -407,6 +407,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 						if(data.distance == 3)
 							$scope.connections.third.push(data);
 					}
+				})
+				.error(function() {
+					$scope.safeApply(function() {
+						$scope.current_xhr++;
+						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
+						$scope.setProgressBar();						
+					});
 				});
 			}
 		}
