@@ -32,8 +32,6 @@
 
 <body>
 	
-<!--	<img id="background_image" src="/static/img/wooden_wall.jpg">    -->
-
 	<div ng-controller="mainCtrl">
 
 		<!-- JQuery Dialogs -->
@@ -190,21 +188,25 @@
 							<td>Degree</td>
 							<td>Connected Through</td>
 							<td>Common Connections</td>
+							<td>Picture</td>
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'">
 							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
 							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
 							<td><a style="color: black" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td><img class="profile_pic" src="{{connection.pictureUrl}}"></td>						
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second | orderBy:'-relationToViewer.connections._total'">
 							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
 							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
 							<td><a style="color: black" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td><img class="profile_pic" src="{{connection.pictureUrl}}"></td>						
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third | orderBy:'-relationToViewer.connections._total'">
 							<td ng-click="viewProfile(connection)">{{connection.distance}}</td>
 							<td ng-click="viewProfile(connection)">{{connection.through}}</td>
 							<td><a style="color: black" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td><img class="profile_pic" src="{{connection.pictureUrl}}"></td>						
 						</tr>
 					</table>
 				</div>
@@ -261,7 +263,6 @@
 	</div>
 	
 <!------------------------------------------------------------------->
-</img>
 </body>
 
 </html>
