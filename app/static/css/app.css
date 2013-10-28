@@ -4,8 +4,7 @@ body {
 	background-color: #f1f1f1;
 	background-position: fixed;
 	background-size: 100px, 100px;
-	font-family: 'Questrial',sans-serif;
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	font-family: Verdana, Geneva, sans-serif;
 }
 
 .center {

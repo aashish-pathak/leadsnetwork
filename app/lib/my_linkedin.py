@@ -30,10 +30,15 @@ class MyLinkedIn(Config):
 		self.url_search = self.get_cfg("LinkedIn", "url_search")
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
-		if company_name == "":
-			search_query = "&first-name=" + first_name + "&last-name=" + last_name
-		else:
-			search_query = "&first-name=" + first_name + "&last-name=" + last_name + "&company-name=" + company_name
+		search_query = ""
+		
+		if first_name != "":
+			search_query += "&first-name=" + first_name 
+		if last_name != "":
+			search_query += "&last-name=" + last_name
+		if company_name != "":
+			search_query += "&company-name=" + company_name
+			
 		resp, content = self.client.request(self.url_search + search_query)
 		print "call_people_search()"
 		return content

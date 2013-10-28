@@ -67,6 +67,12 @@
 			</p>
 		</div>
 
+		<div id="both_fname_lname_error" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Do you want to search using both first-name and last-name?
+			</p>
+		</div>
+
 		<div id="http_error" title="Ooops!" class="ui-helper-hidden">
 			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			HTTP Error. Unable to connect to server.
@@ -133,11 +139,17 @@
 				<br>
 				<form method='GET' ng-submit="theSearch()">
 					 <br>
-					<input type="text" class="form-control" ng-model="fname" placeholder="First Name" required><br>
+					<input type="text" class="form-control" ng-model="fname" placeholder="First Name"><br>
 					 <br>
-					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name" required><br>
+					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name"><br>
 					 <br>
 					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br>
+
+					<div class="well well-sm" style="background: #CCCCCC; color: #666666">
+						<label><input type="checkbox" ng-model="both_fname_lname">
+							Search using both first-name and last-name.</label>
+					</div>
+					
 					<b><span style="color: black">
 					{{fname | uppercase}} {{lname | uppercase}}</span></b><br><br>
 					<button class="btn btn-blue" style="display: block; width: 100%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
@@ -149,8 +161,9 @@
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 				<div id="results_header">
 					<br>
-					<div id="no_of_users" class="well well-sm" style="background: #CCCCCC">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}. <br></b>
-					Number of leads selected : <b>{{selected_leads_count}}.</b></div>
+					<div id="no_of_users" class="well well-sm" style="background: #CCCCCC">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}. </b><br>
+					Number of leads selected : <b>{{selected_leads_count}}.</b><br></div>
+
 					<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
 					
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
@@ -169,7 +182,7 @@
 					</div>
 					<!------------------->
 					
-					<table class="table myTable">
+					<table class="table myTable table-stripped">
 						<tr class="tr_th">
 							<td>Degree</td>
 							<td>Connected Through</td>

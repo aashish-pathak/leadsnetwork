@@ -31,6 +31,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.fname = '';
 	$scope.lname = '';
 	$scope.cname = '';
+	$scope.both_fname_lname = true;
 	
 	$scope.connections={};
 	$scope.connections.all=[];
@@ -332,6 +333,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
+		if($scope.both_fname_lname == true)
+			if($scope.fname == '' || $scope.lname == '') {
+				$scope.createDialog("#both_fname_lname_error");
+				return;
+			}
+
 		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
