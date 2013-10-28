@@ -74,45 +74,16 @@
 		</div>
 
 		<!----------------------------------------------------------------->
-		<!----------------------------------------------------------------->
-		<!----------------------------------------------------------------->
 	
 		<div id="container_div">
-		
+
+		<!----------------------------Header--------------------------->		
 		<div id="header_div" class="row-fluid" ng-show="show_always">
 			<center><span id="header_center" class="center app_name">
 				<a style="color: hsl(195, 79%, 43%)" href="reload()">Leads' Network!</a>
 			</span></center>		
 		</div>
 		<br><br><br>
-		<!----------------------------Header--------------------------->
-		<!--
-		<div id="header_div" class="row-fluid" ng-show="show_always">
-
-		<div id="header_center" class="center">
-			Leads' Network
-		</div>
-
-		<div id="header_left" class="span3">
-			<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
-			<i class="icon-large icon-group" style="color: #BBBBBB"></i></button>
-		</div>
-
-		<div id="header_right" class="span3">
-			<span class="btn-group" ng-show="is_logged_in" style="float: right">
-			<span class="glyphicon glyphicon-user" style="color: #BBBBBB"></span>
-			<a class="dropdown-toggle" style="cursor: pointer; color: #BBBBBB">{{ldap_name | uppercase}}</a>
-			<ul class="dropdown-menu" role="menu">
-				<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings</a></li>
-				<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
-			</ul>
-			
-			</span>
-			
-		</div>	
-		</div>
-		<br><br><br><br>
-		-->
 
 		<!---------------------------Main DIV-------------------------->
 		<div id="main_div" class="center">
@@ -143,11 +114,11 @@
 			<div id="login_div" class="center" ng-hide="is_logged_in">
 				<form ng-submit="signIn()">
 					<center><img class="login_image" src="static/img/login-icon.png"><br><br></center>
-						<div class="span4 center">
-							<input type="text" class="center form-control input" name="username" ng-model="login_username" placeholder="LDAP Username" required>
+						<div class="span6 center">
+							<input type="text" class="center form-control" name="username" ng-model="login_username" placeholder="LDAP Username" required>
 						</div>
 						<br>
-						<div class="span4 center">
+						<div class="span6 center">
 							<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="LDAP Password" required>
 						</div>
 						<br>
@@ -178,7 +149,8 @@
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 				<div id="results_header">
 					<br>
-					<div id="no_of_users" class="well well-sm" style="background: #CCCCCC">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}. </b></div>
+					<div id="no_of_users" class="well well-sm" style="background: #CCCCCC">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}. <br></b>
+					Number of leads selected : <b>{{selected_leads_count}}.</b></div>
 					<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
 					
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
@@ -263,7 +235,9 @@
 		</div>
 		<div id="footer_div" class="center" ng-show="show_always">
 			<br>
-			<div class="span6 center" style="text-align:center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.
+			<div class="span6 center" style="text-align:center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 
+			<a style="color: hsl(195, 79%, 43%)" target="_new" href="http://www.gslab.com">Great Software Laboratory Pvt. Ltd. </a>
+			All Rights Reserved.
 			</div>
 			<br>
 		</div>

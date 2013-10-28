@@ -1,9 +1,11 @@
+
 body {
 	background-image:url('/static/img/linkedin_background.png');
 	background-color: #f1f1f1;
 	background-position: fixed;
 	background-size: 100px, 100px;
 	font-family: 'Questrial',sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
 }
 
 .center {
@@ -73,7 +75,7 @@ tr:first-child:hover {
 }
 
 #header_div {
-	background-color: #333333;
+	background-color: #333333 !important;
 	background: -moz-linear-gradient(center top , #555555 0%, #515151 18%, #373737 85%, #333333 100%) repeat scroll 0 0 #333333;
 	color: white;
 	height: auto;
@@ -99,7 +101,6 @@ box-shadow: 5px 5px 5px #888888;
 
 #header_center {
 	text-align: center;
-	width: 60%;
 	height: 100%;
 	display: inline-block;
 }
@@ -108,7 +109,7 @@ box-shadow: 5px 5px 5px #888888;
 	text-align: center;
 	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
 	font-weight: bold;
-    font-size: 150%;
+    font-size: 170%;
     line-height: 50px;
     text-transform: uppercase;
 }

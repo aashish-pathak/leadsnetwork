@@ -8,9 +8,7 @@
 
 var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies']);
 
-
 leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', '$location', function($scope, $rootScope, $http, $cookies, $window, $q, $modal, $location) {
-
 
 	$scope.show_always = true;
 	$scope.is_logged_in = false;
@@ -81,8 +79,19 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************ Select Leads **************************/
 
 	$scope.leadsDiv = function() {
-		// $scope.show_leads = true;
-		$scope.show_leads = !$scope.show_leads;
+		// check that at least one lead is selected
+		var none = true;
+		for(var i=0;i<$scope.leads_list.length;i++) {
+			if($scope.leads_list[i][2] == true) {
+				none = false;
+				break;
+			}
+		}
+		
+		if( none == true)
+			$scope.createDialog("#at_least_one_lead");
+		else
+			$scope.show_leads = !$scope.show_leads;
 	};
 	
 	$scope.selectAll = function() {
@@ -99,6 +108,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.selectBack = function() {
 		// check that at least one lead is selected
 		var none = true;
+		$scope.selected_leads_count = 0;
 		for(var i=0;i<$scope.leads_list.length;i++) {
 			if($scope.leads_list[i][2] == true) {
 				none = false;
@@ -307,6 +317,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
+		
+		$scope.selected_leads_count = 0;
+		// count number of selected leads
+		var count = 0;
+		for(var i=0;i<$scope.leads_list.length;i++)
+			if($scope.leads_list[i][2] == true)
+				count++;
+		
+		$scope.selected_leads_count = count;
 		
 		$scope.peopleSearch();
 	};
