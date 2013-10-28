@@ -418,14 +418,14 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 						$scope.current_xhr++;
 						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
 						$scope.setProgressBar();						
+						// add default profile picture
+						if(!('pictureUrl' in data)) {
+							data.pictureUrl = '/static/img/ghost_profile.png';
+							console.log(data);
+						}
 					});
-
-					if(data.distance >= 1 && data.distance <=3)
-					{
-						$scope.connections.all.push(data);
-					}
 					
-					if(data.distance <= 3) {
+					if(data.distance <= 3) {						
 						if(data.distance == 1)
 							$scope.connections.first.push(data);
 						if(data.distance == 2)
@@ -433,6 +433,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 						if(data.distance == 3)
 							$scope.connections.third.push(data);
 					}
+					
+					if(data.distance >= 1 && data.distance <=3)
+					{
+						$scope.connections.all.push(data);
+					}
+					
 				})
 				.error(function() {
 					$scope.safeApply(function() {
