@@ -3,14 +3,17 @@
 <html ng-app="myApp">
 <head>
 	
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
 	<meta charset="utf-8">
 	<title>Leads' Network!</title>
 	
 	<script src="static/js/jquery.js" ></script>
+	<script src="static/js/jquery-ui-leads.js" ></script>
 	<script src="static/lib/angular/angular.js"></script>
 	<script src="static/lib/angular/angular-cookies.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+<!--<script src="bootstrap_js"></script>-->
 	<script src="static/js/app.js"></script>
 
 	<style type='text/css'>
@@ -18,6 +21,7 @@
     </style>
 	
 	<link rel="stylesheet" type="text/css" href="static/css/bootswatch.css">
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.css">
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
 	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
 	<link rel="stylesheet" type="text/css" href="static/css/style_bootstrap.css">
@@ -26,6 +30,36 @@
 </head>
 
 <body>
+	
+	<!-- JQuery Dialogs -->
+	<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+		The person '{{fname}} {{lname}}' from '{{cname}}' is not on linkedin.
+		</p>
+	</div>
+
+	<div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+		The person '{{fname}} {{lname}}' is not on linkedin.
+		</p>
+	</div>
+
+	<div id="at_least_one_lead" title="No lead selected!" class="ui-helper-hidden">
+		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+		Please select at least one lead!
+		</p>
+	</div>
+
+	<div id="http_error" title="Ooops!" class="ui-helper-hidden">
+		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+		HTTP Error. Unable to connect to server.
+		</p>
+	</div>
+	<!------------------->
+	
+	
+	
+	
 	<div id="parent" ng-controller="parentCtrl">
 		<div class="login font" id="login" ng-controller="loginCtrl" ng-hide="is_old_user">
 			<form ng-submit="signIn()">
@@ -42,7 +76,16 @@
 			<div id="header" ng-controller="headerCtrl">
 				<br>
 				<div class="header_contents">
-				<span class="app_name" align="center"><a style="color: hsl(195, 79%, 43%)" href=".">Leads' Network!</a></span>
+					<!--  
+				<span class="user_name">
+					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</span>
+					-->
+				<a style="color: hsl(195, 79%, 43%)" target="_new" href="http://www.gslab.com"><img src="static/img/gslab_logo.png" class="gslab_logo"/></a>
+				<span class="app_name" align="center"><a style="color: hsl(195, 79%, 43%)" href="reload()">Leads' Network!</a></span>
+				<!--
+				<span class="signout_button"><button class="btn btn-custom-signout" ng-click="signOut()">
+					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></span>	-->
+
 					<!-- Dropdown logout link -->
 					<div class="settings_button user_button">
 						<span class="btn-group">
@@ -51,7 +94,7 @@
 								{{name | uppercase}}  <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-							<li><a ng-click="signOut()">Sign Out</a></li>
+							<li style="cursor: pointer"><a ng-click="signOut()">Sign Out</a></li>
 						  </ul>
 						</span>
 					</div>
@@ -72,20 +115,18 @@
 							<input class="input_navigation" type="text" ng-model="lname" placeholder="Last Name" required>
 							
 							<h1 class="h1_navigation" align="center">Company Name</h1>
-							<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name"><br>
+							<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name">
 							
-							<p ng-show="fname"><!--Searching : --><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
+							<p ng-show="fname"><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
 							<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
 						</form>
 						</div>
-						<br>
+						
 
+						<hr class="hr_style">
 						<div class="leads_info">
 							<div class="leads font">
-							<br><br>
-							<p align="center">
-								<button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	Add Account</button><br><br>
-							</p>
+							<p align="center"><button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	Add Account</button><br></p>
 							<p align="center">
 								<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
 								<font size="5%">Leads</font>
@@ -93,7 +134,7 @@
 							</p>
 								<div class="leads_list">
 								<ul class="unstyled">
-									<li ng-repeat="lead in leads">
+									<li ng-repeat="lead in leads | orderBy:alphabetical">
 										<input type="checkbox" ng-model="lead[2]">
 										<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
 								</ul>
@@ -103,18 +144,24 @@
 					</div>
 				</div>
 
-				<div class="font" id="content" ng-controller="contentCtrl">
+				<div id="content_alt" ng-hide="fname">
+					
+				</div>
+				<div class="font" id="content" ng-controller="contentCtrl"  ng-show="fname">
 					<br><br>
+					
 					<div class="search_summary">
-					<button class="btn btn-custom-stop" ng-click="stop()" ng-show="fname">
+					<button class="btn btn-custom-stop" ng-click="stop()">
 						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
 					<!--<p ng-show="fname">	Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>-->
-					<p ng-show="fname">	Search results for {{fname | uppercase}} {{lname | uppercase}}.</p>
+					<p ng-show="fname">	Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</p>
+					<!-- <p ng-show="fname">	Search results for {{fname | uppercase}} {{lname | uppercase}}.</p> -->
 					<!--<p ng-show="fname">Progress : {{progress}}</p>-->
 
 					</div>
 
 					<div class="results font" ng-show="fname">
+													
 					<table class="table table-hover">
 						<tr class="table_header">
 							<td>Degree</td>
@@ -128,12 +175,13 @@
 						</tr>
 					</table>
 					</div>
-
-<!--					<p>Through lead {{lead_number}} : {{profile_data}}</p>-->
+					
 				</div>
 			</div>
 			
 			<div id="footer" ng-controller="footerCtrl">
+				<br>
+				<p align="center" style="color:black">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.</p>
 			</div>
 		</div>
 

@@ -30,10 +30,15 @@ class MyLinkedIn(Config):
 		self.url_search = self.get_cfg("LinkedIn", "url_search")
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
-		if company_name == "":
-			search_query = "&first-name=" + first_name + "&last-name=" + last_name
-		else:
-			search_query = "&first-name=" + first_name + "&last-name=" + last_name + "&company-name=" + company_name
+		search_query = ""
+		
+		if first_name != "":
+			search_query += "&first-name=" + first_name 
+		if last_name != "":
+			search_query += "&last-name=" + last_name
+		if company_name != "":
+			search_query += "&company-name=" + company_name
+			
 		resp, content = self.client.request(self.url_search + search_query)
 		print "call_people_search()"
 		return content
@@ -42,7 +47,7 @@ class MyLinkedIn(Config):
 		self.url_profile = self.get_cfg("LinkedIn", "url_profile")
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
-		self.fetch_profile_query = profile_id + ":(id,first-name,last-name,distance,relation-to-viewer,public-profile-url)?format=json"
+		self.fetch_profile_query = profile_id + ":(id,first-name,last-name,distance,relation-to-viewer,public-profile-url,picture-url::(original))?format=json"
 		resp, content = self.client.request(self.url_profile + self.fetch_profile_query)
 		print "get_profile_using_id()"
 		return content
