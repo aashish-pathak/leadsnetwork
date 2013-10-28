@@ -78,6 +78,7 @@ tr:first-child:hover {
 	background: -moz-linear-gradient(center top , #555555 0%, #515151 18%, #373737 85%, #333333 100%) repeat scroll 0 0 #333333;
 	color: white;
 	height: auto;
+	width: 100%;
 
 position: fixed;
 top: 0;

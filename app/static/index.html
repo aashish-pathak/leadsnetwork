@@ -84,10 +84,10 @@
 		<div id="container_div">
 
 		<!----------------------------Header--------------------------->		
-		<div id="header_div" class="row-fluid" ng-show="show_always">
-			<center><span id="header_center" class="center app_name">
+		<div id="header_div" ng-show="show_always">
+			<center><div id="header_center" class="center app_name">
 				<a style="color: hsl(195, 79%, 43%)" href="reload()">Leads' Network!</a>
-			</span></center>		
+			</div></center>		
 		</div>
 		<br><br><br>
 
@@ -108,7 +108,8 @@
 				<div class="sub_header_right">
 					<span class="btn-group" ng-show="is_logged_in" style="float: right">
 					<span class="glyphicon glyphicon-user" style="color: #666666"></span>
-					<a class="dropdown-toggle" style="cursor: pointer; color: #666666">{{ldap_name | uppercase}}</a>
+					<a class="dropdown-toggle" style="cursor: pointer; color: #666666">
+					{{ldap_name | uppercase}}</a>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings </a></li>
 						<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
@@ -148,7 +149,7 @@
 					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br>
 
 					<div class="well well-sm" style="background: #CCCCCC; color: #666666">
-						<label><input type="checkbox" ng-model="both_fname_lname">
+						<label style="cursor: pointer"><input type="checkbox" ng-model="both_fname_lname">
 							Search using both first-name and last-name.</label>
 					</div>
 					
