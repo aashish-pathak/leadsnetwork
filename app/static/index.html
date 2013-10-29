@@ -108,10 +108,10 @@
 				<div id="results_header_container" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 					<br>
 					<div id="results_summary" class="well well-sm" style="background: transparent">
-							Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}} </b><br>
+							Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}} </b>.<br>
 							Number of leads selected : <b>{{selected_leads_count}}</b><br>
-							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
-							<span ng-show="done_searching">Searching done !</span>
+							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b>.</span>
+							<span ng-show="done_searching"><b>Searching done !</b></span>
 					</div>
 
 					<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
@@ -197,7 +197,7 @@
 			
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 			
-				<br><br><br><br><br><br><br><br><br><br>
+				<br><br><br><br><br><br><br><br><br><br><br><br>
 				<div id="results_table" style="color: white; background:rgba(255,255,255,0.1);">
 				
 					<!-- JQuery Dialog -->
