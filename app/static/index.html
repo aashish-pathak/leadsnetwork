@@ -83,9 +83,28 @@
 
 		<!----------------------------Header--------------------------->		
 		<div id="header_div" ng-show="show_always">
-			<center><div id="header_center" class="center app_name">
-				<a style="color: hsl(195, 79%, 43%)" href="reload()">Leads' Network!</a>
-			</div></center>		
+			<div class="header_left">
+				<a href="." data-toggle="tooltip" title="List of leads !">
+				<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+				<i class="icon-large icon-group" style="color: white"></i></button></a>
+			</div>
+			<div class="header_right">
+				<span class="btn-group" ng-show="is_logged_in" style="float: right">
+				<span class="glyphicon glyphicon-user" style="color: white"></span>
+				<a class="dropdown-toggle" style="cursor: pointer; color: white">
+				{{ldap_name | uppercase}}</a>
+				<ul class="dropdown-menu pull-right" role="menu">
+					<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings </a></li>
+					<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
+				</ul>
+				</span>
+			</div>			
+
+			<div id="header_center" class="center app_name">
+				<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">Leads' Network!</a>
+			</div>
+			
+			
 		</div>
 		<br><br><br>
 
@@ -93,7 +112,7 @@
 		<div id="main_div" class="center">
 		
 			<!------------------------Sub-Header----------------------->
-			
+			<!--
 			<center>
 			
 			<div id="sub_header">
@@ -117,6 +136,7 @@
 			</div>
 			</center>
 			<br><br>
+			-->
 			<!---------------------------LOG IN------------------------>
 			<div id="login_div" class="center" ng-hide="is_logged_in">
 				<form ng-submit="signIn()">

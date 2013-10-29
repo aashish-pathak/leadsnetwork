@@ -127,9 +127,9 @@ tr:hover {
     background:rgba(255,255,255,0.3);
 }
 tr:first-child:hover {
+	cursor: default;
     background-color: transparent;
-    cursor: default;
-    background:rgba(255,255,255,0.3);
+    
 }
 
 /* DIVs : header, footer, login, search, results, leads */
@@ -146,11 +146,11 @@ tr:first-child:hover {
 	height: auto;
 	width: 100%;
 
-position: fixed;
-top: 0;
-left: 0;
-z-index: 999;
-box-shadow: 5px 5px 5px #888888;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	box-shadow: 5px 5px 5px #888888;
 
 
   background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
@@ -159,6 +159,24 @@ box-shadow: 5px 5px 5px #888888;
   -o-background-size: cover;
   background-size: cover;
 
+}
+
+.header_left {
+	left:0;
+	position: absolute;
+	max-width: 30%;
+	width: 20%;
+	margin-top: 7px;
+}
+
+.header_right {
+	right:0;
+	position: absolute;
+	display: inline;
+	max-width: 30%;
+	width: 20%;
+	margin-top: 15px;
+	margin-right: 10px;
 }
 
 #header_left {
@@ -176,7 +194,7 @@ box-shadow: 5px 5px 5px #888888;
 #header_center {
 	text-align: center;
 	height: 100%;
-	display: inline-block;
+	width:100%;
 }
 
 .app_name {
@@ -202,22 +220,6 @@ box-shadow: 5px 5px 5px #888888;
 	height: 100%;
 }
 
-#sub_header {
-	max-width: 95%;
-	color: #666666;
-}
-
-.sub_header_left {
-	max-width: 50%;
-	float: left;
-}
-
-.sub_header_right {
-	max-width: 50%;
-	margin-top: 1%;
-	float: right;
-}
-
 #login_div {
 	max-width: 50%;
 }
@@ -241,7 +243,7 @@ box-shadow: 5px 5px 5px #888888;
 	-o-background-size: cover;
 	background-size: cover;
 	
-	position: relative;
+	position: absolute fixed;
 	width: 100%;
 	z-index: 999;
 }

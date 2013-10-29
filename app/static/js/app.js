@@ -151,7 +151,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.$watch(
 		function() {return $location.absUrl();},
 		function() {
-			if($location.absUrl().indexOf("#") != -1 && $location.absUrl().indexOf("linkedin.com") > -1) {
+			if($location.absUrl().indexOf("#") != -1) {
 				$scope.goTo($scope.homepage);
 			}
 		}
