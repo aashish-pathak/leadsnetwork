@@ -1,10 +1,68 @@
+/* Animations *********************************************************/
+
+/* Leads List*/
+
+.slider {
+	overflow-y: hidden;
+	max-height: 500px; /* approximate max height */
+
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+
+.leads-show {
+	-webkit-transition: 1s linear all; /* Chrome */
+	transition: 1s linear all;
+	opacity: 0;
+}
+
+.leads-show.leads-show-active {
+	opacity: 1;
+}
+
+/* Results List*/
+.result-enter {
+	-webkit-transition: 1s linear all; /* Chrome */
+	transition: 1s linear all;
+	opacity: 0;
+}
+
+.result-enter.result-enter-active {
+	opacity: 1;
+}
+
+
+/**********************************************************************/
+/* Profile Picture*/
+.profile_pic {
+	width: 60px;
+	height: 60px;
+}
+.profile_pic:hover {
+	cursor: pointer;
+}
+
+
+/**********************************************************************/
+html{
+  background: url('/static/img/wooden_wall.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;  
+}
 
 body {
-	background-image:url('/static/img/linkedin_background.png');
+	/*background-image:url('/static/img/linkedin_background.png');
 	background-color: #f1f1f1;
 	background-position: fixed;
 	background-size: 100px, 100px;
+	*/
+	background: transparent;
 	font-family: Verdana, Geneva, sans-serif;
+	color: white;
 }
 
 .center {
@@ -57,8 +115,6 @@ tr.t3 td {
 
 tr:hover {
     background-color: #BBBBBB;
-    
-    cursor: pointer;
 }
 tr:first-child:hover {
     background-color: transparent;
