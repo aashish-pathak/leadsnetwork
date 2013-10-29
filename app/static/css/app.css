@@ -129,7 +129,6 @@ tr:hover {
 tr:first-child:hover {
 	cursor: default;
     background-color: transparent;
-    
 }
 
 /* DIVs : header, footer, login, search, results, leads */
@@ -143,14 +142,14 @@ tr:first-child:hover {
 	background-color: #333333 !important;
 	background: -moz-linear-gradient(center top , #555555 0%, #515151 18%, #373737 85%, #333333 100%) repeat scroll 0 0 #333333;
 	color: white;
-	height: auto;
+	height: 50px;
 	width: 100%;
 
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 999;
-	box-shadow: 5px 5px 5px #888888;
+	/*box-shadow: 5px 5px 5px #888888;*/
 
 
   background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
@@ -236,17 +235,29 @@ tr:first-child:hover {
 	max-width: 95%;
 }
 
-#results_header {
-	background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	
-	position: absolute fixed;
-	width: 100%;
-	z-index: 999;
+#results_header_container {
+
+  background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+
+
+	margin-left: 2.5%;
+	max-width: 95%;
+	top: 50px;
 }
+
+#results_header {
+	
+}
+
+#results_table {
+	
+}
+
 
 #leads_div {
 	max-width: 95%;

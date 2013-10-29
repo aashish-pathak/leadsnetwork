@@ -82,7 +82,7 @@
 		<div id="container_div">
 
 		<!----------------------------Header--------------------------->		
-		<div id="header_div" ng-show="show_always">
+		<div id="header_div" ng-show="show_always"">
 			<div class="header_left">
 				<a href="." data-toggle="tooltip" title="List of leads !">
 				<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
@@ -104,6 +104,21 @@
 				<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">Leads' Network!</a>
 			</div>
 			
+			
+				<div id="results_header_container" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+					<br>
+					<div id="results_summary" class="well well-sm" style="background: transparent">
+							Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}} </b><br>
+							Number of leads selected : <b>{{selected_leads_count}}</b><br>
+							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
+							<span ng-show="done_searching">Searching done !</span>
+					</div>
+
+					<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+					
+					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
+					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
+				</div>
 			
 		</div>
 		<br><br><br>
@@ -179,24 +194,10 @@
 			</div>
 			
 			<!-------------------------Results DIV--------------------->
+			
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
-				
-				<div id="results_header">
-					<br>
-					<div id="results_summary" class="well well-sm" style="background: transparent">
-							Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}} </b><br>
-							Number of leads selected : <b>{{selected_leads_count}}</b><br>
-							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
-							<span ng-show="done_searching">Searching done !</span>
-					</div>
-
-					<div ng-hide="done_searching"><progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress></div>
-					
-					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
-					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
-				</div>
-				
-				<br><br>
+			
+				<br><br><br><br><br><br><br><br><br><br>
 				<div id="results_table" style="color: white; background:rgba(255,255,255,0.1);">
 				
 					<!-- JQuery Dialog -->
@@ -219,7 +220,7 @@
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
 							<td style="vertical-align: middle">{{connection.distance}}</td>
 							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle"><a style="color: white" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td style="vertical-align: middle"><a style="color: white; cursor: pointer" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
 							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
