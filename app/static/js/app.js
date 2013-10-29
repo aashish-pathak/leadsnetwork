@@ -16,6 +16,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.show_search_form = true;
 	$scope.show_results = false;
 	$scope.show_leads = false;
+	$scope.leads_filter = '';
 
 	$scope.homepage = 'http://localhost:5000/';
 
@@ -551,5 +552,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.setProgressBar();							
 		});
 	};
+	
+	/* ********************* Clear Search Box *************************/
+	
+	$scope.clearSearchBox = function() {
+		$scope.leads_filter = '';
+	};
+	
 	
 }]);

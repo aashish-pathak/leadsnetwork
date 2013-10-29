@@ -253,6 +253,8 @@
 				<div id="leads_select_header" class="row-fluid">
 					<button style="float: left; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
 					<button style="float: right; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
+					<br><br><br><br>
+					<input type="text" class="form-control center" style="max-width: 50%" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
 				</div>
 				<br><br>
 				</center>
@@ -260,7 +262,7 @@
 				<div id="leads_list">
 					<ul class="unstyled center">
 						
-						<li ng-repeat="lead in leads_list">
+						<li ng-repeat="lead in leads_list | filter:leads_filter">
 							<label><input type="checkbox" ng-model="lead[2]">
 							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</label></li>
 					</ul>
