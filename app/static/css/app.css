@@ -1,3 +1,12 @@
+@media screen and (max-width: 650px) {
+	html {
+		background-image:url('/static/img/linkedin_background.png');
+		background-color: #f1f1f1;
+		background-position: fixed;
+		background-size: 100px, 100px;
+	}
+}
+
 /* Animations *********************************************************/
 
 /* Leads List*/
@@ -47,7 +56,7 @@
 
 /**********************************************************************/
 html{
-  background: url('/static/img/wooden_wall.jpg') no-repeat center center fixed; 
+  background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -115,18 +124,19 @@ tr.t3 td {
 
 tr:hover {
     background-color: #BBBBBB;
+    background:rgba(255,255,255,0.3);
 }
 tr:first-child:hover {
     background-color: transparent;
-    color: black;
     cursor: default;
+    background:rgba(255,255,255,0.3);
 }
 
 /* DIVs : header, footer, login, search, results, leads */
 
 #container_div {
 	background: transparent;
-	color: black;
+	color: white;
 }
 
 #header_div {
@@ -141,6 +151,14 @@ top: 0;
 left: 0;
 z-index: 999;
 box-shadow: 5px 5px 5px #888888;
+
+
+  background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
 }
 
 #header_left {
@@ -214,6 +232,18 @@ box-shadow: 5px 5px 5px #888888;
 
 #results_div {
 	max-width: 95%;
+}
+
+#results_header {
+	background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
+	position: relative;
+	width: 100%;
+	z-index: 999;
 }
 
 #leads_div {

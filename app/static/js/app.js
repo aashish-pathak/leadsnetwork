@@ -48,6 +48,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.current_xhr = 0;
 	$scope.progressBar.value = 0;
 	$scope.progressBar.type = 'danger';
+	$scope.done_searching = false;
 
 	/* ************************* Safe Apply ***************************/
 
@@ -150,7 +151,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.$watch(
 		function() {return $location.absUrl();},
 		function() {
-			if($location.absUrl().indexOf("#") != -1) {
+			if($location.absUrl().indexOf("#") != -1 && $location.absUrl().indexOf("linkedin.com") > -1) {
 				$scope.goTo($scope.homepage);
 			}
 		}
@@ -167,7 +168,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				
 			// complete progress
 			$scope.progress = 100;
-			$scope.setProgressBar();							
+			$scope.setProgressBar();
+			$scope.done_searching = true;							
 		});
 		
 		$scope.canceler = [];
@@ -364,6 +366,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_search_form = false;
 		$scope.show_results = true;
 
+		$scope.done_searching = false;
 		$scope.progress = 0;
 		$scope.total_xhr = 0;
 		$scope.current_xhr = 0;
@@ -383,6 +386,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var total_leads = $scope.leads_list.length;
 		var total_calls = total_leads * numResults;
 		$scope.current_lead="";
+		$scope.searching_message = "";
 		$scope.connections.all=[];
 		$scope.connections.first=[];
 		$scope.connections.second=[];
@@ -423,6 +427,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 							data.pictureUrl = '/static/img/ghost_profile.png';
 							console.log(data);
 						}
+						$scope.current_lead = data.through;
 					});
 					
 					if(data.distance <= 3) {						
@@ -531,7 +536,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			value: value,
 			type: type
 		};
-
+		
+		if($scope.progress == 100)
+			$scope.done_searching = true;
 	};
 	
 	/* ********************* Reset ProgressBar ************************/

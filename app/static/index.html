@@ -140,18 +140,18 @@
 				<br>
 				<form method='GET' ng-submit="theSearch()">
 					 <br>
-					<input type="text" class="form-control" ng-model="fname" placeholder="First Name"><br>
+					<input type="text" class="form-control" ng-model="fname" placeholder="First Name" required><br>
 					 <br>
-					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name"><br>
+					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name" required><br>
 					 <br>
 					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br>
 
-					<div class="well well-sm" style="background: #CCCCCC; color: #666666">
+					<div class="well well-sm" style="background: #CCCCCC; color: #666666" ng-show="!show_always">
 						<label style="cursor: pointer"><input type="checkbox" ng-model="both_fname_lname">
 							Search using both first-name and last-name.</label>
 					</div>
 					
-					<b><span style="color: black">
+					<b><span>
 					{{fname | uppercase}} {{lname | uppercase}}</span></b><br><br>
 					<button class="btn btn-blue" style="display: block; width: 100%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
 				</form>
@@ -160,18 +160,24 @@
 			
 			<!-------------------------Results DIV--------------------->
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+				
 				<div id="results_header">
 					<br>
-					<div id="no_of_users" class="well well-sm" style="background: #CCCCCC">Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}. </b><br>
-					Number of leads selected : <b>{{selected_leads_count}}.</b><br></div>
+					<div id="results_summary" class="well well-sm" style="background: transparent">
+							Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}} </b><br>
+							Number of leads selected : <b>{{selected_leads_count}}</b><br>
+							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
+							<span ng-show="done_searching">Searching done !</span>
+					</div>
 
-					<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+					<div ng-hide="done_searching"><progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress></div>
 					
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
 					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
 				</div>
+				
 				<br><br>
-				<div id="results_table" style="background: #CCCCCC">					
+				<div id="results_table" style="color: white; background:rgba(255,255,255,0.1);">
 				
 					<!-- JQuery Dialog -->
 					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
@@ -183,7 +189,7 @@
 					</div>
 					<!------------------->
 					
-					<table class="table myTable table-stripped">
+					<table class="table">
 						<tr class="tr_th">
 							<td>Degree</td>
 							<td>Connected Through</td>
@@ -193,19 +199,19 @@
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
 							<td style="vertical-align: middle">{{connection.distance}}</td>
 							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle"><a style="color: black" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td style="vertical-align: middle"><a style="color: white" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
 							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
 							<td style="vertical-align: middle">{{connection.distance}}</td>
 							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle"><a style="color: black" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td style="vertical-align: middle"><a style="color: white" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
 							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
 							<td style="vertical-align: middle">{{connection.distance}}</td>
 							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle"><a style="color: black" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td style="vertical-align: middle"><a style="color: white" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
 							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>						
 						</tr>
 					</table>
