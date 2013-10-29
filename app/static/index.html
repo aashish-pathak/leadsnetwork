@@ -173,7 +173,7 @@
 					
 					<b><span>
 					{{fname | uppercase}} {{lname | uppercase}}</span></b><br><br>
-					<button class="btn btn-blue" style="display: block; width: 100%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
+					<button class="btn btn-blue" style="display: block; width: 50%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
 				</form>
 				</center>
 			</div>
@@ -254,7 +254,7 @@
 					<button style="float: left; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
 					<button style="float: right; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
 					<br><br><br><br>
-					<input type="text" class="form-control center" style="max-width: 50%" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
+					<input type="text" class="form-control center" style="max-width: 30%" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
 				</div>
 				<br><br>
 				</center>
@@ -264,7 +264,7 @@
 						
 						<li ng-repeat="lead in leads_list | filter:leads_filter">
 							<label><input type="checkbox" ng-model="lead[2]">
-							<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</label></li>
+							    {{lead[1]}}</label></li>
 					</ul>
 				</div>
 				
