@@ -123,6 +123,11 @@ body {
 
 	font-family: amble-regular, sans-serif;
 	font-size: 15px;
+	
+	/* Font Smoothing*/
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+    text-shadow: 0.5px 0.5px 0.5px rgba(100,100,100,1);
 }
 
 .center {
