@@ -218,6 +218,16 @@ tr:first-child:hover {
 
 /* DIVs : header, footer, login, search, results, leads */
 
+#common_connections {
+	
+	
+}
+
+
+.view_connections:hover {
+	cursor: pointer;
+}
+
 #container_div {
 	background: transparent;
 	color: white;
@@ -233,7 +243,7 @@ tr:first-child:hover {
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 999;
+	z-index: 1;
 	/*box-shadow: 5px 5px 5px #888888;*/
 
 

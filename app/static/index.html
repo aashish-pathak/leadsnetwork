@@ -222,19 +222,19 @@
 						<tr class="my_tr" ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
 							<td style="vertical-align: middle">{{connection.distance}}</td>
 							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle"><a style="color: white; cursor: pointer" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
 							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
 							<td style="vertical-align: middle">{{connection.distance}}</td>
 							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle"><a style="color: white" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
 							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
 						</tr>
 						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
 							<td style="vertical-align: middle">{{connection.distance}}</td>
 							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle"><a style="color: white" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
+							<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
 							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>						
 						</tr>
 					</table>

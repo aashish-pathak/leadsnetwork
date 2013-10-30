@@ -70,6 +70,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.createDialog = function(msgType) {
 		$( msgType ).dialog({
 			modal: true,
+			style: "z-index:1000",
 			buttons: {
 				Ok: function() {
 					$(this).dialog( "close" );
