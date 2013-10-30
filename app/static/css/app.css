@@ -62,6 +62,33 @@
 
 /* Animations *********************************************************/
 
+.leads-show, .leads-hide {
+  -webkit-transition:all linear 1s;
+  -moz-transition:all linear 1s;
+  -ms-transition:all linear 1s;
+  -o-transition:all linear 1s;
+  transition:all linear 1s;
+
+}
+
+.leads-show {
+  opacity:0;
+}
+
+.leads-show.leads-show-active {
+  opacity:1;
+}
+
+.leads-hide {
+  opacity:1;
+}
+
+.leads-hide.leads-hide-active {
+  opacity:0;
+}
+
+
+
 /* Leads List*/
 
 .slider {
@@ -345,7 +372,7 @@ tr:first-child:hover {
 	max-width: 95%;
 }
 
-#results_header_container {
+#results_header {
 
   background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -359,8 +386,11 @@ tr:first-child:hover {
 	top: 50px;
 }
 
-#results_header {
-	
+.bottom-shadow {
+	/* Only bottom shadow*/
+	-webkit-box-shadow: 0px 5px 5px -5px #ffffff;
+    -moz-box-shadow: 0px 5px 5px -5px #ffffff;
+    box-shadow: 0px 5px 5px -5px #ffffff;
 }
 
 #results_table {

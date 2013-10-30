@@ -106,9 +106,9 @@
 			</div>
 			
 			
-				<div id="results_header_container" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 					<br>
-					<div id="results_summary" class="well well-sm">
+					<div id="results_summary" class="well well-sm bottom-shadow">
 						Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
 						Leads selected : <b>{{selected_leads_count}}</b>.<br>
 						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
