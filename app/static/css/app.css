@@ -54,6 +54,12 @@
 	src: url('/static/fonts/amble/Amble-Regular.ttf');
 }
 
+@font-face {
+	font-family: linkedin-like;
+	src: url('/static/fonts/PTC75F.ttf');
+}
+
+
 /* Animations *********************************************************/
 
 /* Leads List*/
@@ -127,7 +133,7 @@ body {
 	/* Font Smoothing*/
 	-webkit-font-smoothing: antialiased;
 	-moz-font-smoothing: antialiased;
-    text-shadow: 0.5px 0.5px 0.5px rgba(100,100,100,1);
+    text-shadow: 0.5px 0.5px 0.5px rgba(127, 127, 127, 0.5);
 }
 
 .center {
@@ -275,10 +281,15 @@ tr:first-child:hover {
 	width:100%;
 }
 
+.app_logo {
+	width: 40px;
+	height: 40px;
+}
+
 .app_name {
 	text-align: center;
 	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
-	font-family: finger-paint, sans-serif;
+	font-family: linkedin-like, sans-serif;
 	font-weight: bold;
     font-size: 170%;
     line-height: 50px;
@@ -297,6 +308,15 @@ tr:first-child:hover {
 .settings_button {
 	float: left;
 	height: 100%;
+}
+
+#results_summary {
+	background:rgba(255,255,255,0.1);
+}
+
+#results_table {
+	color: white;
+	background:rgba(255,255,255,0.1);
 }
 
 #login_div {

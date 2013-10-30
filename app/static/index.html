@@ -101,16 +101,17 @@
 			</div>			
 
 			<div id="header_center" class="center app_name">
-				<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">LEADS' In!</a>
+				<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">
+					Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
 			</div>
 			
 			
 				<div id="results_header_container" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 					<br>
-					<div id="results_summary" class="well well-sm" style="background: transparent">
+					<div id="results_summary" class="well well-sm">
 						Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
 						Leads selected : <b>{{selected_leads_count}}</b>.<br>
-						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b>.</span>
+						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
 						<span ng-show="done_searching"><b>Searching done !</b></span>
 					</div>
 					<span>
@@ -199,7 +200,7 @@
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 			
 				<br><br><br><br><br><br><br><br><br><br><br><br>
-				<div id="results_table" style="color: white; background:rgba(255,255,255,0.1);">
+				<div id="results_table">
 				
 					<!-- JQuery Dialog -->
 					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
