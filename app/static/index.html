@@ -101,20 +101,21 @@
 			</div>			
 
 			<div id="header_center" class="center app_name">
-				<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">Leads' Network!</a>
+				<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">Leads' In!</a>
 			</div>
 			
 			
 				<div id="results_header_container" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 					<br>
 					<div id="results_summary" class="well well-sm" style="background: transparent">
-							Number of linkedin users with name <b>{{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}} </b>.<br>
-							Number of leads selected : <b>{{selected_leads_count}}</b><br>
-							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b>.</span>
-							<span ng-show="done_searching"><b>Searching done !</b></span>
+						Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
+						Leads selected : <b>{{selected_leads_count}}</b>.<br>
+						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b>.</span>
+						<span ng-show="done_searching"><b>Searching done !</b></span>
 					</div>
-
-					<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+					<span>
+						<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+					</span>
 					
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
 					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
