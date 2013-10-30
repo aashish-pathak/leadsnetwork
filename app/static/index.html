@@ -218,7 +218,7 @@
 							<td>Common Connections</td>
 							<td>Picture</td>
 						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
+						<tr class="my_tr" ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
 							<td style="vertical-align: middle">{{connection.distance}}</td>
 							<td style="vertical-align: middle">{{connection.through}}</td>
 							<td style="vertical-align: middle"><a style="color: white; cursor: pointer" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</a></td>
