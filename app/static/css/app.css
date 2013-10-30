@@ -1,3 +1,58 @@
+/* OTF Fonts **********************************************************/
+@font-face {
+	font-family: quicksand;
+	src: url('/static/fonts/Quicksand-Regular.otf');
+}
+
+@font-face {
+	font-family: sansation;
+	src: url('/static/fonts/Sansation-Regular.ttf');
+}
+
+@font-face {
+	font-family: molot;
+	src: url('/static/fonts/Molot.otf');
+}
+
+@font-face {
+	font-family: comfortaa;
+	src: url('/static/fonts/Comfortaa_Regular.ttf');
+}
+
+@font-face {
+	font-family: fff;
+	src: url('/static/fonts/FFF_Tusj.ttf');
+}
+
+@font-face {
+	font-family: finger-paint;
+	src: url('/static/fonts/FingerPaint-Regular.ttf');
+}
+
+@font-face {
+	font-family: passion-one;
+	src: url('/static/fonts/PassionOne-Regular.otf');
+}
+
+@font-face {
+	font-family: asap;
+	src: url('/static/fonts/Asap-Regular.otf');
+}
+
+@font-face {
+	font-family: exo-regular;
+	src: url('/static/fonts/exo/Exo-Regular.otf');
+}
+
+@font-face {
+	font-family: exo-medium;
+	src: url('/static/fonts/exo/Exo-Medium.otf');
+}
+
+@font-face {
+	font-family: amble-regular;
+	src: url('/static/fonts/amble/Amble-Regular.ttf');
+}
 
 /* Animations *********************************************************/
 
@@ -54,7 +109,6 @@ html{
   -o-background-size: cover;
   background-size: cover;  
   
-  
 }
 
 body {
@@ -64,8 +118,11 @@ body {
 	background-size: 100px, 100px;
 	*/
 	background: transparent;
-	font-family: Verdana, Geneva, sans-serif;
 	color: white;
+	text-rendering: optimizelegibility;
+
+	font-family: amble-regular, sans-serif;
+	font-size: 15px;
 }
 
 .center {
@@ -96,7 +153,8 @@ body {
 
 table {
 	cellspacing: 0;
-	border-spacing: 0;
+	cellpadding: 0;
+	border: none;
 }
 
 tr {
@@ -215,6 +273,7 @@ tr:first-child:hover {
 .app_name {
 	text-align: center;
 	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+	font-family: finger-paint, sans-serif;
 	font-weight: bold;
     font-size: 170%;
     line-height: 50px;
