@@ -158,8 +158,8 @@ body {
 	font-size: 15px;
 	
 	/* Font Smoothing*/
-	-webkit-font-smoothing: antialiased;
-	-moz-font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;		/* chrome */
+	font-smooth: always;						/* firefox */
     text-shadow: 0.5px 0.5px 0.5px rgba(127, 127, 127, 0.5);
 }
 
