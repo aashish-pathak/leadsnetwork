@@ -136,12 +136,18 @@
 
 /**********************************************************************/
 html{
-  background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
+
+
+  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;  
-  
+  background-size: cover;
+
+	-webkit-background-size: 500px 500px;
+	-moz-background-size: 500px 500px;
+	-o-background-size: 500px 500px;
+	background-size: 500px 500px;  
 }
 
 body {
@@ -274,11 +280,17 @@ tr:first-child:hover {
 	/*box-shadow: 5px 5px 5px #888888;*/
 
 
-  background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
+  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  
+ 	-webkit-background-size: 500px 500px;
+	-moz-background-size: 500px 500px;
+	-o-background-size: 500px 500px;
+	background-size: 500px 500px;  
+
 
 }
 
@@ -374,11 +386,18 @@ tr:first-child:hover {
 
 #results_header {
 
-  background: url('/static/img/plain_wall.jpg') no-repeat center center fixed; 
+  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
+
+	-webkit-background-size: 500px 500px;
+	-moz-background-size: 500px 500px;
+	-o-background-size: 500px 500px;
+	background-size: 500px 500px;  
+
 
 	min-height: 200px;
 	margin-left: 2.5%;
