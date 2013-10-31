@@ -156,11 +156,7 @@
 html{
 
 
-  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: url('/static/img/dark_net.jpg') repeat center center fixed;
 
 	-webkit-background-size: 500px 500px;
 	-moz-background-size: 500px 500px;
@@ -306,8 +302,11 @@ tr:first-child:hover {
 	top: 0;
 	left: 0;
 	z-index: 1;
-	/*box-shadow: 5px 5px 5px #888888;*/
 
+	/*box-shadow: h-shadow v-shadow blur spread color inset;*/
+/*	-webkit-box-shadow: 0px 5px 5px -5px #ffffff;
+    -moz-box-shadow: 0px 5px 5px -5px #ffffff;  
+    box-shadow: 0px 5px 5px 1px #ffffff;  */
 
   background: url('/static/img/dark_net.jpg') repeat center center fixed; 
   -webkit-background-size: cover;
@@ -438,6 +437,13 @@ tr:first-child:hover {
 	-webkit-box-shadow: 0px 5px 5px -5px #ffffff;
     -moz-box-shadow: 0px 5px 5px -5px #ffffff;
     box-shadow: 0px 5px 5px -5px #ffffff;
+}
+
+.bottom-shadow-inset {
+	/* Only bottom shadow*/
+	-webkit-box-shadow: 0px -5px 5px -5px #ffffff inset;
+    -moz-box-shadow: 0px -5px 5px -5px #ffffff inset;
+    box-shadow: 0px -5px 5px -5px #ffffff inset;
 }
 
 #results_table {
