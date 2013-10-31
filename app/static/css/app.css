@@ -461,10 +461,11 @@ thead tr:first-child:hover {
 
 #login_div {
 	max-width: 50%;
+
 }
 
 #main_div {
-	min-height: 500px;
+	min-height: 650px;
 }
 
 #search_div {
