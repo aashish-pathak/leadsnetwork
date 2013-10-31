@@ -216,9 +216,20 @@ table {
 	background:rgba(255,255,255,0.1);
 }
 
+/* for chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+	table {
+		border: 1px solid #DDDDDD;
+	}
+	tr {
+		border-top: 1px solid #DDDDDD;
+	}
+}
+
 .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
     border-top: 1px solid #DDDDDD;
     border-top: none;
+    -webkit-border-bottom: 1px dotted #999999;
 }
 
 .table thead > tr, .table tbody > tr {
@@ -237,10 +248,13 @@ tr {
 	-webkit-box-shadow: 0px 0px 16px 0 rgba(0 ,0 ,0 ,1);
 	box-shadow: 0px 0px 16px 0 rgba(0 ,0 ,0 ,1);
 
-
 	/* Rounded corners*/
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 	border-radius: 5px;
+
 }
+
 
 .tr_th {
 	font-weight: bold;
@@ -265,11 +279,11 @@ tr.t3 td {
 }
 */
 
-tr:hover {
+tbody tr:hover {
     background-color: #BBBBBB;
     background:rgba(255,255,255,0.3);
 }
-tr:first-child:hover {
+thead tr:first-child:hover {
 	cursor: default;
     background-color: transparent;
 }
