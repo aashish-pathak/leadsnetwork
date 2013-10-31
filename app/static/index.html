@@ -13,6 +13,7 @@
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
 	<script src="static/js/app.js"></script>
+	<script src="static/js/jquery.clearsearch.js" ></script>
 	
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.min.css">
 	<!-- buttons -->
@@ -32,6 +33,13 @@
 	
 	<div ng-controller="mainCtrl">
 
+		<!-- for clearing textbox -->
+		<!--
+		<script type="text/javascript">
+			$('.clearable').clearSearch();
+		</script>
+		-->
+		
 		<!-- JQuery Dialogs -->
 		<div id="invalid_username" title="Ooops!" class="ui-helper-hidden">
 			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
@@ -270,7 +278,7 @@
 				<div id="leads_list">
 					<ul class="unstyled center">
 						
-						<li ng-repeat="lead in leads_list | filter:leads_filter">
+						<li ng-repeat="lead in leads_list | filter:leads_filter | orderBy:'-name'">
 							<label><input type="checkbox" ng-model="lead[2]">
 							    {{lead[1]}}</label></li>
 					</ul>
