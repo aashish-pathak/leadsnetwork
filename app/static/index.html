@@ -82,30 +82,32 @@
 		<div id="container_div">
 
 		<!----------------------------Header--------------------------->		
-		<div id="header_div" ng-show="show_always"">
-			<div class="header_left">
-				<a href="." data-toggle="tooltip" title="List of leads !">
-				<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
-				<i class="icon-large icon-group" style="color: white"></i></button></a>
-			</div>
-			<div class="header_right">
-				<span class="btn-group" ng-show="is_logged_in" style="float: right">
-				<span class="glyphicon glyphicon-user" style="color: white"></span>
-				<a class="dropdown-toggle" style="cursor: pointer; color: white">
-				{{ldap_name | uppercase}}</a>
-				<ul class="dropdown-menu pull-right" role="menu">
-					<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings </a></li>
-					<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
-				</ul>
-				</span>
-			</div>			
+		
+		<div id="header_div" ng-show="show_always">
+			<!--for bottom shadow-->
+			<div class="bottom-shadow">
+				<div class="header_left">
+					<a href="." data-toggle="tooltip" title="List of leads !">
+					<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+					<i class="icon-large icon-group" style="color: white"></i></button></a>
+				</div>
+				<div class="header_right">
+					<span class="btn-group" ng-show="is_logged_in" style="float: right">
+					<span class="glyphicon glyphicon-user" style="color: white"></span>
+					<a class="dropdown-toggle" style="cursor: pointer; color: white">
+					{{ldap_name | uppercase}}</a>
+					<ul class="dropdown-menu pull-right" role="menu">
+						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings </a></li>
+						<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
+					</ul>
+					</span>
+				</div>			
 
-			<div id="header_center" class="center app_name">
-				<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">
-					Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
+				<div id="header_center" class="center app_name">
+					<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">
+						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
+				</div>
 			</div>
-			
-			
 				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 					<br>
 					<div id="results_summary" class="well well-sm bottom-shadow">
