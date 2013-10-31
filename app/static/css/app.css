@@ -93,6 +93,21 @@
 	font-family: istok;
 	src: url('/static/fonts/istok.ttf');
 }
+
+@font-face {
+	font-family: juice;
+	src: url('/static/fonts/juice.ttf');
+}
+
+@font-face {
+	font-family: jura-regular;
+	src: url('/static/fonts/jura-regular.otf');
+}
+
+@font-face {
+	font-family: jura-bold;
+	src: url('/static/fonts/jura-bold.otf');
+}
 /* for Font Size ******************************************************/
 
 @media (max-width: 300px) {
@@ -208,7 +223,7 @@ body {
 	color: white;
 	text-rendering: optimizelegibility;
 
-	font-family: istok, sans-serif;
+	font-family: jura-bold, sans-serif;
 	font-size: 15px;
 	
 	/* Font Smoothing*/
