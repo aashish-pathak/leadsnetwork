@@ -104,10 +104,6 @@
 	src: url('/static/fonts/jura-regular.otf');
 }
 
-@font-face {
-	font-family: jura-bold;
-	src: url('/static/fonts/jura-bold.otf');
-}
 /* for Font Size ******************************************************/
 
 @media (max-width: 300px) {
