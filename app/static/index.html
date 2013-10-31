@@ -6,13 +6,12 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" charset="utf-8" />
 	<title>Leads' Network!</title>
 	
-	<script src="static/js/jquery.js" ></script>
-	<script src="static/js/jquery-backstretch.js" ></script>
-	<script src="static/js/jquery-ui-leads.js" ></script>
-	<script src="static/lib/angular/angular.js"></script>
-	<script src="static/lib/angular/angular-cookies.js"></script>
-	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.js"></script>
-	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+	<script src="static/js/jquery.min.js" ></script>
+	<script src="static/js/jquery-ui-leads.min.js" ></script>
+	<script src="static/lib/angular/angular.min.js"></script>
+	<script src="static/lib/angular/angular-cookies.min.js"></script>
+	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
+	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
 	<script src="static/js/app.js"></script>
 	
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.css">
@@ -67,7 +66,8 @@
 
 		<div id="both_fname_lname_error" title="Ooops!" class="ui-helper-hidden">
 			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			Do you want to search using both first-name and last-name?
+			<!--Do you want to search using both first-name and last-name?-->
+			Please enter both first name and last name !
 			</p>
 		</div>
 
@@ -85,7 +85,7 @@
 		
 		<div id="header_div" ng-show="show_always">
 			<!--for bottom shadow-->
-			<div class="bottom-shadow">
+			<div class="">
 				<div class="header_left">
 					<a href="." data-toggle="tooltip" title="List of leads !">
 					<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
@@ -215,30 +215,34 @@
 					<!------------------->
 					
 					<table class="table">
-						<tr class="tr_th">
-							<td>Degree</td>
-							<td>Connected Through</td>
-							<td>Common Connections</td>
-							<td>Picture</td>
-						</tr>
-						<tr class="my_tr" ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
-							<td style="vertical-align: middle">{{connection.distance}}</td>
-							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
-							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
-						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.second | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
-							<td style="vertical-align: middle">{{connection.distance}}</td>
-							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
-							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
-						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.third | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
-							<td style="vertical-align: middle">{{connection.distance}}</td>
-							<td style="vertical-align: middle">{{connection.through}}</td>
-							<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
-							<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>						
-						</tr>
+						<thead>
+							<tr class="tr_th">
+								<td>Degree</td>
+								<td>Connected Through</td>
+								<td>Common Connections</td>
+								<td>Picture</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="my_tr" ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle">{{connection.distance}}</td>
+								<td style="vertical-align: middle">{{connection.through}}</td>
+								<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+								<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
+							</tr>
+							<tr ng-class="connection.row_type" ng-repeat="connection in connections.second | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle">{{connection.distance}}</td>
+								<td style="vertical-align: middle">{{connection.through}}</td>
+								<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+								<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
+							</tr>
+							<tr ng-class="connection.row_type" ng-repeat="connection in connections.third | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle">{{connection.distance}}</td>
+								<td style="vertical-align: middle">{{connection.through}}</td>
+								<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+								<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>						
+							</tr>
+						</tbody>
 					</table>
 				</div>
 				<div id="results_footer">

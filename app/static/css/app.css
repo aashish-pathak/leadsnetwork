@@ -59,6 +59,24 @@
 	src: url('/static/fonts/PTC75F.ttf');
 }
 
+/* for Font Size ******************************************************/
+
+@media (max-width: 300px) {
+    html { font-size: 70%; }
+}
+
+@media (min-width: 500px) {
+    html { font-size: 80%; }
+}
+
+@media (min-width: 700px) {
+    html { font-size: 120%; }
+}
+
+@media (min-width: 1200px) {
+    html { font-size: 200%; }
+}
+
 
 /* Animations *********************************************************/
 
@@ -199,11 +217,16 @@ table {
 	cellspacing: 0;
 	cellpadding: 0;
 	border: none;
+	background:rgba(255,255,255,0.1);
 }
 
 .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
     border-top: 1px solid #DDDDDD;
     border-top: none;
+}
+
+.table thead > tr, .table tbody > tr {
+	background-clip: padding-box;
 }
 
 tr {
@@ -220,7 +243,7 @@ tr {
 
 
 	/* Rounded corners*/
-	border-radius: 10px;
+	border-radius: 5px;
 }
 
 .tr_th {
@@ -370,7 +393,6 @@ tr:first-child:hover {
 
 #results_table {
 	color: white;
-	background:rgba(255,255,255,0.1);
 }
 
 #login_div {
