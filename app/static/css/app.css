@@ -104,25 +104,268 @@
 	src: url('/static/fonts/jura-regular.otf');
 }
 
-/* for Font Size ******************************************************/
+/* Media Queries (responsive design) **********************************/
 
-@media (max-width: 300px) {
-    html { font-size: 70%; }
+/* for large devices (laptops and desktops)*/
+@media (min-width: 720px) {
+    html
+    {
+		background: url('/static/img/dark_net.jpg') repeat center center fixed;
+		-webkit-background-size: 500px 500px;
+		-moz-background-size: 500px 500px;
+		-o-background-size: 500px 500px;
+		background-size: 500px 500px;  
+    }
+
+	body
+	{
+		/*background-image:url('/static/img/linkedin_background.png');
+		background-color: #f1f1f1;
+		background-position: fixed;
+		background-size: 100px, 100px;
+		*/
+		background: transparent;
+		color: white;
+		text-rendering: optimizelegibility;
+
+		font-family: jura-bold, sans-serif;
+		font-size: 15px;
+		
+		/* Font Smoothing*/
+		-webkit-font-smoothing: antialiased;		/* chrome */
+		font-smooth: always;						/* firefox */
+		text-shadow: 0.5px 0.5px 0.5px rgba(127, 127, 127, 0.5);
+	}
+	
+	#results_header {
+
+	  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+
+
+		-webkit-background-size: 500px 500px;
+		-moz-background-size: 500px 500px;
+		-o-background-size: 500px 500px;
+		background-size: 500px 500px;  
+
+
+		min-height: 200px;
+		margin-left: 2.5%;
+		max-width: 95%;
+		top: 55px;
+	}
+	
+	#results_table {
+		color: white;
+	}
+		
+	tbody tr:hover {
+		background-color: #BBBBBB;
+		background:rgba(255,255,255,0.3);
+	}
+	
+	thead tr:first-child:hover {
+		cursor: default;
+		background-color: transparent;
+	}	
+	
+	.profile_pic {
+		width: 60px;
+		height: 60px;
+	}
+
+	#leads_list {
+		max-width: 60%;
+		text-align: left;
+		margin: auto;
+	}
+}
+/* for handheld TAB devices*/
+@media (min-width: 480px) and (max-width: 720px) {
+    html
+    {
+/*
+		background: url('/static/img/linkedin_background.png') repeat center center fixed;
+
+		-webkit-background-size: 500px 500px;
+		-moz-background-size: 500px 500px;
+		-o-background-size: 500px 500px;
+		background-size: 500px 500px;  
+*/		
+		background-color: #f1f1f1;
+     }
+     
+	body
+	{
+		/*background-image:url('/static/img/linkedin_background.png');
+		background-color: #f1f1f1;
+		background-position: fixed;
+		background-size: 100px, 100px;
+		*/
+		background: transparent;
+		color: black;
+		text-rendering: optimizelegibility;
+
+		font-family: jura-bold, sans-serif;
+		font-size: 15px;
+		
+		/* Font Smoothing*/
+		-webkit-font-smoothing: antialiased;		/* chrome */
+		font-smooth: always;						/* firefox */
+		text-shadow: 0.5px 0.5px 0.5px rgba(127, 127, 127, 0.5);
+	}
+
+	#results_header {
+	
+	/*
+	  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+
+
+		-webkit-background-size: 500px 500px;
+		-moz-background-size: 500px 500px;
+		-o-background-size: 500px 500px;
+		background-size: 500px 500px;  
+	*/
+	color: black;
+	
+	background-color: #f1f1f1;
+
+		min-height: 200px;
+		margin-left: 2.5%;
+		max-width: 95%;
+		top: 55px;
+	}
+
+
+	#results_table {
+		color: black;
+	}
+	
+	tbody tr:hover {
+		background-color: #888888;
+		background:rgba(255,255,255,0.3);
+	}
+	
+	thead tr:first-child:hover {
+		cursor: default;
+		background-color: transparent;
+	}
+		
+	.profile_pic {
+		width: 60px;
+		height: 60px;
+	}
+
+	#leads_list {
+		max-width: 90%;
+		text-align: left;
+		margin: auto;
+	}
 }
 
-@media (min-width: 500px) {
-    html { font-size: 80%; }
+/* for handheld TAB devices*/
+@media (max-width: 480px){
+    html
+    {
+/*
+		background: url('/static/img/linkedin_background.png') repeat center center fixed;
+
+		-webkit-background-size: 500px 500px;
+		-moz-background-size: 500px 500px;
+		-o-background-size: 500px 500px;
+		background-size: 500px 500px;  
+*/		
+		background-color: #f1f1f1;
+     }
+     
+	body
+	{
+		/*background-image:url('/static/img/linkedin_background.png');
+		background-color: #f1f1f1;
+		background-position: fixed;
+		background-size: 100px, 100px;
+		*/
+		background: transparent;
+		color: black;
+		text-rendering: optimizelegibility;
+
+		font-family: jura-bold, sans-serif;
+		font-size: 95%;
+		
+		/* Font Smoothing*/
+		-webkit-font-smoothing: antialiased;		/* chrome */
+		font-smooth: always;						/* firefox */
+		text-shadow: 0.5px 0.5px 0.5px rgba(127, 127, 127, 0.5);
+	}
+
+	#results_header {
+	
+	/*
+	  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+
+
+		-webkit-background-size: 500px 500px;
+		-moz-background-size: 500px 500px;
+		-o-background-size: 500px 500px;
+		background-size: 500px 500px;  
+	*/
+	color: black;
+	
+	background-color: #f1f1f1;
+
+		min-height: 200px;
+		margin-left: 2.5%;
+		max-width: 95%;
+		top: 55px;
+	}
+
+	#results_table {
+		color: black;
+		margin-top: 50px;
+	}
+	
+	tbody tr:hover {
+		background-color: #888888;
+		background:rgba(255,255,255,0.3);
+	}
+	
+	thead tr:first-child:hover {
+		cursor: default;
+		background-color: transparent;
+	}
+	
+	.profile_pic {
+		width: 40px;
+		height: 40px;
+	}
+	
+	/* for chrome */
+	@media screen and (-webkit-min-device-pixel-ratio:0) { 
+		table {
+			border: 1px solid #DDDDDD;
+		}
+		tr {
+			border-top: 1px solid #DDDDDD;
+		}
+	}
+
+	#leads_list {
+		max-width: 100%;
+		text-align: left;
+		margin: auto;
+	}
 }
-
-@media (min-width: 700px) {
-    html { font-size: 120%; }
-}
-
-@media (min-width: 1200px) {
-    html { font-size: 200%; }
-}
-
-
 /* Animations *********************************************************/
 
 .leads-show, .leads-hide {
@@ -187,11 +430,8 @@
 
 
 /**********************************************************************/
-/* Profile Picture*/
-.profile_pic {
-	width: 60px;
-	height: 60px;
-}
+/* Profile Picture hover*/
+
 .profile_pic:hover {
 	cursor: pointer;
 }
@@ -200,32 +440,18 @@
 /**********************************************************************/
 html{
 
-
+/*
   background: url('/static/img/dark_net.jpg') repeat center center fixed;
 
 	-webkit-background-size: 500px 500px;
 	-moz-background-size: 500px 500px;
 	-o-background-size: 500px 500px;
 	background-size: 500px 500px;  
+*/
 }
 
 body {
-	/*background-image:url('/static/img/linkedin_background.png');
-	background-color: #f1f1f1;
-	background-position: fixed;
-	background-size: 100px, 100px;
-	*/
-	background: transparent;
-	color: white;
-	text-rendering: optimizelegibility;
 
-	font-family: jura-bold, sans-serif;
-	font-size: 15px;
-	
-	/* Font Smoothing*/
-	-webkit-font-smoothing: antialiased;		/* chrome */
-	font-smooth: always;						/* firefox */
-    text-shadow: 0.5px 0.5px 0.5px rgba(127, 127, 127, 0.5);
 }
 
 .center {
@@ -260,16 +486,6 @@ table {
 	cellpadding: 0;
 	border: none;
 	background:rgba(255,255,255,0.1);
-}
-
-/* for chrome */
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
-	table {
-		border: 1px solid #DDDDDD;
-	}
-	tr {
-		border-top: 1px solid #DDDDDD;
-	}
 }
 
 .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
@@ -325,14 +541,7 @@ tr.t3 td {
 }
 */
 
-tbody tr:hover {
-    background-color: #BBBBBB;
-    background:rgba(255,255,255,0.3);
-}
-thead tr:first-child:hover {
-	cursor: default;
-    background-color: transparent;
-}
+
 
 /* DIVs : header, footer, login, search, results, leads */
 
@@ -348,7 +557,7 @@ thead tr:first-child:hover {
 
 #container_div {
 	background: transparent;
-	color: white;
+
 }
 
 #header_div {
@@ -451,17 +660,14 @@ thead tr:first-child:hover {
 	background:rgba(255,255,255,0.1);
 }
 
-#results_table {
-	color: white;
-}
-
 #login_div {
 	max-width: 50%;
 
 }
 
 #main_div {
-	min-height: 650px;
+	min-height: 600px;
+	margin-top: 50px;
 }
 
 #search_div {
@@ -472,26 +678,7 @@ thead tr:first-child:hover {
 	max-width: 95%;
 }
 
-#results_header {
 
-  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
-
-	-webkit-background-size: 500px 500px;
-	-moz-background-size: 500px 500px;
-	-o-background-size: 500px 500px;
-	background-size: 500px 500px;  
-
-
-	min-height: 200px;
-	margin-left: 2.5%;
-	max-width: 95%;
-	top: 55px;
-}
 
 .bottom-shadow {
 	/* Only bottom shadow*/
@@ -506,11 +693,6 @@ thead tr:first-child:hover {
     -moz-box-shadow: 0px -5px 5px -5px #ffffff inset;
     box-shadow: 0px -5px 5px -5px #ffffff inset;
 }
-
-#results_table {
-	
-}
-
 
 #leads_div {
 	max-width: 95%;
