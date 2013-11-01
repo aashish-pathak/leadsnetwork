@@ -51,6 +51,7 @@ class MySQL(Config):
 		
 		leads_count = row[0]
 		random_number = random.randint(1, leads_count)
+		print 'Random Lead Number : ' + str(random_number)
 		sql = "select * from people"
 		rows = self.cursor.execute(sql)
 		for x in range(1, random_number):

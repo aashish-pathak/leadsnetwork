@@ -1,0 +1,17 @@
+	* UI Modifications:
+		- Changing background to linkedin-background
+		- Font color : black (with light shadow effects)
+		- Removing results_header from header_div and fixing it in results_div
+		- Fixing table header
+	
+	* Ranking algorithm for leads:
+		- fetching data for all leads (one time) :
+			- to fetch contacts, designation, experience, organization, current-city
+		- Static ranking based on stored information
+		- Fetching profile (of query-person) through random lead to look for current-city, school, college, organization
+		- Calculating final weight of all leads for corresponding query-person
+		- Fetching query-person's profile through all sorted leads to look for distance
+	
+	* Storing result logs:
+		- Storing query-person and all of his/her search results into a file for further use
+		- machine learning on such data leading to results close to optimal results (future work)
