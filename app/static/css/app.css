@@ -249,8 +249,9 @@
 	}
 	
 	tbody tr:hover {
-		background-color: #888888;
-		background:rgba(255,255,255,0.3);
+		background-color: #333333;
+		color: white;
+		/*background:rgba(127,127,127,0.3);*/
 	}
 	
 	thead tr:first-child:hover {
@@ -336,8 +337,9 @@
 	}
 	
 	tbody tr:hover {
-		background-color: #888888;
-		background:rgba(255,255,255,0.3);
+		background-color: #333333;
+		color: white;
+		/*background:rgba(127,127,127,0.3);*/
 	}
 	
 	thead tr:first-child:hover {
