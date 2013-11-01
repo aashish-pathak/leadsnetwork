@@ -7,6 +7,7 @@ class MyLinkedIn(Config):
 	
 	def __init__(self):
 		super(MyLinkedIn, self).__init__()
+		self.callback_url = self.get_cfg("LinkedIn", "callback_url")
 		self.consumer_key = self.get_cfg("LinkedIn", "consumer_key")
 		self.consumer_secret = self.get_cfg("LinkedIn", "consumer_secret")
 		self.__create_consumer()
@@ -63,7 +64,7 @@ class MyLinkedIn(Config):
 	def get_auth_url(self):
 		l = LinkedinAPI(api_key=self.consumer_key,
 						api_secret=self.consumer_secret,
-						callback_url='http://localhost:5000/callback',
+						callback_url=self.callback_url,
 						permissions=["r_network"])
 		auth_props = l.get_authentication_tokens()
 		auth_url = auth_props['auth_url']
