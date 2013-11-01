@@ -18,8 +18,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.show_leads = false;
 	$scope.leads_filter = '';
 
-	$scope.homepage = 'http://localhost:5000/';
-
 	$scope.login_username = '';
 	$scope.login_password = '';
 	
@@ -154,7 +152,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		function() {return $location.absUrl();},
 		function() {
 			if($location.absUrl().indexOf("#") != -1) {
-				$scope.goTo($scope.homepage);
+				$scope.goTo("/");
 			}
 		}
 	);
