@@ -64,6 +64,42 @@
 		text-align: left;
 		margin: auto;
 	}
+	
+		#login_div {
+		max-width: 50%;
+	}
+
+	.input-ldap {
+		width: 60%;
+	}
+	
+	.button-login {
+		
+	}
+
+	.button-text-login {
+		display: none;
+	}
+	
+	#search_div {
+		max-width: 50%;
+	}
+
+	.button-search {
+		 width: 50%;
+	}
+
+	.button-leads {
+		
+	}
+	
+	.button-logo-leads {
+	
+	}
+	
+	.button-text-leads {
+		display: none;
+	}
 
 
 /**********************************************************************/
@@ -154,3 +190,38 @@
 		margin: auto;
 	}
 	
+		#login_div {
+		max-width: 50%;
+	}
+
+	.input-ldap {
+		width: 60%;
+	}
+	
+	.button-login {
+		
+	}
+
+	.button-text-login {
+		display: none;
+	}
+	
+	#search_div {
+		max-width: 50%;
+	}
+
+	.button-search {
+		 width: 50%;
+	}
+
+	.button-leads {
+		
+	}
+	
+	.button-logo-leads {
+	
+	}
+	
+	.button-text-leads {
+		display: none;
+	}
