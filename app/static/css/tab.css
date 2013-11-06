@@ -109,4 +109,11 @@
 		 width: 50%;
 	}
 
+	.button-logo-leads {
+	
+	}
+	
+	.button-text-leads {
+		display: none;
+	}
 }

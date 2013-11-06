@@ -1,11 +1,11 @@
 
 /* for chrome */
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
+@media screen and (-webkit-min-device-pixel-ratio:0) {
 		table {
-			border: 1px solid #DDDDDD;
+			border: 1px solid #888888;
 		}
 		tr {
-			border-top: 1px solid #DDDDDD;
+			border-top: 1px solid #888888;
 		}
 	}
 
