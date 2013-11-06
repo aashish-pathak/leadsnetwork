@@ -248,7 +248,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Sign In *****************************/
 
 	$scope.signIn = function() {
-				
+
+		if($scope.login_username == '' || $scope.login_password == '') {
+			$scope.createDialog("#both_username_password_error");
+			return;
+		}
+
 		var login_url = "/login";
 		
 		var post_data = new Object();
