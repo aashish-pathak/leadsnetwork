@@ -192,6 +192,14 @@
 		text-align: left;
 		margin: auto;
 	}
+
+	#login_div {
+		max-width: 50%;
+	}
+
+	.input-ldap {
+		width: 60%;
+	}
 	
 }
 /* for handheld TAB devices*/
@@ -280,9 +288,17 @@
 		text-align: left;
 		margin: auto;
 	}
+
+	#login_div {
+		max-width: 80%;
+	}
+	
+	.input-ldap {
+		width: 100%;
+	}
 }
 
-/* for handheld TAB devices*/
+/* for MOBILE devices*/
 @media (max-width: 480px){
     html
     {
@@ -362,9 +378,21 @@
 		width: 40px;
 		height: 40px;
 	}
-	
-	/* for chrome */
-	@media screen and (-webkit-min-device-pixel-ratio:0) { 
+
+	#login_div {
+		max-width: 100%;
+	}
+
+	.input-ldap {
+		width: 100%;
+	}
+}
+
+
+
+
+/* for chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
 		table {
 			border: 1px solid #DDDDDD;
 		}
@@ -673,11 +701,6 @@ tr.t3 td {
 	background:rgba(255,255,255,0.1);
 }
 
-#login_div {
-	max-width: 50%;
-
-}
-
 #main_div {
 	min-height: 600px;
 	margin-top: 50px;
@@ -691,7 +714,7 @@ tr.t3 td {
 	max-width: 95%;
 }
 
-
+/*******************************Input Boxes****************************/
 
 .bottom-shadow {
 	/* Only bottom shadow*/

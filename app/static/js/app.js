@@ -422,8 +422,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 						$scope.current_xhr++;
 						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
 						$scope.setProgressBar();						
-						// add default profile picture
-						if(!('pictureUrl' in data)) {
+						// add default profile picture for connections under degree 3
+						if(!('pictureUrl' in data) && data.distance <= 3 && data.distance > 0) {
 							data.pictureUrl = '/static/img/ghost_profile.png';
 							console.log(data);
 						}
