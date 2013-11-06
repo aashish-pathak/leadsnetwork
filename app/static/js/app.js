@@ -31,6 +31,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.lname = '';
 	$scope.cname = '';
 	$scope.both_fname_lname = true;
+	$scope.is_search_clicked = false;
 	
 	$scope.connections={};
 	$scope.connections.all=[];
@@ -316,10 +317,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_results = false;		
 		$scope.resetProgressBar();
 		$scope.stopRequests();
+		$scope.is_search_clicked = false;
 	};
 
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
+
+	$scope.is_search_clicked = true;
 		
 		$scope.selected_leads_count = 0;
 		// count number of selected leads
@@ -338,6 +342,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if($scope.both_fname_lname == true)
 			if($scope.fname == '' || $scope.lname == '') {
 				$scope.createDialog("#both_fname_lname_error");
+				$scope.is_search_clicked = false;
 				return;
 			}
 
@@ -361,7 +366,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* ********************** Find Connections ************************/
 
-	$scope.findConnections = function() {		
+	$scope.findConnections = function() {
 		
 		$scope.show_search_form = false;
 		$scope.show_results = true;
