@@ -1,0 +1,112 @@
+/* for large devices (laptops and desktops)*/
+@media (min-width: 720px) {
+    html
+    {
+/*
+		background: url('/static/img/linkedin_background.png') repeat center center fixed;
+
+		-webkit-background-size: 500px 500px;
+		-moz-background-size: 500px 500px;
+		-o-background-size: 500px 500px;
+		background-size: 500px 500px;  
+*/		
+		background-color: #f1f1f1;
+     }
+     
+	body
+	{
+		/*background-image:url('/static/img/linkedin_background.png');
+		background-color: #f1f1f1;
+		background-position: fixed;
+		background-size: 100px, 100px;
+		*/
+		background: transparent;
+		color: black;
+		text-rendering: optimizelegibility;
+
+		font-family: jura-bold, sans-serif;
+		font-size: 15px;
+		
+		/* Font Smoothing*/
+		-webkit-font-smoothing: antialiased;		/* chrome */
+		font-smooth: always;						/* firefox */
+		text-shadow: 0.5px 0.5px 0.5px rgba(127, 127, 127, 0.5);
+	}
+
+	#results_header {
+	
+	/*
+	  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+
+
+		-webkit-background-size: 500px 500px;
+		-moz-background-size: 500px 500px;
+		-o-background-size: 500px 500px;
+		background-size: 500px 500px;  
+	*/
+	color: black;
+	
+	background-color: #f1f1f1;
+
+		min-height: 200px;
+		margin-left: 2.5%;
+		max-width: 95%;
+		top: 55px;
+	}
+
+
+	#results_table {
+		color: black;
+	}
+	
+	tbody tr:hover {
+		background-color: #333333;
+		color: white;
+		/*background:rgba(127,127,127,0.3);*/
+	}
+	
+	thead tr:first-child:hover {
+		cursor: default;
+		background-color: transparent;
+	}
+		
+	.profile_pic {
+		width: 60px;
+		height: 60px;
+	}
+
+	#leads_list {
+		max-width: 90%;
+		text-align: left;
+		margin: auto;
+	}
+
+	#login_div {
+		max-width: 50%;
+	}
+
+	.input-ldap {
+		width: 60%;
+	}
+	
+	.button-login {
+		
+	}
+
+	.button-text-login {
+		display: none;
+	}
+	
+	#search_div {
+		max-width: 50%;
+	}
+
+	.button-search {
+		 width: 50%;
+	}
+}
+

@@ -26,6 +26,14 @@
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.min.css" media="all">
 	<!-- main css -->
 	<link rel="stylesheet" type="text/css" href="static/css/app.css">
+	<!-- desktop css -->
+	<link rel="stylesheet" type="text/css" href="static/css/desktop.css">
+	<!-- tab css -->
+	<link rel="stylesheet" type="text/css" href="static/css/tab.css">
+	<!-- mobile css -->
+	<link rel="stylesheet" type="text/css" href="static/css/mobile.css">
+	<!-- fonts css -->
+	<link rel="stylesheet" type="text/css" href="static/css/fonts.css">
 
 </head>
 
@@ -175,8 +183,10 @@
 							<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="LDAP Password" required>
 						</div>
 						<br>
-						<center><button class="btn btn-red center">
-							<i class="icon-large icon-linkedin"></i></button></center>
+						<center><button class="btn btn-red center button-login">
+							<i class="icon-large icon-linkedin button-logo-login"></i>
+							<span class="button-text-login">Log In</span>
+							</button></center>
 				</form>
 			</div>
 			
@@ -199,7 +209,7 @@
 					
 					<b><span>
 					{{fname | uppercase}} {{lname | uppercase}}</span></b><br><br>
-					<button class="btn btn-blue" style="display: block; width: 50%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
+					<button class="btn btn-blue button-search" style="display: block"><span class="glyphicon glyphicon-search"></span>	Search</button>
 				</form>
 				</center>
 			</div>
