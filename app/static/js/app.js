@@ -178,7 +178,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Go Back *****************************/
 
 	$scope.goBack = function() {
-		$scope.stopRequests();
 		$scope.searchAgain();
 	};
 
@@ -316,6 +315,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_search_form = true;
 		$scope.show_results = false;		
 		$scope.resetProgressBar();
+		$scope.stopRequests();
 	};
 
 	/* ************************* The Search ***************************/
