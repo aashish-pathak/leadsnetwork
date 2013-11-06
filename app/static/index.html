@@ -34,6 +34,8 @@
 	<link rel="stylesheet" type="text/css" href="static/css/mobile.css">
 	<!-- fonts css -->
 	<link rel="stylesheet" type="text/css" href="static/css/fonts.css">
+	<!-- progress bar css -->
+	<link rel="stylesheet" type="text/css" href="static/css/progress-bar.css">
 
 </head>
 
@@ -103,7 +105,7 @@
 			<div class="bottom-shadow-inset">
 				<div class="header_left">
 					<a href="." data-toggle="tooltip" title="List of leads !">
-					<button class="btn" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
 						<span class="button-logo-leads"><i class="icon-large icon-group" style="color: white"></i></span>
 						<span class="button-text-leads" style="color: white">Leads</span>
 					</button></a>
@@ -119,8 +121,8 @@
 					</ul>
 					</span>
 				</div>			
-
-				<div id="header_center" class="center app_name">
+				
+			<div id="header_center" class="center app_name">
 					<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">
 						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
 				</div>
@@ -133,9 +135,14 @@
 						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
 						<span ng-show="done_searching"><b>Searching done !</b></span>
 					</div>
-					<span>
+					<span ng-hide="done_searching">
 						<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
 					</span>
+					<span ng-show="done_searching">
+						<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
+					</span>
+
+
 					
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
 					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>

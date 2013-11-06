@@ -104,6 +104,11 @@
 		width: 80%;
 	}
 
+	.button-leads {
+		/*border: solid 1px;
+		border-color: white;*/
+	}
+
 	.button-logo-leads {
 		display: none;
 	}

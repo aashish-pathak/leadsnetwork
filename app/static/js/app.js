@@ -49,6 +49,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.progressBar.value = 0;
 	$scope.progressBar.type = 'danger';
 	$scope.done_searching = false;
+	$scope.progress_bar_animation = 'progress-striped active';
 
 	/* ************************* Safe Apply ***************************/
 
