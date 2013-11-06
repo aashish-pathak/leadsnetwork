@@ -178,11 +178,11 @@
 				<form ng-submit="signIn()">
 					<center><img class="login_image bottom-shadow-image" src="static/img/networking.jpg"><br><br></center>
 						<div class="center input-ldap">
-							<input type="text" class="center form-control" name="username" ng-model="login_username" placeholder="LDAP Username" required>
+							<input type="text" class="center form-control" name="username" ng-model="login_username" placeholder="*LDAP Username" ng-required="true">
 						</div>
 						<br>
 						<div class="center input-ldap">
-							<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="LDAP Password" required>
+							<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="*LDAP Password" ng-required="true">
 						</div>
 						<br>
 						<center><button class="btn btn-red center button-login">
@@ -198,9 +198,9 @@
 				<br>
 				<form method='GET' ng-submit="theSearch()">
 					 <br>
-					<input type="text" class="form-control" ng-model="fname" placeholder="First Name" required><br>
+					<input type="text" class="form-control" ng-model="fname" placeholder="*First Name" ng-required="true"><br>
 					 <br>
-					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name" required><br>
+					<input type="text" class="form-control" ng-model="lname" placeholder="*Last Name" ng-required="true"><br>
 					 <br>
 					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br>
 
