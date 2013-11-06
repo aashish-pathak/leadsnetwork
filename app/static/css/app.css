@@ -318,7 +318,10 @@ tr.t3 td {
 	max-width: 95%;
 }
 
-/*******************************Input Boxes****************************/
+.button-border {
+	border-style: solid;
+	border-color: white;
+}
 
 .bottom-shadow {
 	/* Only bottom shadow*/
