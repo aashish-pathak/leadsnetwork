@@ -10,6 +10,7 @@ var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies']);
 
 leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', '$location', function($scope, $rootScope, $http, $cookies, $window, $q, $modal, $location) {
 
+	// for showing and hiding appropriate DIV elements
 	$scope.show_always = true;
 	$scope.is_logged_in = false;
 	$scope.is_admin = false;
@@ -18,21 +19,25 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.show_leads = false;
 	$scope.leads_filter = '';
 
+	// login credentials
 	$scope.login_username = '';
 	$scope.login_password = '';
 	
 	$scope.ldap_name;
 
+	// list of leads
 	$scope.leads_list = [];
 	$scope.leads_empty = false;
 	$scope.selected_leads_count = 0;
-	
+
+	// search parameters
 	$scope.fname = '';
 	$scope.lname = '';
 	$scope.cname = '';
 	$scope.both_fname_lname = true;
 	$scope.is_search_clicked = false;
-	
+
+	// result sets
 	$scope.connections={};
 	$scope.connections.all=[];
 	$scope.connections.first=[];
@@ -41,7 +46,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.common_connections = [];
 	
 	$scope.canceler = [];
-	
+
+	// progress calculation
 	$scope.progressBar = {};
 	$scope.progress = 0;
 	$scope.total_xhr = 0;
