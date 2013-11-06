@@ -357,6 +357,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.success(function(data) {
 			$scope.data = data;
 			if(!$scope.data.numResults) {
+				$scope.is_search_clicked = false;
 				if($scope.cname == '') {
 					$scope.createDialog("#not_on_linkedin_without_cname");
 				}
