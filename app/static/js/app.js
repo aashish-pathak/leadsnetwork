@@ -439,7 +439,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 						// add default profile picture for connections under degree 3
 						if(!('pictureUrl' in data) && data.distance <= 3 && data.distance > 0) {
 							data.pictureUrl = '/static/img/ghost_profile.png';
-							console.log(data);
 						}
 						$scope.current_lead = data.through;
 					});
@@ -473,10 +472,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************* View Profile *************************/
 	
 	$scope.viewProfile = function (connection) {
-		window.$windowScope = $scope;
-		window.open(connection.publicProfileUrl,
-					'frame',
-					'resizeable,top=200,left=200,height=500,width=700');
+		
+		if(connection.publicProfileUrl) {
+			window.$windowScope = $scope;
+			window.open(connection.publicProfileUrl,
+						'frame',
+						'resizeable,top=200,left=200,height=500,width=700');
+		}
+		else
+			$scope.createDialog("#url_undefined");
 	};
 	
 	/* ********************** View Connections ************************/
