@@ -144,14 +144,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$window.location.href = $scope.linkedin_url;
 		})
 		.error(function() {
-			$( "#add_account_http_error" ).dialog({
-				modal: true,
-				buttons: {
-					Ok: function() {
-						$(this).dialog( "close" );
-					}
-				}
-			});
+			$scope.createDialog("#http_error");
 		});
 	};
 	
@@ -374,6 +367,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			else {
 				$scope.findConnections();
 			}			
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
 		});
 	};
 	
