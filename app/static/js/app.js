@@ -486,10 +486,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************** View Connections ************************/
 
 	$scope.viewConnections = function (connection) {
+		var max_connections = 10;
+		
 		$scope.common_connections = [];
 		var count = connection.relationToViewer.connections._total;
-		if(count > 10)
-			count = 10;
+		if(count > max_connections)
+			count = max_connections;
 			
 		for(var i=0; i<count; i++) {
 			var first_name = connection.relationToViewer.connections.values[i].person.firstName;
