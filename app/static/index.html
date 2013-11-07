@@ -14,7 +14,7 @@
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
 	<script src="static/js/app.js"></script>
-	<script src="static/js/jquery.clearsearch.js" ></script>
+	<!--<script src="static/js/jquery.clearsearch.js" ></script>-->
 	
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.min.css">
 	<!-- buttons -->
@@ -27,6 +27,16 @@
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.min.css" media="all">
 	<!-- main css -->
 	<link rel="stylesheet" type="text/css" href="static/css/app.css">
+	<!-- desktop css -->
+	<link rel="stylesheet" type="text/css" href="static/css/desktop.css">
+	<!-- tab css -->
+	<link rel="stylesheet" type="text/css" href="static/css/tab.css">
+	<!-- mobile css -->
+	<link rel="stylesheet" type="text/css" href="static/css/mobile.css">
+	<!-- fonts css -->
+	<link rel="stylesheet" type="text/css" href="static/css/fonts.css">
+	<!-- progress bar css -->
+	<link rel="stylesheet" type="text/css" href="static/css/progress-bar.css">
 
 </head>
 
@@ -75,7 +85,13 @@
 		<div id="both_fname_lname_error" title="Ooops!" class="ui-helper-hidden">
 			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			<!--Do you want to search using both first-name and last-name?-->
-			Please enter both first name and last name !
+			Please enter both First Name and Last Name !
+			</p>
+		</div>
+
+		<div id="both_username_password_error" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Please enter both Username and Password (LDAP Credentials) !
 			</p>
 		</div>
 
@@ -85,9 +101,16 @@
 	</p>
       </div>
 
-    <!----------------------------------------------------------------->
-    
-    <div id="container_div">
+
+		<div id="url_undefined" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Public profile for this person is not available.
+			</p>
+		</div>
+
+		<!----------------------------------------------------------------->
+	
+		<div id="container_div">
 
 		<!----------------------------Header--------------------------->		
 		
@@ -96,8 +119,10 @@
 			<div class="bottom-shadow-inset">
 				<div class="header_left">
 					<a href="." data-toggle="tooltip" title="List of leads !">
-					<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
-					<i class="icon-large icon-group" style="color: white"></i></button></a>
+					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+						<span class="button-logo-leads"><i class="icon-large icon-group" style="color: white"></i></span>
+						<span class="button-text-leads" style="color: white">Leads</span>
+					</button></a>
 				</div>
 				<div class="header_right">
 					<span class="btn-group" ng-show="is_logged_in" style="float: right">
@@ -110,8 +135,8 @@
 					</ul>
 					</span>
 				</div>			
-
-				<div id="header_center" class="center app_name">
+				
+			<div id="header_center" class="center app_name">
 					<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">
 						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
 				</div>
@@ -124,9 +149,14 @@
 						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
 						<span ng-show="done_searching"><b>Searching done !</b></span>
 					</div>
-					<span>
+					<span ng-hide="done_searching">
 						<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
 					</span>
+					<span ng-show="done_searching">
+						<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
+					</span>
+
+
 					
 					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
 					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
@@ -167,17 +197,19 @@
 			<!---------------------------LOG IN------------------------>
 			<div id="login_div" class="center" ng-hide="is_logged_in">
 				<form ng-submit="signIn()">
-					<center><img class="login_image" src="static/img/networking.jpg"><br><br></center>
-						<div class="span6 center">
-							<input type="text" class="center form-control" name="username" ng-model="login_username" placeholder="LDAP Username" required>
+					<center><img class="login_image bottom-shadow-image" src="static/img/networking.jpg"><br><br></center>
+						<div class="center input-ldap">
+							<input type="text" class="center form-control" name="username" ng-model="login_username" placeholder="*LDAP Username">
 						</div>
 						<br>
-						<div class="span6 center">
-							<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="LDAP Password" required>
+						<div class="center input-ldap">
+							<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="*LDAP Password">
 						</div>
 						<br>
-						<center><button class="btn btn-red center">
-							<i class="icon-large icon-linkedin"></i></button></center>
+						<center><button class="btn btn-red center button-login">
+							<i class="icon-large icon-linkedin button-logo-login"></i>
+							<span class="button-text-login">Log In</span>
+							</button></center>
 				</form>
 			</div>
 			
@@ -187,9 +219,9 @@
 				<br>
 				<form method='GET' ng-submit="theSearch()">
 					 <br>
-					<input type="text" class="form-control" ng-model="fname" placeholder="First Name" required><br>
+					<input type="text" class="form-control" ng-model="fname" placeholder="*First Name"><br>
 					 <br>
-					<input type="text" class="form-control" ng-model="lname" placeholder="Last Name" required><br>
+					<input type="text" class="form-control" ng-model="lname" placeholder="*Last Name"><br>
 					 <br>
 					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br>
 
@@ -200,7 +232,7 @@
 					
 					<b><span>
 					{{fname | uppercase}} {{lname | uppercase}}</span></b><br><br>
-					<button class="btn btn-blue" style="display: block; width: 50%;"><span class="glyphicon glyphicon-search"></span>	Search</button>
+					<button ng-disabled="is_search_clicked" class="btn btn-blue button-search" style="display: block"><span class="glyphicon glyphicon-search"></span>	Search</button>
 				</form>
 				</center>
 			</div>
@@ -209,13 +241,13 @@
 			
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 			
-				<br><br><br><br><br><br><br><br><br><br><br><br>
+				<br><br><br><br><br><br><br><br>
 				<div id="results_table">
 				
 					<!-- JQuery Dialog -->
 					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
 						<p><span class="icon-large icon-group" style="float: left; margin: 0 7px 50px 0;"></span>
-						<b>The following connections are common with "{{fname}} {{lname}}" :</b></p>
+						<b>The following connections are common with "{{fname | uppercase}} {{lname | uppercase}}" :</b></p>
 						<ol>
 							<li ng-repeat="c in common_connections"> {{c}} </li>
 						</ol>
@@ -271,7 +303,7 @@
 					<button style="float: left; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
 					<button style="float: right; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
 					<br><br><br><br>
-					<input type="text" class="form-control center" style="max-width: 30%" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
+					<input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
 				</div>
 				<br><br>
 				</center>
