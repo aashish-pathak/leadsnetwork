@@ -81,6 +81,12 @@
 		height: 40px;
 	}
 
+	#leads_list {
+		max-width: 100%;
+		text-align: left;
+		margin: auto;
+	}
+
 	#login_div {
 		max-width: 100%;
 	}
