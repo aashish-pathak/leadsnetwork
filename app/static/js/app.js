@@ -10,6 +10,7 @@ var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies']);
 
 leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', '$location', function($scope, $rootScope, $http, $cookies, $window, $q, $modal, $location) {
 
+	// for showing and hiding appropriate DIV elements
 	$scope.show_always = true;
 	$scope.is_logged_in = false;
 	$scope.is_admin = false;
@@ -18,20 +19,25 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.show_leads = false;
 	$scope.leads_filter = '';
 
+	// login credentials
 	$scope.login_username = '';
 	$scope.login_password = '';
 	
 	$scope.ldap_name;
 
+	// list of leads
 	$scope.leads_list = [];
 	$scope.leads_empty = false;
 	$scope.selected_leads_count = 0;
-	
+
+	// search parameters
 	$scope.fname = '';
 	$scope.lname = '';
 	$scope.cname = '';
 	$scope.both_fname_lname = true;
-	
+	$scope.is_search_clicked = false;
+
+	// result sets
 	$scope.connections={};
 	$scope.connections.all=[];
 	$scope.connections.first=[];
@@ -40,7 +46,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.common_connections = [];
 	
 	$scope.canceler = [];
-	
+
+	// progress calculation
 	$scope.progressBar = {};
 	$scope.progress = 0;
 	$scope.total_xhr = 0;
@@ -48,6 +55,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.progressBar.value = 0;
 	$scope.progressBar.type = 'danger';
 	$scope.done_searching = false;
+	$scope.progress_bar_animation = 'progress-striped active';
 
 	/* ************************* Safe Apply ***************************/
 
@@ -136,14 +144,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$window.location.href = $scope.linkedin_url;
 		})
 		.error(function() {
-			$( "#add_account_http_error" ).dialog({
-				modal: true,
-				buttons: {
-					Ok: function() {
-						$(this).dialog( "close" );
-					}
-				}
-			});
+			$scope.createDialog("#http_error");
 		});
 	};
 	
@@ -178,7 +179,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Go Back *****************************/
 
 	$scope.goBack = function() {
-		$scope.stopRequests();
 		$scope.searchAgain();
 	};
 
@@ -247,7 +247,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Sign In *****************************/
 
 	$scope.signIn = function() {
-				
+
+		if($scope.login_username == '' || $scope.login_password == '') {
+			$scope.createDialog("#both_username_password_error");
+			return;
+		}
+
 		var login_url = "/login";
 		
 		var post_data = new Object();
@@ -316,10 +321,14 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_search_form = true;
 		$scope.show_results = false;		
 		$scope.resetProgressBar();
+		$scope.stopRequests();
+		$scope.is_search_clicked = false;
 	};
 
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
+
+	$scope.is_search_clicked = true;
 		
 		$scope.selected_leads_count = 0;
 		// count number of selected leads
@@ -338,6 +347,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if($scope.both_fname_lname == true)
 			if($scope.fname == '' || $scope.lname == '') {
 				$scope.createDialog("#both_fname_lname_error");
+				$scope.is_search_clicked = false;
 				return;
 			}
 
@@ -346,6 +356,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.success(function(data) {
 			$scope.data = data;
 			if(!$scope.data.numResults) {
+				$scope.is_search_clicked = false;
 				if($scope.cname == '') {
 					$scope.createDialog("#not_on_linkedin_without_cname");
 				}
@@ -356,12 +367,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			else {
 				$scope.findConnections();
 			}			
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
 		});
 	};
 	
 	/* ********************** Find Connections ************************/
 
-	$scope.findConnections = function() {		
+	$scope.findConnections = function() {
 		
 		$scope.show_search_form = false;
 		$scope.show_results = true;
@@ -422,8 +436,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 						$scope.current_xhr++;
 						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
 						$scope.setProgressBar();						
-						// add default profile picture
-						if(!('pictureUrl' in data)) {
+						// add default profile picture for connections under degree 3
+						if(!('pictureUrl' in data) && data.distance <= 3 && data.distance > 0) {
 							data.pictureUrl = '/static/img/ghost_profile.png';
 							console.log(data);
 						}
@@ -468,10 +482,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************** View Connections ************************/
 
 	$scope.viewConnections = function (connection) {
+		var max_connections = 10;
+		
 		$scope.common_connections = [];
 		var count = connection.relationToViewer.connections._total;
-		if(count > 10)
-			count = 10;
+		if(count > max_connections)
+			count = max_connections;
 			
 		for(var i=0; i<count; i++) {
 			var first_name = connection.relationToViewer.connections.values[i].person.firstName;

@@ -1,0 +1,105 @@
+/* OTF Fonts **********************************************************/
+@font-face {
+	font-family: quicksand;
+	src: url('/static/fonts/Quicksand-Regular.otf');
+}
+
+@font-face {
+	font-family: sansation;
+	src: url('/static/fonts/Sansation-Regular.ttf');
+}
+
+@font-face {
+	font-family: molot;
+	src: url('/static/fonts/Molot.otf');
+}
+
+@font-face {
+	font-family: comfortaa;
+	src: url('/static/fonts/Comfortaa_Regular.ttf');
+}
+
+@font-face {
+	font-family: fff;
+	src: url('/static/fonts/FFF_Tusj.ttf');
+}
+
+@font-face {
+	font-family: finger-paint;
+	src: url('/static/fonts/FingerPaint-Regular.ttf');
+}
+
+@font-face {
+	font-family: passion-one;
+	src: url('/static/fonts/PassionOne-Regular.otf');
+}
+
+@font-face {
+	font-family: asap;
+	src: url('/static/fonts/Asap-Regular.otf');
+}
+
+@font-face {
+	font-family: exo-regular;
+	src: url('/static/fonts/exo/Exo-Regular.otf');
+}
+
+@font-face {
+	font-family: exo-medium;
+	src: url('/static/fonts/exo/Exo-Medium.otf');
+}
+
+@font-face {
+	font-family: amble-regular;
+	src: url('/static/fonts/amble/Amble-Regular.ttf');
+}
+
+@font-face {
+	font-family: linkedin-like;
+	src: url('/static/fonts/PTC75F.ttf');
+}
+
+@font-face {
+	font-family: bpreplay;
+	src: url('/static/fonts/BPreplay.otf');
+}
+
+@font-face {
+	font-family: droidsans;
+	src: url('/static/fonts/DroidSans.ttf');
+}
+
+@font-face {
+	font-family: dustismo;
+	src: url('/static/fonts/dustismo.ttf');
+}
+
+@font-face {
+	font-family: flux;
+	src: url('/static/fonts/flux.ttf');
+}
+
+@font-face {
+	font-family: furore;
+	src: url('/static/fonts/Furore.otf');
+}
+
+@font-face {
+	font-family: hammersmith;
+	src: url('/static/fonts/hammersmith.ttf');
+}
+
+@font-face {
+	font-family: istok;
+	src: url('/static/fonts/istok.ttf');
+}
+
+@font-face {
+	font-family: juice;
+	src: url('/static/fonts/juice.ttf');
+}
+
+@font-face {
+	font-family: jura-regular;
+	src: url('/static/fonts/jura-regular.otf');
+}
