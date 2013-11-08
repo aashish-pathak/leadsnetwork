@@ -103,3 +103,8 @@
 	font-family: jura-regular;
 	src: url('/static/fonts/jura-regular.otf');
 }
+
+@font-face {
+	font-family: proxima;
+	src: url('/static/fonts/ProximaNova/ProximaNovaScOsfReg.otf');
+}

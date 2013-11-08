@@ -26,6 +26,7 @@
 
 		font-family: jura-bold, sans-serif;
 		font-family: sansation, sans-serif;
+		font-family: proxima, sans-serif;
 		font-size: 15px;
 		
 		/* Font Smoothing*/
@@ -54,8 +55,8 @@
 	background-color: #f1f1f1;
 
 		min-height: 200px;
-		margin-left: 2.5%;
-		max-width: 95%;
+		margin-left: 1%;
+		max-width: 98%;
 		top: 55px;
 	}
 
