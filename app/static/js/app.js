@@ -371,6 +371,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");
+			$scope.is_search_clicked = false;
 		});
 	};
 	
