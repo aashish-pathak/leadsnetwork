@@ -308,7 +308,7 @@ tr.t3 td {
 
 #results_summary {
 	background:rgba(255,255,255,0.1);
-	font-size: 140%;
+	/*font-size: 110%;*/
 }
 
 #main_div {
