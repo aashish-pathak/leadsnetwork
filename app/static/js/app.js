@@ -365,6 +365,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				}
 			}
 			else {
+				$scope.is_search_clicked = false;
 				$scope.findConnections();
 			}			
 		})
