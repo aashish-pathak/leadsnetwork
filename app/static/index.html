@@ -136,6 +136,7 @@
 					{{ldap_name | uppercase}}</a>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings </a></li>
+						<li style="cursor: pointer"><a ng-click="addAccount()"> <i class="icon-large icon-plus"></i>	Add Account </a></li>
 						<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
 					</ul>
 					</span>
@@ -163,8 +164,8 @@
 
 
 					
-					<button class="btn btn-blue" ng-click="searchAgain()" style="float: left; display: block; width: 49.9%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
-					<button class="btn btn-blue" ng-click="stopRequests()" style="float: right; display: block; width: 49.9%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
+					<button class="btn btn-blue" ng-show="done_searching" ng-click="searchAgain()" style="float: left; display: block; width: 100%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
+					<button class="btn btn-blue" ng-hide="done_searching" ng-click="stopRequests()" style="float: right; display: block; width: 100%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
 				</div>
 			
 		</div>
@@ -301,7 +302,7 @@
 				<br><br>
 				<center>
 				<div id="leads_add_account_header">
-					<button class="btn btn-blue full-button" ng-click="addAccount()" style="display: block; width: 100%;"><span class="icon-large icon-plus"></span>	Add Account</button>
+					
 				</div>
 				<br>
 				<div id="leads_select_header" class="row-fluid">
