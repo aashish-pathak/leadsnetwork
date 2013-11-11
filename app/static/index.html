@@ -236,9 +236,8 @@
 							Search using both first-name and last-name.</label>
 					</div>
 					
-					<b><span>
-					{{fname | uppercase}} {{lname | uppercase}}</span>
-					<span ng-show="cname"> from {{cname | uppercase}}</span></b><br><br>
+					<b><span>{{fname | uppercase}} {{lname | uppercase}}</span>
+						<span ng-show="cname"> from {{cname | uppercase}}</span></b><br><br>
 					<button ng-disabled="is_search_clicked" class="btn btn-blue button-search" style="display: block"><span class="glyphicon glyphicon-search"></span>	Search</button>
 				</form>
 				</center>
