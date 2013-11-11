@@ -316,8 +316,8 @@ tr.t3 td {
 }
 
 #main_div {
-	min-height: 600px;
-	/*margin-top: 50px;*/
+	/*min-height: 600px;
+	margin-top: 50px;*/
 }
 
 #results_div {
@@ -374,6 +374,8 @@ tr.t3 td {
 	-moz-background-size: 500px 500px;
 	-o-background-size: 500px 500px;
 	background-size: 500px 500px;  
+	
+	margin-top: 10%;
 }
 
 /* IE 6 */
