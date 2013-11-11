@@ -118,10 +118,16 @@
 			<div class="bottom-shadow-inset">
 				<div class="header_left">
 					<a href="." data-toggle="tooltip" title="List of leads !">
-					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in && !show_leads">
 						<span class="button-logo-leads"><i class="icon-large icon-group" style="color: white"></i></span>
 						<span class="button-text-leads" style="color: white">Leads</span>
-					</button></a>
+					</button> <!-- with normal background : button not pressed-->
+					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in && show_leads">
+						<span class="button-logo-leads"><i class="icon-large icon-group" style="color: #888888"></i></span>
+						<span class="button-text-leads" style="color: white">Leads</span>
+					</button> <!-- with dark background : button pressed-->
+					
+					</a>
 				</div>
 				<div class="header_right">
 					<span class="btn-group" ng-show="is_logged_in" style="float: right">
