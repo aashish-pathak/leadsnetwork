@@ -147,7 +147,7 @@
 						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
 				</div>
 			</div>
-				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+				<div id="results_header" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 					<br>
 					<div id="results_summary" class="well well-sm bottom-shadow">
 						Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
@@ -162,10 +162,11 @@
 						<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
 					</span>
 
-
-					
-					<button class="btn btn-blue" ng-show="done_searching" ng-click="searchAgain()" style="float: left; display: block; width: 100%;"><span class="glyphicon glyphicon-search"></span>	Search again</button>
-					<button class="btn btn-blue" ng-hide="done_searching" ng-click="stopRequests()" style="float: right; display: block; width: 100%;"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
+					<center>
+						<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
+						<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
+					</center>
+					<hr>
 				</div>
 			
 		</div>
@@ -292,7 +293,9 @@
 					</table>
 				</div>
 				<div id="results_footer">
-					<button class="btn btn-blue" ng-click="goBack()" style="display: block; width: 100%;"><span class="icon-large icon-mail-reply"></span>	Back</button>
+					<center>
+						<button class="btn btn-blue responsive-button" ng-click="goBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
+					</center>
 				</div>
 
 			</div>
@@ -306,8 +309,8 @@
 				</div>
 				<br>
 				<div id="leads_select_header" class="row-fluid">
-					<button style="float: left; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
-					<button style="float: right; display: block; width: 49.9%;" class="btn btn-blue" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="icon-large icon-check"></span>	Select All</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	Select None</button>
 					<br><br><br><br>
 					<input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
 				</div>
@@ -326,7 +329,7 @@
 				<center>
 				<br>
 				<div id="leads_decide_footer">
-					<button style="display: block; width: 100%;" class="btn btn-blue" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
+					<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
 				</div>
 				</center>
 				<br><br>

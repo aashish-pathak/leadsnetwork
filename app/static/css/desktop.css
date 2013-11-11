@@ -122,6 +122,13 @@
 	.button-text-leads {
 		display: none;
 	}
-		
+
+	.responsive-button {
+		width: 50%;
+	}
+
+	.responsive-button-half {
+		width: 24%;
+	}		
 }
 
