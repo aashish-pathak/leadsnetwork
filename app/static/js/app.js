@@ -35,7 +35,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.lname = '';
 	$scope.cname = '';
 	$scope.both_fname_lname = true;
-	$scope.is_search_clicked = false;
+	$scope.enable_search = false;
 
 	// result sets
 	$scope.connections={};
@@ -135,6 +135,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************* Add Account **************************/
 	
 	$scope.addAccount = function() {
+
+		// stop pending AJAX requests first
+		$scope.stopRequests();
 
 		var add_account_url = "/add_account";
 		
@@ -273,6 +276,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.is_logged_in = true;
 				if($scope.login_response.response == 'Admin')
 					$scope.is_admin = true;
+					
+				// enable "SEARCH" button again
+				$scope.enable_search = false;
 			}
 			
 			// unsuccessful login
@@ -322,13 +328,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_results = false;		
 		$scope.resetProgressBar();
 		$scope.stopRequests();
-		$scope.is_search_clicked = false;
+		$scope.enable_search = false;
 	};
 
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
 
-	$scope.is_search_clicked = true;
+	$scope.enable_search = true;
 		
 		$scope.selected_leads_count = 0;
 		// count number of selected leads
@@ -347,7 +353,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if($scope.both_fname_lname == true)
 			if($scope.fname == '' || $scope.lname == '') {
 				$scope.createDialog("#both_fname_lname_error");
-				$scope.is_search_clicked = false;
+				$scope.enable_search = false;
 				return;
 			}
 
@@ -356,7 +362,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.success(function(data) {
 			$scope.data = data;
 			if(!$scope.data.numResults) {
-				$scope.is_search_clicked = false;
+				$scope.enable_search = false;
 				if($scope.cname == '') {
 					$scope.createDialog("#not_on_linkedin_without_cname");
 				}
@@ -370,7 +376,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");
-			$scope.is_search_clicked = false;
+			$scope.enable_search = false;
 		});
 	};
 	
