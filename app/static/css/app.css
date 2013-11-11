@@ -104,6 +104,11 @@ body {
 
 }
 
+input[type="text"]
+{
+    font-family: asap;
+}
+
 .center {
      float: none;
      margin-left: auto;
