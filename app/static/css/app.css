@@ -317,7 +317,7 @@ tr.t3 td {
 
 #main_div {
 	min-height: 600px;
-	margin-top: 50px;
+	/*margin-top: 50px;*/
 }
 
 #results_div {
@@ -343,6 +343,13 @@ tr.t3 td {
     box-shadow: 0px -5px 5px -5px #ffffff inset;
 }
 
+.top-shadow-inset {
+	/* Only bottom shadow*/
+	-webkit-box-shadow: 0px 5px 5px -5px #ffffff inset;
+    -moz-box-shadow: 0px 5px 5px -5px #ffffff inset;
+    box-shadow: 0px 5px 5px -5px #ffffff inset;
+}
+
 .bottom-shadow-image {
 	-moz-box-shadow: 0px 5px 5px 5px #888888;
 	-webkit-box-shadow: 0px 5px 5px 5px #888888;
@@ -355,6 +362,25 @@ tr.t3 td {
 
 #footer_div {
 	color: #666666;
+	font-size: 90%;
+	position:fixed;
+	left:0px;
+	bottom:0px;
+	/*height:30px;*/
+	width:100%;
+
+	background: url('/static/img/dark_net.jpg') repeat center center fixed; 
+	-webkit-background-size: 500px 500px;
+	-moz-background-size: 500px 500px;
+	-o-background-size: 500px 500px;
+	background-size: 500px 500px;  
+}
+
+/* IE 6 */
+* html #footer_div {
+    color: white;
+	position:absolute;
+	top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
 }
 
 
