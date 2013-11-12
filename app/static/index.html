@@ -325,7 +325,7 @@
 				<div id="leads_list">
 					<ul class="unstyled center">
 						
-						<li ng-repeat="lead in leads_list | filter:leads_filter | orderBy:'-name'">
+						<li ng-repeat="lead in leads_list">
 							<label><input type="checkbox" ng-model="lead[2]">
 							    {{lead[1]}}</label></li>
 					</ul>

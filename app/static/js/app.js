@@ -205,8 +205,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.leads_list = data;
 			for(var i=0; i<$scope.leads_list.length;i++)
 				$scope.leads_list[i][2] = true;
-				
-			$scope.leads_list = $scope.leads_list.sort($scope.comparatorAlphabetical);
+		
+			$scope.safeApply(function() {
+				$scope.leads_list = $scope.leads_list.sort($scope.comparatorAlphabetical);
+			});
 		});
 	};
 	
