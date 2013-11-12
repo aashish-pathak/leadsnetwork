@@ -63,7 +63,8 @@
 
 	#results_table {
 		color: black;
-		margin-top: 55px;
+		margin-top: 31%;
+		margin-top: 43%;
 	}
 	
 	tbody tr:hover {
@@ -124,4 +125,13 @@
 	.button-text-leads {
 	
 	}
+
+	.responsive-button {
+		width: 100%;
+	}
+	
+	.responsive-button-half {
+		width: 48%;
+	}		
+
 }

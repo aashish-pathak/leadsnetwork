@@ -35,7 +35,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.lname = '';
 	$scope.cname = '';
 	$scope.both_fname_lname = true;
-	$scope.is_search_clicked = false;
+	$scope.enable_search = false;
 
 	// result sets
 	$scope.connections={};
@@ -101,7 +101,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if( none == true)
 			$scope.createDialog("#at_least_one_lead");
 		else
-			$scope.show_leads = !$scope.show_leads;
+			$scope.toggleLeadsDiv();
 	};
 	
 	$scope.selectAll = function() {
@@ -129,12 +129,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if( none == true)
 			$scope.createDialog("#at_least_one_lead");
 		else
-			$scope.show_leads = false;
+			$scope.toggleLeadsDiv();
 	};
 	
 	/* ************************* Add Account **************************/
 	
 	$scope.addAccount = function() {
+
+		// stop pending AJAX requests first
+		$scope.stopRequests();
 
 		var add_account_url = "/add_account";
 		
@@ -180,6 +183,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	$scope.goBack = function() {
 		$scope.searchAgain();
+		$scope.scrollTop();
 	};
 
 
@@ -273,6 +277,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.is_logged_in = true;
 				if($scope.login_response.response == 'Admin')
 					$scope.is_admin = true;
+					
+				// enable "SEARCH" button again
+				$scope.enable_search = false;
+				
+				// scroll to the TOP of the page
+				$scope.scrollTop();
 			}
 			
 			// unsuccessful login
@@ -314,6 +324,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.canceler[i].resolve();
 		});
 
+		// scroll to the TOP of the page
+		$scope.scrollTop();
+
 	};
 
 	/* ************************ Search Again **************************/
@@ -322,13 +335,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_results = false;		
 		$scope.resetProgressBar();
 		$scope.stopRequests();
-		$scope.is_search_clicked = false;
+		$scope.enable_search = false;
 	};
 
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
 
-	$scope.is_search_clicked = true;
+	$scope.enable_search = true;
 		
 		$scope.selected_leads_count = 0;
 		// count number of selected leads
@@ -347,7 +360,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if($scope.both_fname_lname == true)
 			if($scope.fname == '' || $scope.lname == '') {
 				$scope.createDialog("#both_fname_lname_error");
-				$scope.is_search_clicked = false;
+				$scope.enable_search = false;
 				return;
 			}
 
@@ -356,7 +369,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.success(function(data) {
 			$scope.data = data;
 			if(!$scope.data.numResults) {
-				$scope.is_search_clicked = false;
+				$scope.enable_search = false;
 				if($scope.cname == '') {
 					$scope.createDialog("#not_on_linkedin_without_cname");
 				}
@@ -370,7 +383,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");
-			$scope.is_search_clicked = false;
+			$scope.enable_search = false;
 		});
 	};
 	
@@ -578,6 +591,21 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.clearSearchBox = function() {
 		$scope.leads_filter = '';
 	};
+
+	/* ******************** Scroll Top Element ************************/
 	
+	$scope.scrollTop = function() {
+		$('html, body').animate({scrollTop: '0px'}, 0);
+	};
+
+	/* ********************* Toggle Leads Div *************************/
+	
+	$scope.toggleLeadsDiv = function() {
+		$scope.show_leads = !$scope.show_leads;
+		
+		// scroll to TOP when showing leads' list
+		if($scope.show_leads == true)
+			$scope.scrollTop();
+	};
 	
 }]);
