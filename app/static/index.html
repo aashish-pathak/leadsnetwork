@@ -243,8 +243,7 @@
 						<label style="cursor: pointer"><input type="checkbox" ng-model="both_fname_lname">
 							Search using both first-name and last-name.</label>
 					</div>
-					
-					<b><span>{{fname | uppercase}} {{lname | uppercase}}</span>
+					<b><span>&nbsp;{{fname | uppercase}} {{lname | uppercase}}</span>
 						<span ng-show="cname"> from {{cname | uppercase}}</span></b>
 					<button ng-disabled="enable_search" class="btn btn-blue button-search" style="display: block"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search</button>
 				</form>
