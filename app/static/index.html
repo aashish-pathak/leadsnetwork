@@ -149,25 +149,27 @@
 				</div>
 			</div>
 				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
-					<div id="results_summary" class="well well-sm bottom-shadow">
-						Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
-						Leads selected : <b>{{selected_leads_count}}</b>.<br>
-						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
-						<span ng-show="done_searching"><b>Searching done !</b></span>
+					<div id="results_summary_container">
+						<div id="results_summary" class="well well-sm bottom-shadow">
+							Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
+							Leads selected : <b>{{selected_leads_count}}</b>.<br>
+							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
+							<span ng-show="done_searching"><b>Searching done !</b></span>
+						</div>
+						<div style="width: 98%; margin-left: 1%;">
+							<span ng-hide="done_searching">
+								<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+							</span>
+							<span ng-show="done_searching">
+								<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
+							</span>
+						</div>
+						<center>
+							<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search again</button>
+							<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
+						</center>
+						<hr>
 					</div>
-					<div style="width: 98%; margin-left: 1%;">
-						<span ng-hide="done_searching">
-							<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
-						</span>
-						<span ng-show="done_searching">
-							<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
-						</span>
-					</div>
-					<center>
-						<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search again</button>
-						<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
-					</center>
-					<hr>
 				</div>
 			
 		</div>
