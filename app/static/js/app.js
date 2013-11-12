@@ -129,7 +129,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if( none == true)
 			$scope.createDialog("#at_least_one_lead");
 		else
-			$scope.show_leads = false;
+			$scope.toggleLeadsDiv();
 	};
 	
 	/* ************************* Add Account **************************/
@@ -280,6 +280,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 					
 				// enable "SEARCH" button again
 				$scope.enable_search = false;
+				
+				// scroll to the TOP of the page
+				$scope.scrollTop();
 			}
 			
 			// unsuccessful login
@@ -320,6 +323,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			for(var i=0;i<$scope.canceler.length;i++)
 				$scope.canceler[i].resolve();
 		});
+
+		// scroll to the TOP of the page
+		$scope.scrollTop();
 
 	};
 
