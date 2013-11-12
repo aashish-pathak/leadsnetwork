@@ -596,7 +596,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	$scope.toggleLeadsDiv = function() {
 		$scope.show_leads = !$scope.show_leads;
-		$scope.scrollTop();
+		
+		// scroll to TOP when showing leads' list
+		if($scope.show_leads == true)
+			$scope.scrollTop();
 	};
 	
 }]);
