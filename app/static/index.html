@@ -14,7 +14,7 @@
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
 	<script src="static/js/app.js"></script>
-	<script src="static/js/back-to-top.js"></script>
+	<!--<script src="static/js/back-to-top.js"></script>-->
 	<!--<script src="static/js/jquery.clearsearch.js" ></script>-->
 	
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.min.css">
@@ -133,13 +133,13 @@
 				</div>
 				<div class="header_right">
 					<span class="btn-group" ng-show="is_logged_in" style="float: right">
+					<a class="dropdown-toggle" style="cursor: pointer; color: white; text-decoration: none">
 					<span class="glyphicon glyphicon-user" style="color: white"></span>
-					<a class="dropdown-toggle" style="cursor: pointer; color: white">
-					{{ldap_name | uppercase}}</a>
+					&nbsp;{{ldap_name | uppercase}}</a>
 					<ul class="dropdown-menu pull-right" role="menu">
-						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings </a></li>
-						<li style="cursor: pointer"><a ng-click="addAccount()"> <i class="icon-large icon-plus"></i>	Add Account </a></li>
-						<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
+						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>&nbsp;&nbsp;Settings </a></li>
+						<li style="cursor: pointer"><a ng-click="addAccount()"> <i class="icon-large icon-plus"></i>&nbsp;&nbsp;Add Account </a></li>
+						<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>&nbsp;&nbsp;Sign Out</a></li>
 					</ul>
 					</span>
 				</div>			
@@ -149,30 +149,29 @@
 						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
 				</div>
 			</div>
-				<div id="results_header" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
-					<br>
+				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 					<div id="results_summary" class="well well-sm bottom-shadow">
 						Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
 						Leads selected : <b>{{selected_leads_count}}</b>.<br>
 						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
 						<span ng-show="done_searching"><b>Searching done !</b></span>
 					</div>
-					<span ng-hide="done_searching">
-						<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
-					</span>
-					<span ng-show="done_searching">
-						<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
-					</span>
-
+					<div style="width: 98%; margin-left: 1%;">
+						<span ng-hide="done_searching">
+							<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+						</span>
+						<span ng-show="done_searching">
+							<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
+						</span>
+					</div>
 					<center>
-						<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>	Search again</button>
-						<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>		Stop</button><br>
+						<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search again</button>
+						<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
 					</center>
 					<hr>
 				</div>
 			
 		</div>
-		<br><br><br>
 
 		<!---------------------------Main DIV-------------------------->
 		<div id="main_div" class="center">
@@ -208,28 +207,32 @@
 			<!---------------------------LOG IN------------------------>
 			<div id="login_div" class="center" ng-hide="is_logged_in">
 				<form ng-submit="signIn()">
-					<center><img class="login_image bottom-shadow-image" src="static/img/networking.jpg"><br><br></center>
-						<div class="center input-ldap">
-							<input type="text" class="center form-control" name="username" ng-model="login_username" placeholder="*LDAP Username">
+					<center><img class="login_image bottom-shadow-image" src="static/img/networking.jpg"></center>
+						
+						<div class="username-password">
+							<div class="center input-ldap">
+								<input type="text" class="center form-control" name="username" ng-model="login_username" placeholder="*LDAP Username">
+							</div>
+							<br>
+							<div class="center input-ldap">
+								<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="*LDAP Password">
+							</div>
+							<br>
+							<center><button class="btn btn-red center button-login">
+								<i class="icon-large icon-linkedin button-logo-login"></i>
+								<span class="button-text-login">Log In</span>
+								</button>
+							</center>
 						</div>
-						<br>
-						<div class="center input-ldap">
-							<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="*LDAP Password">
-						</div>
-						<br>
-						<center><button class="btn btn-red center button-login">
-							<i class="icon-large icon-linkedin button-logo-login"></i>
-							<span class="button-text-login">Log In</span>
-							</button></center>
 				</form>
 			</div>
 			
 			<!-------------------------Search Form--------------------->
 			<div id="search_div" class="center" ng-show="is_logged_in && show_search_form && !show_results && !show_leads">
 				<center>
-				<br>
+				
 				<form method='GET' ng-submit="theSearch()">
-					 <br>
+					 
 					<input type="text" class="form-control" ng-model="fname" placeholder="*First Name"><br>
 					 <br>
 					<input type="text" class="form-control" ng-model="lname" placeholder="*Last Name"><br>
@@ -242,8 +245,8 @@
 					</div>
 					
 					<b><span>{{fname | uppercase}} {{lname | uppercase}}</span>
-						<span ng-show="cname"> from {{cname | uppercase}}</span></b><br><br>
-					<button ng-disabled="is_search_clicked" class="btn btn-blue button-search" style="display: block"><span class="glyphicon glyphicon-search"></span>	Search</button>
+						<span ng-show="cname"> from {{cname | uppercase}}</span></b>
+					<button ng-disabled="enable_search" class="btn btn-blue button-search" style="display: block"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search</button>
 				</form>
 				</center>
 			</div>
@@ -252,7 +255,6 @@
 			
 			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 			
-				<br><br><br><br><br><br><br><br>
 				<div id="results_table">
 				
 					<!-- JQuery Dialog -->
@@ -296,7 +298,6 @@
 						</tbody>
 					</table>
 				</div>
-				<br><br><br><br>
 				<!--
 				<div id="results_footer">
 					<center>
@@ -308,45 +309,41 @@
 			
 			<!--------------------------Leads DIV---------------------->
 			<div id="leads_div" class="center" ng-show="is_logged_in && show_leads">
-				<br><br>
 				<center>
 				<div id="leads_add_account_header">
 					
 				</div>
 				<br>
 				<div id="leads_select_header" class="row-fluid">
-					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="icon-large icon-check"></span>	All</button>
-					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>	None</button>
-					<br><br><br><br>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="icon-large icon-check"></span>&nbsp;&nbsp;All</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>&nbsp;&nbsp;None</button>
+					<br><br>
 					<input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
+					<br>
 				</div>
-				<br><br>
 				</center>
 				
 				<div id="leads_list">
 					<ul class="unstyled center">
 						
-						<li ng-repeat="lead in leads_list | filter:leads_filter | orderBy:'-name'">
+						<li ng-repeat="lead in leads_list">
 							<label><input type="checkbox" ng-model="lead[2]">
 							    {{lead[1]}}</label></li>
 					</ul>
 				</div>
 				
 				<center>
-				<br>
 				<div id="leads_decide_footer">
-					<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
+					<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>&nbsp;&nbsp;Back</button>
 				</div>
 				</center>
-				<br><br>
 			</div>
 
 		<!-----------------------------Footer-------------------------->
 		</div>
 		<div id="footer_div" class="center top-shadow-inset" ng-show="show_always">
-			<div class="span6 center" style="text-align:center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 
-			<a style="color: hsl(195, 79%, 43%)" target="_new" href="http://www.gslab.com">Great Software Laboratory Pvt. Ltd. </a>
-			<br>All Rights Reserved.
+			<div class="span6 center" style="text-align:center; margin-top:7px;">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 
+			<a style="color: hsl(195, 79%, 43%)" target="_new" href="http://www.gslab.com">Great Software Laboratory Pvt. Ltd. </a><br>All Rights Reserved.
 			</div>
 		</div>
 	</div>

@@ -11,6 +11,7 @@
 		background-size: 500px 500px;  
 */		
 		background-color: #f1f1f1;
+		background-color: #f9f9f9;
      }
      
 	body
@@ -35,28 +36,23 @@
 		text-shadow: 0.5px 0.5px 0.5px rgba(127, 127, 127, 0.5);
 	}
 
+	#main_div {
+		margin-top: 10%;
+		margin-bottom: 10%;
+	}
+
+	.username-password {
+		margin-top: 5%;
+	}
+
 	#results_header {
-	
-	/*
-	  background: url('/static/img/dark_net.jpg') repeat center center fixed; 
-	  -webkit-background-size: cover;
-	  -moz-background-size: cover;
-	  -o-background-size: cover;
-	  background-size: cover;
+		color: black;
+		
+		background-color: #f1f1f1;
+		background-color: #f9f9f9;
 
-
-		-webkit-background-size: 500px 500px;
-		-moz-background-size: 500px 500px;
-		-o-background-size: 500px 500px;
-		background-size: 500px 500px;  
-	*/
-	color: black;
-	
-	background-color: #f1f1f1;
-
-		min-height: 200px;
-		margin-left: 1%;
-		max-width: 98%;
+		/*margin-left: 1%;*/
+		max-width: 100%;
 		top: 55px;
 	}
 
@@ -64,11 +60,11 @@
 	#results_table {
 		color: black;
 		margin-top: 3%;
-		margin-top: 6%;
+		margin-top: 270px;
 	}
 	
 	tbody tr:hover {
-		background-color: #333333;
+		background-color: #666666;
 		color: white;
 		/*background:rgba(127,127,127,0.3);*/
 	}
@@ -132,6 +128,12 @@
 	.responsive-button-half {
 		width: 24%;
 	}		
+
+	#leads_div {
+		max-width: 95%;
+		margin-bottom: 5%;
+	}
+
 
 	/**********************************************************************/
 	/* "Back To Top" css*/
