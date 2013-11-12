@@ -149,7 +149,7 @@
 				</div>
 			</div>
 				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
-					<div id="results_summary_container">
+						<br>
 						<div id="results_summary" class="well well-sm bottom-shadow">
 							Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
 							Leads selected : <b>{{selected_leads_count}}</b>.<br>
@@ -169,7 +169,6 @@
 							<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
 						</center>
 						<hr>
-					</div>
 				</div>
 			
 		</div>
