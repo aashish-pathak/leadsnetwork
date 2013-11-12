@@ -339,6 +339,10 @@ tr.t3 td {
 	-moz-box-shadow: 0px 5px 5px 5px #888888;
 	-webkit-box-shadow: 0px 5px 5px 5px #888888;
 	box-shadow: 0px 3px 5px 5px #888888;
+	
+	-moz-box-box-shadow: 0 1px 2px 0 #000000;
+	-webkit-box-shadow: 0 1px 2px 0 #000000;
+	box-shadow: 0 1px 2px 0 #000000;
 }
 
 #footer_div {
