@@ -101,7 +101,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if( none == true)
 			$scope.createDialog("#at_least_one_lead");
 		else
-			$scope.show_leads = !$scope.show_leads;
+			$scope.toggleLeadsDiv();
 	};
 	
 	$scope.selectAll = function() {
@@ -183,6 +183,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	$scope.goBack = function() {
 		$scope.searchAgain();
+		$scope.scrollTop();
 	};
 
 
@@ -584,6 +585,18 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.clearSearchBox = function() {
 		$scope.leads_filter = '';
 	};
+
+	/* ******************** Scroll Top Element ************************/
 	
+	$scope.scrollTop = function() {
+		$('html, body').animate({scrollTop: '0px'}, 0);
+	};
+
+	/* ********************* Toggle Leads Div *************************/
+	
+	$scope.toggleLeadsDiv = function() {
+		$scope.show_leads = !$scope.show_leads;
+		$scope.scrollTop();
+	};
 	
 }]);
