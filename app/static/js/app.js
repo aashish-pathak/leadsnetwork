@@ -421,8 +421,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.connections.first=[];
 		$scope.connections.second=[];
 		$scope.connections.third=[];
-		var lead_number=1;
-
+		
 		// find total number of http requests
 		$scope.total_xhr = $scope.calculateTotalCalls();
 
@@ -437,11 +436,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				// create canceler
 				$scope.canceler.push($q.defer());
 
-				var lead_number_str = $scope.leads_list[lead_number][0];
-				//var lead_number_str = lead_number.toString();
-				$scope.lead_number = lead_number_str;
+				var lead_num_str = $scope.leads_list[lead_number][0];
 				profile_id = $scope.people_search_ids[i];
-				fetch_profile_url = "/fetch_profile?lead_number=" + lead_number_str + "&profile_id=" + profile_id;
+				fetch_profile_url = "/fetch_profile?lead_number=" + lead_num_str + "&profile_id=" + profile_id;
 				
 				// calculate progress before each http request
 				
