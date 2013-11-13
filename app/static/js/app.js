@@ -440,8 +440,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				profile_id = $scope.people_search_ids[i];
 				fetch_profile_url = "/fetch_profile?lead_number=" + lead_num_str + "&profile_id=" + profile_id;
 				
-				// calculate progress before each http request
-				
 				$http({method:'GET', url:fetch_profile_url, timeout: $scope.canceler[i].promise})
 				.success(function(data) {
 					
