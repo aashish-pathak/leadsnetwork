@@ -424,6 +424,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		// find total number of http requests
 		$scope.total_xhr = $scope.calculateTotalCalls();
+		alert("Total calls : " + $scope.total_xhr);
 
 		for(var lead_number = 0; lead_number < total_leads; lead_number++) {
 			for(var i=0;i<numResults;i++) {
