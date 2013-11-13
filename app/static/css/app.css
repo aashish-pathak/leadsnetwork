@@ -175,6 +175,7 @@ tr {
 .tr_th {
 	font-weight: bold;
 	color: #0077B5;
+	background-color: #c6c6c6;
 }
 
 td {

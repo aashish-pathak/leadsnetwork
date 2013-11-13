@@ -60,18 +60,18 @@
 	#results_table {
 		color: black;
 		margin-top: 7%;
-		margin-top: 270px;
+		margin-top: 300px;
 	}
 	
 	tbody tr:hover {
-		background-color: #333333;
-		color: white;
+		background-color: #e1e1e1;
+		color: black;
 		/*background:rgba(127,127,127,0.3);*/
 	}
 	
 	thead tr:first-child:hover {
 		cursor: default;
-		background-color: transparent;
+		/*background-color: transparent;*/
 	}
 		
 	.profile_pic {
@@ -132,17 +132,25 @@
 	#leads_div {
 		max-width: 95%;
 		margin-bottom: 10%;
+		margin-top: 0%;
 	}
 
 	/**********************************************************************/
 	/* "Back To Top" css*/
 
 	.back-to-top {
+		position: fixed;
+		bottom: 4em;
+		right: 0px;
+		text-decoration: none;
+		color: #000000;
+		background-color: rgba(235, 235, 235, 0.80);
+		font-size: 12px;
+		padding: 1em;
 		display: none;
 	}
 
 	.back-to-top:hover {    
-		display: none;
+		background-color: rgba(135, 135, 135, 0.50);
 	}
-
 }

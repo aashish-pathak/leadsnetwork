@@ -149,6 +149,16 @@ def fetch_profile():
 	
 	return json.dumps(json_profile)
 
+###########################__For Testing Multiple AJAX Requests__###############################
+@app.route('/xhr')
+def xhr():
+	
+	import time
+	time.sleep(2)
+	
+	parameter = request.args.get('parameter')	
+	return jsonify({'parameter' : parameter})
+
 ###########################__Index Page__###############################
 @app.route('/')
 def index():

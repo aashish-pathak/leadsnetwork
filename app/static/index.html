@@ -14,6 +14,7 @@
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
 	<script src="static/js/app.js"></script>
+	<!--<script src="static/js/app-sequential.js"></script>-->
 	<!--<script src="static/js/back-to-top.js"></script>-->
 	<!--<script src="static/js/jquery.clearsearch.js" ></script>-->
 	
@@ -150,25 +151,26 @@
 				</div>
 			</div>
 				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
-					<div id="results_summary" class="well well-sm bottom-shadow">
-						Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
-						Leads selected : <b>{{selected_leads_count}}</b>.<br>
-						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
-						<span ng-show="done_searching"><b>Searching done !</b></span>
-					</div>
-					<div style="width: 98%; margin-left: 1%;">
-						<span ng-hide="done_searching">
-							<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
-						</span>
-						<span ng-show="done_searching">
-							<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
-						</span>
-					</div>
-					<center>
-						<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search again</button>
-						<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
-					</center>
-					<hr>
+						<br>
+						<div id="results_summary" class="well well-sm bottom-shadow">
+							Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
+							Leads selected : <b>{{selected_leads_count}}</b>.<br>
+							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
+							<span ng-show="done_searching"><b>Searching done !</b></span>
+						</div>
+						<div style="width: 98%; margin-left: 1%;">
+							<span ng-hide="done_searching">
+								<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+							</span>
+							<span ng-show="done_searching">
+								<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
+							</span>
+						</div>
+						<center>
+							<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search again</button>
+							<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
+						</center>
+						<hr>
 				</div>
 			
 		</div>
@@ -243,8 +245,7 @@
 						<label style="cursor: pointer"><input type="checkbox" ng-model="both_fname_lname">
 							Search using both first-name and last-name.</label>
 					</div>
-					
-					<b><span>{{fname | uppercase}} {{lname | uppercase}}</span>
+					<b><span>&nbsp;{{fname | uppercase}} {{lname | uppercase}}</span>
 						<span ng-show="cname"> from {{cname | uppercase}}</span></b>
 					<button ng-disabled="enable_search" class="btn btn-blue button-search" style="display: block"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search</button>
 				</form>
@@ -326,7 +327,7 @@
 				<div id="leads_list">
 					<ul class="unstyled center">
 						
-						<li ng-repeat="lead in leads_list">
+						<li ng-repeat="lead in leads_list | filter: leads_filter">
 							<label><input type="checkbox" ng-model="lead[2]">
 							    {{lead[1]}}</label></li>
 					</ul>

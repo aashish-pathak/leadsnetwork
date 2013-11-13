@@ -173,7 +173,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			// complete progress
 			$scope.progress = 100;
 			$scope.setProgressBar();
-			$scope.done_searching = true;							
+			$scope.done_searching = true;
 		});
 		
 		$scope.canceler = [];
@@ -426,21 +426,24 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.total_xhr = $scope.calculateTotalCalls();
 		alert("Total calls : " + $scope.total_xhr);
 
-		for(var lead_number = 0; lead_number < total_leads; lead_number++) {
-			for(var i=0;i<numResults;i++) {
-				
+		//for(var lead_number = 0; lead_number < total_leads; lead_number++) {
+			//for(var i=0;i<numResults;i++) {
+		/*		
 				if($scope.leads_list[lead_number][2] == false) {
 					// current lead is not selected
 					continue;
 				}
-
+		*/
 				// create canceler
 				$scope.canceler.push($q.defer());
 
+				/*
 				var lead_num_str = $scope.leads_list[lead_number][0];
 				profile_id = $scope.people_search_ids[i];
 				fetch_profile_url = "/fetch_profile?lead_number=" + lead_num_str + "&profile_id=" + profile_id;
-				
+				*/
+				$scope.findConnectionsSingle(0, total_leads, 0, numResults);
+				/*
 				$http({method:'GET', url:fetch_profile_url, timeout: $scope.canceler[i].promise})
 				.success(function(data) {
 					
@@ -477,8 +480,91 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 						$scope.setProgressBar();						
 					});
 				});
-			}
+				*/
+			//}
+		//}
+	};
+	
+	/* ****************** Find Connections Single *********************/
+
+	$scope.findConnectionsSingle = function(lead_number, total_leads, i, numResults) {
+
+		console.log("i=" + i + ", numResults=" + numResults + ", lead_number=" + lead_number + ", total_leads=" + total_leads);
+
+		if(lead_number==total_leads)
+			return;
+
+		else if($scope.leads_list[lead_number][2] == false) {
+			// current lead is not selected
+			return;
 		}
+
+		else {
+			$scope.canceler.push($q.defer());
+
+			var lead_num_str = $scope.leads_list[lead_number][0];
+			profile_id = $scope.people_search_ids[i];
+			fetch_profile_url = "/fetch_profile?lead_number=" + lead_num_str + "&profile_id=" + profile_id;
+
+			var promise = 
+				$http({method:'GET', url:fetch_profile_url, timeout: $scope.canceler[i].promise})
+				.success(function(data) {
+					
+					$scope.safeApply(function() {
+						$scope.current_xhr++;
+						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
+						$scope.setProgressBar();						
+						// add default profile picture for connections under degree 3
+						if(!('pictureUrl' in data) && data.distance <= 3 && data.distance > 0) {
+							data.pictureUrl = '/static/img/ghost_profile.png';
+						}
+						$scope.current_lead = data.through;
+						
+						// adjust parameters and call again
+						if(i == numResults) {
+							i=0;
+							lead_number++;
+						}
+						else
+							i++;
+
+					});
+					
+					if(data.distance <= 3) {						
+						if(data.distance == 1)
+							$scope.connections.first.push(data);
+						if(data.distance == 2)
+							$scope.connections.second.push(data);
+						if(data.distance == 3)
+							$scope.connections.third.push(data);
+					}
+					
+					if(data.distance >= 1 && data.distance <=3)
+					{
+						$scope.connections.all.push(data);
+					}
+
+					$scope.findConnectionsSingle(lead_number, total_leads, i, numResults);
+				})
+				.error(function() {
+					$scope.safeApply(function() {
+						$scope.current_xhr++;
+						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
+						$scope.setProgressBar();					
+
+						// adjust parameters and call again
+						if(i == numResults) {
+							i=0;
+							lead_number++;
+						}
+						else
+							i++;
+					});
+
+					$scope.findConnectionsSingle(lead_number, total_leads, i, numResults);
+				});
+
+			}
 	};
 	
 	/* ************************* View Profile *************************/
@@ -545,7 +631,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if (numResults > 25)
 			numResults = 25;
 		
-		return selected_leads * numResults;
+		return selected_leads * (numResults+1);
 	};
 
 	/* ************************* Progress Bar *************************/
@@ -605,6 +691,49 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		// scroll to TOP when showing leads' list
 		if($scope.show_leads == true)
 			$scope.scrollTop();
+	};
+
+	/* ********************* Test XHRs *************************/
+	
+	$scope.testXhrs = function() {
+
+		var test_xhrs_url = '/xhr?parameter=' + 11;
+		var init_promise = 
+		$http({method:'GET', url:test_xhrs_url})
+			.success(function(data, status, headers, config) {
+				$scope.test_data = data;
+				console.log($scope.test_data);
+			})
+			.error(function() {
+				$scope.createDialog("#http_error");
+			});
+
+		init_promise.then(function() {
+			var i=0;
+			$scope.testSingleXhr(i);
+		});
+
+	};
+	
+	$scope.testSingleXhr = function(i) {
+
+		if(i==5)
+			return;
+
+		var test_xhrs_url = '/xhr?parameter=' + i.toString();
+
+		$http({method:'GET', url:test_xhrs_url})
+		.success(function(data, status, headers, config) {
+			$scope.test_data = data;
+			console.log($scope.test_data);
+			
+			$scope.testSingleXhr(i+1);
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
+			
+			$scope.testSingleXhr(i+1);
+		});
 	};
 	
 }]);
