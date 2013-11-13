@@ -601,6 +601,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	$scope.toggleLeadsDiv = function() {
 		$scope.show_leads = !$scope.show_leads;
+		$scope.leads_filter = '';
 		
 		// scroll to TOP when showing leads' list
 		if($scope.show_leads == true)
