@@ -28,7 +28,7 @@ class MySQL(Config):
 
 	def insert_into_people(self, name, linkedin_id, access_token_key, access_token_secret):
 		try:
-			self.cursor.execute("""insert into people (name, linkedin_id, access_token, access_secret) values (%s,%s,%s,%s);""",(name, linkedin_id, access_token_key, access_token_secret))
+			self.cursor.execute("""INSERT INTO people (name, linkedin_id, access_token, access_secret) VALUES (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE access_token = %s, access_secret = %s;""",(name, linkedin_id, access_token_key, access_token_secret, access_token_key, access_token_secret))
 			print "insert_into_people()"
 		except Exception as e:
 			print "unable to insert !!!!!!!!!!!!!!!!!!!!!!"
