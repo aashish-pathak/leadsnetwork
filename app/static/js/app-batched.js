@@ -173,7 +173,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				
 			// complete progress
 			$scope.progress = 100;
-			$scope.finishProgressBar();
+			$scope.setProgressBar();
 			$scope.done_searching = true;
 			//console.log("Progress : " + $scope.progress);
 		});
@@ -503,6 +503,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				lead_number++;
 				$scope.findConnectionsBatched(lead_number, total_leads, numResults);
 			});
+		}
+		
+		else {
+			// current lead is not selected, move on to next lead
+			lead_number++;
+			$scope.findConnectionsBatched(lead_number, total_leads, numResults);
 		}
 	};
 	
