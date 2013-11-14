@@ -23,7 +23,7 @@
 	<!-- buttons -->
 	<link rel="stylesheet" type="text/css" href="static/css/style_bootstrap.css">
 	<!-- icons -->
-	<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.min.css">
+	<!--<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.min.css">-->
 	<!-- responsive -->
 	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
 	<!-- twitter bootstrap 3.0-->
@@ -41,6 +41,9 @@
 	<!-- progress bar css -->
 	<link rel="stylesheet" type="text/css" href="static/css/progress-bar.css">
 
+	<!-- favicon -->
+	<link rel="shortcut icon" href="static/img/ghost.ico">
+
 </head>
 
 <body>
@@ -56,57 +59,57 @@
 		
 		<!-- JQuery Dialogs -->
 		<div id="invalid_username" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			Username is invalid. Please provide LDAP Username.
 			</p>
 		</div>
 		
 		<div id="invalid_password" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			Password is invalid. Please provide LDAP Password.
 			</p>
 		</div>
 		
 		<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
-			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			The person '{{fname}} {{lname}}' from '{{cname}}' is not on linkedin.
 			</p>
 		</div>
 
-    <div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
-      <p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-	The person '{{fname}} {{lname}}' is not on linkedin.
-	</p>
-      </div>
+		<div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			The person '{{fname}} {{lname}}' is not on linkedin.
+			</p>
+		</div>
 
-    <div id="at_least_one_lead" title="No lead selected!" class="ui-helper-hidden">
-      <p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-	Please select at least one lead!
-	</p>
-      </div>
+		<div id="at_least_one_lead" title="No lead selected!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Please select at least one lead!
+			</p>
+		</div>
 
 		<div id="both_fname_lname_error" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			<!--Do you want to search using both first-name and last-name?-->
 			Please enter both First Name and Last Name !
 			</p>
 		</div>
 
 		<div id="both_username_password_error" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			Please enter both Username and Password (LDAP Credentials) !
 			</p>
 		</div>
 
-    <div id="http_error" title="Ooops!" class="ui-helper-hidden">
-      <p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-	HTTP Error. Unable to connect to server.
-	</p>
-      </div>
+		<div id="http_error" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			HTTP Error. Unable to connect to server.
+			</p>
+		</div>
 
 
 		<div id="url_undefined" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			Public profile for this person is not available.
 			</p>
 		</div>
@@ -123,12 +126,14 @@
 				<div class="header_left">
 					<a href="." data-toggle="tooltip" title="List of leads !">
 					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in && !show_leads">
-						<span class="button-logo-leads"><i class="icon-large icon-group" style="color: white"></i></span>
-						<span class="button-text-leads" style="color: white">Leads</span>
+						<!--<span class="button-logo-leads">-->
+						<span class="glyphicon glyphicon-th-list" style="color: white"></span>
+						<!--<span class="button-text-leads" style="color: white">Leads</span>-->
 					</button> <!-- with normal background : button not pressed-->
 					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in && show_leads">
-						<span class="button-logo-leads"><i class="icon-large icon-group" style="color: #888888"></i></span>
-						<span class="button-text-leads" style="color: #888888">Leads</span>
+						<!--<span class="button-logo-leads">-->
+						<span class="glyphicon glyphicon-list" style="color: #888888"></span>
+						<!--<span class="button-text-leads" style="color: white">Leads</span>-->
 					</button> <!-- with dark background : button pressed-->
 					
 					</a>
@@ -139,9 +144,9 @@
 					<span class="glyphicon glyphicon-user" style="color: white"></span>
 					&nbsp;{{ldap_name | uppercase}}</a>
 					<ul class="dropdown-menu pull-right" role="menu">
-						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>&nbsp;&nbsp;Settings </a></li>
-						<li style="cursor: pointer"><a ng-click="addAccount()"> <i class="icon-large icon-plus"></i>&nbsp;&nbsp;Add Account </a></li>
-						<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>&nbsp;&nbsp;Sign Out</a></li>
+						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Settings </a></li>
+						<li style="cursor: pointer"><a ng-click="addAccount()"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Account </a></li>
+						<li style="cursor: pointer"><a ng-click="signOut()"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;Sign Out</a></li>
 					</ul>
 					</span>
 				</div>			
@@ -168,7 +173,7 @@
 							</span>
 						</div>
 						<center>
-							<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search again</button>
+							<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Search again</button>
 							<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
 						</center>
 						<hr>
@@ -180,7 +185,7 @@
 		<div id="main_div" class="center">
 		
 			<!-- "Back To Top" button-->
-			<a href="#" class="back-to-top" style="background: transparent; text-decoration: none"><i class="icon icon-arrow-up"></i></a>
+			<a href="#" class="back-to-top" style="background: transparent; text-decoration: none"><span class="glyphicon glyphicon-arrow-up"></span></a>
 			<!------------------------Sub-Header----------------------->
 			<!--
 			<center>
@@ -221,9 +226,10 @@
 								<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="*LDAP Password">
 							</div>
 							<br>
-							<center><button class="btn btn-red center button-login">
-								<i class="icon-large icon-linkedin button-logo-login"></i>
-								<span class="button-text-login">Log In</span>
+							<center>
+								<button class="btn btn-red center button-login">
+									<span class="glyphicon glyphicon-log-in"></span>
+									<!--<span class="button-text-login">Log In</span>-->
 								</button>
 							</center>
 						</div>
@@ -261,7 +267,7 @@
 				
 					<!-- JQuery Dialog -->
 					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
-						<p><span class="icon-large icon-group" style="float: left; margin: 0 7px 50px 0;"></span>
+						<p><span class="glyphicon glyphicon-tags" style="float: left; margin: 0 7px 50px 0;"></span>
 						<b>"{{fname | uppercase}} {{lname | uppercase}}" is reachable via :</b></p>
 						<ol>
 							<li ng-repeat="c in common_connections"> {{c}} </li>
@@ -317,8 +323,8 @@
 				</div>
 				<br>
 				<div id="leads_select_header" class="row-fluid">
-					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="icon-large icon-check"></span>&nbsp;&nbsp;All</button>
-					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="icon-large icon-check-empty"></span>&nbsp;&nbsp;None</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="glyphicon glyphicon-unchecked"></span>&nbsp;&nbsp;None</button>
 					<br><br>
 					<input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
 					<br>
@@ -336,7 +342,7 @@
 				
 				<center>
 				<div id="leads_decide_footer">
-					<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="icon-large icon-mail-reply"></span>&nbsp;&nbsp;Back</button>
+					<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
 				</div>
 				</center>
 			</div>

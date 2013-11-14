@@ -286,6 +286,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				
 				// scroll to the TOP of the page
 				$scope.scrollTop();
+
+				// select all leads initially
+				$scope.selectAll();
 			}
 			
 			// unsuccessful login
