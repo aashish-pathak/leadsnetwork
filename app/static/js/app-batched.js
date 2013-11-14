@@ -164,19 +164,19 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* *********************** Stop Requests **************************/
 
 	$scope.stopRequests = function() {
+		
 		$scope.safeApply(function() {
-			
+		
 			// abort requests
 			for(var i=0;i<$scope.canceler.length;i++)
 				$scope.canceler[i].resolve();
 				
 			// complete progress
 			$scope.progress = 100;
-			$scope.setProgressBar();
-			$scope.done_searching = true;							
+			$scope.finishProgressBar();
+			$scope.done_searching = true;
+			//console.log("Progress : " + $scope.progress);
 		});
-		
-		$scope.canceler = [];
 	};
 
 	/* ************************** Go Back *****************************/
@@ -407,7 +407,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			numResults = 25;
 
 		$scope.people_search_ids=[];
-		$scope.canceler = [];
 		for(var i=0;i<numResults;i++)
 			$scope.people_search_ids.push($scope.data.people.values[i].id);
 		
@@ -415,6 +414,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var fetch_profile_url="";
 		var total_leads = $scope.leads_list.length;
 		var total_calls = total_leads * numResults;
+		
 		$scope.current_lead="";
 		$scope.searching_message = "";
 		$scope.connections.all=[];
@@ -426,58 +426,83 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.total_xhr = $scope.calculateTotalCalls();
 		//alert("Total calls : " + $scope.total_xhr);
 
-		for(var lead_number = 0; lead_number < total_leads; lead_number++) {
-			for(var i=0;i<numResults;i++) {
+		// call batched form of findConnections
+		$scope.findConnectionsBatched(0, total_leads, numResults);
+	};
+	
+	/* ****************** Find Connections Batched *********************/
+
+	$scope.findConnectionsBatched = function(lead_number, total_leads, numResults) {
+
+		$scope.canceler = [];
+		$scope.promises = [];
+		
+		if(lead_number==total_leads)
+			return;
+		
+		else if($scope.leads_list[lead_number][2] == true){
+			
+			//console.log("numResults=" + numResults + ", lead_number=" + lead_number + ", total_leads=" + total_leads);	
+			
+			// initialize canceler and promises
+			
+			for(var i=0; i<numResults; i++) {
 				
-				if($scope.leads_list[lead_number][2] == false) {
-					// current lead is not selected
-					continue;
-				}
-
-				// create canceler
-				$scope.canceler.push($q.defer());
-
 				var lead_num_str = $scope.leads_list[lead_number][0];
 				profile_id = $scope.people_search_ids[i];
 				fetch_profile_url = "/fetch_profile?lead_number=" + lead_num_str + "&profile_id=" + profile_id;
+					
+				$scope.canceler.push($q.defer());
 				
-				$http({method:'GET', url:fetch_profile_url, timeout: $scope.canceler[i].promise})
-				.success(function(data) {
-					
-					$scope.safeApply(function() {
-						$scope.current_xhr++;
-						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
-						$scope.setProgressBar();						
-						// add default profile picture for connections under degree 3
-						if(!('pictureUrl' in data) && data.distance <= 3 && data.distance > 0) {
-							data.pictureUrl = '/static/img/ghost_profile.png';
-						}
-						$scope.current_lead = data.through;
+				var promise = $http({method:'GET', url:fetch_profile_url, timeout: $scope.canceler[i].promise})
+					.success(function(data) {
+						
+						$scope.safeApply(function() {
+							$scope.current_xhr++;
+							$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
+							if(!$scope.done_searching)
+								$scope.setProgressBar();					
+							
+							// add default profile picture for connections under degree 3
+							if(!('pictureUrl' in data) && data.distance <= 3 && data.distance > 0) {
+								data.pictureUrl = '/static/img/ghost_profile.png';
+							}
+							$scope.current_lead = data.through;
+							
+							if(data.distance <= 3) {						
+								if(data.distance == 1)
+									$scope.connections.first.push(data);
+								if(data.distance == 2)
+									$scope.connections.second.push(data);
+								if(data.distance == 3)
+									$scope.connections.third.push(data);
+							}
+							
+							if(data.distance >= 1 && data.distance <=3)
+							{
+								$scope.connections.all.push(data);
+							}
+						});
+					})
+					.error(function() {
+						$scope.safeApply(function() {
+							$scope.current_xhr++;
+							$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
+							
+							if(!$scope.done_searching)
+								$scope.setProgressBar();					
+						});
 					});
-					
-					if(data.distance <= 3) {						
-						if(data.distance == 1)
-							$scope.connections.first.push(data);
-						if(data.distance == 2)
-							$scope.connections.second.push(data);
-						if(data.distance == 3)
-							$scope.connections.third.push(data);
-					}
-					
-					if(data.distance >= 1 && data.distance <=3)
-					{
-						$scope.connections.all.push(data);
-					}
-					
-				})
-				.error(function() {
-					$scope.safeApply(function() {
-						$scope.current_xhr++;
-						$scope.progress = ($scope.current_xhr / $scope.total_xhr)*100;
-						$scope.setProgressBar();						
-					});
-				});
+
+				$scope.promises.push(promise);
 			}
+		
+			// call next batch of AJAX requests only when all requests from current batch are resolved
+			$q.all($scope.promises).then(function() {
+				//$scope.setProgressBar();
+				lead_number++;
+				$scope.findConnectionsBatched(lead_number, total_leads, numResults);
+			});
 		}
 	};
 	
@@ -545,7 +570,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if (numResults > 25)
 			numResults = 25;
 		
-		return selected_leads * numResults;
+		return selected_leads * (numResults);
 	};
 
 	/* ************************* Progress Bar *************************/
@@ -571,6 +596,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		if($scope.progress == 100)
 			$scope.done_searching = true;
+			
+		//console.log("inside set progressbar with progress = " + $scope.progress);
 	};
 	
 	/* ********************* Reset ProgressBar ************************/
@@ -584,6 +611,17 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});
 	};
 	
+	/* ******************* Finish ProgressBar ***********************/
+	
+	$scope.finishProgressBar = function() {
+		$scope.safeApply(function() {
+			
+			// finish progress
+			$scope.progress = 100;
+			$scope.setProgressBar();							
+		});
+	};
+
 	/* ********************* Clear Search Box *************************/
 	
 	$scope.clearSearchBox = function() {
@@ -605,6 +643,49 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		// scroll to TOP when showing leads' list
 		if($scope.show_leads == true)
 			$scope.scrollTop();
+	};
+
+	/* ********************* Test XHRs *************************/
+	
+	$scope.testXhrs = function() {
+
+		var test_xhrs_url = '/xhr?parameter=' + 11;
+		var init_promise = 
+		$http({method:'GET', url:test_xhrs_url})
+			.success(function(data, status, headers, config) {
+				$scope.test_data = data;
+				console.log($scope.test_data);
+			})
+			.error(function() {
+				$scope.createDialog("#http_error");
+			});
+
+		init_promise.then(function() {
+			var i=0;
+			$scope.testSingleXhr(i);
+		});
+
+	};
+	
+	$scope.testSingleXhr = function(i) {
+
+		if(i==5)
+			return;
+
+		var test_xhrs_url = '/xhr?parameter=' + i.toString();
+
+		$http({method:'GET', url:test_xhrs_url})
+		.success(function(data, status, headers, config) {
+			$scope.test_data = data;
+			console.log($scope.test_data);
+			
+			$scope.testSingleXhr(i+1);
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
+			
+			$scope.testSingleXhr(i+1);
+		});
 	};
 	
 }]);
