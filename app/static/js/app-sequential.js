@@ -164,19 +164,20 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* *********************** Stop Requests **************************/
 
 	$scope.stopRequests = function() {
+		
+		console.log("inside stop requests");
 		$scope.safeApply(function() {
 			
 			// abort requests
 			for(var i=0;i<$scope.canceler.length;i++)
 				$scope.canceler[i].resolve();
-				
+			
 			// complete progress
 			$scope.progress = 100;
 			$scope.setProgressBar();
 			$scope.done_searching = true;
 		});
 		
-		$scope.canceler = [];
 	};
 
 	/* ************************** Go Back *****************************/
@@ -424,7 +425,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		// find total number of http requests
 		$scope.total_xhr = $scope.calculateTotalCalls();
-		alert("Total calls : " + $scope.total_xhr);
+		//alert("Total calls : " + $scope.total_xhr);
 
 		//for(var lead_number = 0; lead_number < total_leads; lead_number++) {
 			//for(var i=0;i<numResults;i++) {
