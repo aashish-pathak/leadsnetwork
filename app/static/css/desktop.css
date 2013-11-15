@@ -37,8 +37,8 @@
 	}
 
 	#main_div {
-		margin-top: 10%;
-		margin-bottom: 7%;
+		/*margin-top: 10%;
+		margin-bottom: 7%;*/
 	}
 
 	.username-password {
@@ -87,6 +87,7 @@
 	
 	#login_div {
 		max-width: 50%;
+		margin-top: 90px;
 	}
 
 	.input-ldap {
@@ -103,6 +104,7 @@
 	
 	#search_div {
 		max-width: 50%;
+		margin-top: 150px;
 	}
 
 	.button-search {
@@ -132,7 +134,8 @@
 	#leads_div {
 		max-width: 95%;
 		margin-bottom: 5%;
-		margin-top: -4%;
+		margin-top: 90px;
+		margin-bottom: 100px;
 	}
 
 

@@ -38,8 +38,8 @@
 	}
 
 	#main_div {
-		margin-top: 25%;
-		margin-bottom: 30%;
+		/*margin-top: 25%;
+		margin-bottom: 30%;*/
 	}
 
 	.username-password {
@@ -87,6 +87,7 @@
 
 	#login_div {
 		max-width: 100%;
+		margin-top: 70px;
 	}
 
 	.input-ldap {
@@ -103,6 +104,7 @@
 	
 	#search_div {
 		max-width: 80%;
+		margin-top: 100px;
 	}
 	
 	.button-search {
@@ -123,17 +125,18 @@
 	}
 
 	.responsive-button {
-		width: 100%;
+		width: 80%;
 	}
 	
 	.responsive-button-half {
-		width: 48%;
+		min-width: 38%;
 	}		
 
 	#leads_div {
 		max-width: 95%;
 		margin-bottom: 5%;
-		margin-top: 0%;
+		margin-top: 70px;
+		margin-bottom: 80px;
 	}
 
 	/**********************************************************************/
