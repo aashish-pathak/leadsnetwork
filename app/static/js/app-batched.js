@@ -29,6 +29,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.leads_list = [];
 	$scope.leads_empty = false;
 	$scope.selected_leads_count = 0;
+	$scope.groups_of_leads = [];
 
 	// search parameters
 	$scope.fname = '';
@@ -185,6 +186,22 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.searchAgain();
 		$scope.scrollTop();
 	};
+
+	/* *********************** Return Groups **************************/
+
+	// get the list groups of leads from backend DB
+	$scope.returnGroups = function() {
+		
+		var groups_url = '/return_groups';
+		$http({method:'GET', url:groups_url})
+		.success(function(data) {
+			$scope.groups_of_leads = data;
+			console.log($scope.groups_of_leads);
+		});
+	};
+	
+	// function for getting list of groups of leads from database
+	$scope.returnGroups();
 
 
 	/* *********************** Return Leads ***************************/

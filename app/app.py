@@ -2,6 +2,25 @@ from flask import Flask, jsonify, abort, request, make_response, send_file, json
 
 app = Flask(__name__)
 
+#########################__RETURN_GROUPS__##############################
+@app.route('/return_groups')
+def return_groups():
+
+	# read all leads from 'people' table and return their names
+	from lib import MySQL
+	group = []
+	groups = []
+	sql = "select * from groups"
+	mysql = MySQL()
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		group_id = row[0]
+		group_name = row[1]
+		group = [group_id, group_name]
+		groups.append(group)
+		
+	return json.dumps(groups)
+
 #########################__RETURN_LEADS__###############################
 @app.route('/return_leads')
 def return_leads():
