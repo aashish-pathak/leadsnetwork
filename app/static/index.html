@@ -145,7 +145,7 @@
 					&nbsp;{{ldap_name | uppercase}}</a>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Settings </a></li>
-						<li style="cursor: pointer"><a ng-click="addAccount()"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add My Account </a></li>
+						<li style="cursor: pointer"><a ng-disabled="show_always" ng-click="addAccount()"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add My Account </a></li>
 						<li style="cursor: pointer"><a ng-click="signOut()"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;Sign Out</a></li>
 					</ul>
 					</span>
@@ -335,7 +335,7 @@
 					<ul class="unstyled center">
 						
 						<li ng-repeat="lead in leads_list | filter: leads_filter">
-							<label><input type="checkbox" ng-model="lead[2]">
+							<label><input type="checkbox" ng-model="lead[3]">
 							    {{lead[1]}}</label></li>
 					</ul>
 				</div>
