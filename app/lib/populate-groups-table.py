@@ -16,7 +16,8 @@ try:
 	gslab_url = 'ldap://172.18.18.17:389'
 	l = ldap.initialize(gslab_url)
 	l.protocol_version = ldap.VERSION3
-	print l.simple_bind_s(username, password)
+	#print l.simple_bind_s(username, password)
+	l.simple_bind_s(username, password)
 	l.unbind_s()
 	
 	# get data for valid user based on his employee_id (username)
@@ -25,7 +26,8 @@ try:
 		gslab_url = 'ldap://172.18.18.17:389'
 		l = ldap.initialize(gslab_url)
 		l.protocol_version = ldap.VERSION3
-		print l.simple_bind_s(application_username, application_password)
+		#print l.simple_bind_s(application_username, application_password)
+		l.simple_bind_s(application_username, application_password)
 		
 		# fetch data from ldap server
 		baseDN = 'ou=users, ou=gslab.com,dc=gslab'
@@ -75,6 +77,7 @@ except Exception as e:
 print practice_names
 print len(practice_names)
 
+# read names from PEOPLE table and search for their PRACTICE-NAME from LDAP Server
 import MySQLdb as mdb
 con = mdb.connect('localhost','admin','admin123','find_connections')
 with con:
@@ -123,14 +126,15 @@ with con:
 			name = row[1]
 			# search for this name in ldap data
 			fname, lname = name.split(' ')
-			print lname
+			print fname + " " + lname
 			try:
 				# user authentication
 				
 				gslab_url = 'ldap://172.18.18.17:389'
 				l = ldap.initialize(gslab_url)
 				l.protocol_version = ldap.VERSION3
-				print l.simple_bind_s(username, password)
+				# print l.simple_bind_s(username, password)
+				l.simple_bind_s(username, password)
 				l.unbind_s()
 				
 				# get data for valid user based on his employee_id (username)
@@ -139,7 +143,8 @@ with con:
 					gslab_url = 'ldap://172.18.18.17:389'
 					l = ldap.initialize(gslab_url)
 					l.protocol_version = ldap.VERSION3
-					print l.simple_bind_s(application_username, application_password)
+					#print l.simple_bind_s(application_username, application_password)
+					l.simple_bind_s(application_username, application_password)
 					
 					# fetch data from ldap server
 					baseDN = 'ou=users, ou=gslab.com,dc=gslab'
