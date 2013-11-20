@@ -94,7 +94,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		// check that at least one lead is selected
 		var none = true;
 		for(var i=0;i<$scope.leads_list.length;i++) {
-			if($scope.leads_list[i][2] == true) {
+			if($scope.leads_list[i][3] == true) {
 				none = false;
 				break;
 			}
@@ -108,12 +108,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	$scope.selectAll = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
-			$scope.leads_list[i][2] = true;
+			$scope.leads_list[i][3] = true;
 	};
 	
 	$scope.selectNone = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
-			$scope.leads_list[i][2] = false;		
+			$scope.leads_list[i][3] = false;		
 	};
 
 	
@@ -122,7 +122,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var none = true;
 		$scope.selected_leads_count = 0;
 		for(var i=0;i<$scope.leads_list.length;i++) {
-			if($scope.leads_list[i][2] == true) {
+			if($scope.leads_list[i][3] == true) {
 				none = false;
 				break;
 			}
@@ -235,12 +235,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.success(function(data) {
 			$scope.leads_list = data;
 			for(var i=0; i<$scope.leads_list.length;i++)
-				$scope.leads_list[i][3] = true;
+				$scope.leads_list[i].push(true);
 		
 			$scope.safeApply(function() {
 				$scope.leads_list = $scope.leads_list.sort($scope.comparatorAlphabetical);
 			});
-			
+
 			$scope.fillGroups();
 		});
 	};
@@ -408,7 +408,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		// count number of selected leads
 		var count = 0;
 		for(var i=0;i<$scope.leads_list.length;i++)
-			if($scope.leads_list[i][2] == true)
+			if($scope.leads_list[i][3] == true)
 				count++;
 		
 		$scope.selected_leads_count = count;
@@ -499,9 +499,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if(lead_number==total_leads)
 			return;
 		
-		else if($scope.leads_list[lead_number][2] == true){
-			
-			//console.log("numResults=" + numResults + ", lead_number=" + lead_number + ", total_leads=" + total_leads);	
+		else if($scope.leads_list[lead_number][3] == true){
 			
 			// initialize canceler and promises
 			
@@ -627,7 +625,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		var selected_leads = 0;
 		for(var i = 0; i < $scope.leads_list.length; i++){
-			if($scope.leads_list[i][2] == true)
+			if($scope.leads_list[i][3] == true)
 				selected_leads++;
 		}
 		
