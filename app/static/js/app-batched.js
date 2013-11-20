@@ -29,6 +29,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.leads_list = [];
 	$scope.leads_empty = false;
 	$scope.selected_leads_count = 0;
+	$scope.groups_list = [];
+	$scope.groups_of_leads = [];
 
 	// search parameters
 	$scope.fname = '';
@@ -186,7 +188,36 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.scrollTop();
 	};
 
+	/* *********************** Return Groups **************************/
 
+	// get the list groups of leads from backend DB
+	$scope.returnGroups = function() {
+		
+		var groups_url = '/return_groups';
+		$http({method:'GET', url:groups_url})
+		.success(function(data) {
+			$scope.groups_list = data;
+			
+			$scope.initGroups();
+		});
+	};
+
+	/* ********************* Initialize Groups ************************/
+
+	$scope.initGroups = function() {
+		//scan groups list and initialize
+		for(var i=0;i<$scope.groups_list.length;i++){
+			// create object and push into groups_of_leads
+			var group_obj = {};
+			group_obj.group_id = $scope.groups_list[i][0];
+			group_obj.group_name = $scope.groups_list[i][1];
+			group_obj.leads_list = [];
+			$scope.groups_of_leads.push(group_obj);
+		}
+		
+		$scope.returnLeads();
+	};
+	
 	/* *********************** Return Leads ***************************/
 
 	// compare between two string (needed for alphabetical sorting)
@@ -204,16 +235,41 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.success(function(data) {
 			$scope.leads_list = data;
 			for(var i=0; i<$scope.leads_list.length;i++)
-				$scope.leads_list[i][2] = true;
+				$scope.leads_list[i][3] = true;
 		
 			$scope.safeApply(function() {
 				$scope.leads_list = $scope.leads_list.sort($scope.comparatorAlphabetical);
 			});
+			
+			$scope.fillGroups();
 		});
 	};
 	
-	// function for getting list of leads from database
-	$scope.returnLeads();
+	/* *********************** Fill Groups ****************************/
+	$scope.fillGroups = function() {
+		for(var current_lead=0; current_lead<$scope.leads_list.length; current_lead++){
+			
+			var group_id = $scope.leads_list[current_lead][2];
+			
+			for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++)
+				if($scope.groups_of_leads[current_group].group_id == group_id)
+					break;
+			
+			$scope.groups_of_leads[current_group].leads_list.push($scope.leads_list[current_lead]);
+		}
+	};
+
+	/* ************************* Start All ****************************/
+
+	$scope.startAll = function() {
+		$scope.returnGroups();
+		$scope.initGroups();
+		$scope.returnLeads();
+		$scope.fillGroups();
+	};
+	
+	//$scope.startAll();
+	$scope.returnGroups();
 
 	/* *********************** Check Cookie ***************************/
 	
