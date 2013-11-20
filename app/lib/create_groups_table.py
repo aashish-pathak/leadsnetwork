@@ -32,7 +32,7 @@ try:
 		print e
 
 	print 'populate table GROUPS'
-	groups = ['Execs', 'Practice Heads', 'LSE', 'SSE', 'SE', 'Others', 'TM', 'Corp']
+	groups = ['Execs', 'PracticeHead', 'LSE', 'SSE', 'SE', 'users', 'TM', 'Corp']
 	for group in groups:
 		print group
 		try:
