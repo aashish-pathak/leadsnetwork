@@ -268,9 +268,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.fillGroups();
 	};
 	
-//	$scope.startAll();
+	//$scope.startAll();
 	$scope.returnGroups();
-	console.log($scope.groups_of_leads);
 
 	/* *********************** Check Cookie ***************************/
 	
