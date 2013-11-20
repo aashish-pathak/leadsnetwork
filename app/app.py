@@ -35,7 +35,8 @@ def return_leads():
 	for row in rows:
 		table_id = row[0]
 		name = row[1]
-		lead = [table_id, name]
+		group_id = row[7]
+		lead = [table_id, name, group_id]
 		leads.append(lead)
 		
 	return json.dumps(leads)

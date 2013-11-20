@@ -4,7 +4,7 @@ import MySQLdb as mdb
 import ldap
 
 def getGroupName(roles):
-	groups = ['Execs', 'PracticeHead', 'LSE', 'SSE', 'SE', 'users', 'TM', 'Corp']
+	groups = ['Null Group', 'Execs', 'PracticeHead', 'LSE', 'SSE', 'SE', 'users', 'TM', 'Corp']
 	for group in groups:
 		if group in roles:
 			return int(groups.index(group))
