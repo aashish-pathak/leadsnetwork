@@ -205,6 +205,16 @@ tr.t3 td {
 	margin-bottom: 10px;
 }
 
+#group-header-name{
+	left:0;
+	display:inline;
+}
+
+#group-header-rest{
+	right:0;
+	display:inline;
+}
+
 #group-body{
 	margin-top: 10px;
 }
