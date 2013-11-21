@@ -200,11 +200,14 @@ tr.t3 td {
 
 /* DIVs : header, footer, login, search, results, leads */
 
-#common_connections {
-	
-	
+#expand-collapse {
+	min-height: 20px;
+	margin-bottom: 10px;
 }
 
+#group-body{
+	margin-top: 10px;
+}
 
 .view_connections:hover {
 	cursor: pointer;
