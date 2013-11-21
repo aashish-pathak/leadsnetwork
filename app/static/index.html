@@ -342,10 +342,10 @@
 								<label ng-click="selectGroup(group)" ng-show="group.leads_empty" style="color:#888888">
 								<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
 								&nbsp;{{group.group_display_name}}</label>
-								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group" style="color: green">
+								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group" style="cursor: pointer; color: green">
 								<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
 								&nbsp;{{group.group_display_name}}</label>
-								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group" style="color: red">
+								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group" style="cursor: pointer; color: red">
 								<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
 								&nbsp;{{group.group_display_name}}</label>
 							</div>

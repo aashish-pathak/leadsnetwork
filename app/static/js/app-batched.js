@@ -365,10 +365,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				all_true = false;
 		}
 		
-		if(all_true == true)
+/*		if(all_true == true)
 			$scope.groups_of_leads[current_group].select_group = true;
 		else if(all_false == true)
 			$scope.groups_of_leads[current_group].select_group = false;
+*/
+		if(all_false == true)
+			$scope.groups_of_leads[current_group].select_group = false;
+		else
+			$scope.groups_of_leads[current_group].select_group = true;
 	};
 
 	/* ******************* Expand-Collapse Group ***********************/
