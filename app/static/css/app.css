@@ -200,11 +200,24 @@ tr.t3 td {
 
 /* DIVs : header, footer, login, search, results, leads */
 
-#common_connections {
-	
-	
+#expand-collapse {
+	min-height: 20px;
+	margin-bottom: 10px;
 }
 
+#group-header-name{
+	left:0;
+	display:inline;
+}
+
+#group-header-rest{
+	right:0;
+	display:inline;
+}
+
+#group-body{
+	margin-top: 10px;
+}
 
 .view_connections:hover {
 	cursor: pointer;
@@ -326,6 +339,13 @@ tr.t3 td {
 	-webkit-box-shadow: 0px 5px 2px -5px #000000;
     -moz-box-shadow: 0px 5px 2px -5px #000000;
     box-shadow: 0px 5px 2px -5px #000000;
+}
+
+.bottom-shadow-light {
+	/* Only bottom shadow*/
+	-webkit-box-shadow: 0px 5px 2px -6px #000000;
+    -moz-box-shadow: 0px 5px 2px -6px #000000;
+    box-shadow: 0px 5px 2px -6px #000000;
 }
 
 .bottom-shadow-inset {
