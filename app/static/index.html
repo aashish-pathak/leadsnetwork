@@ -344,7 +344,7 @@
 								&nbsp;{{group.group_display_name}}</label>
 								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group" style="cursor: pointer; color: green">
 								<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
-								&nbsp;{{group.group_display_name}}</label>
+								&nbsp;{{group.group_display_name}}&nbsp;&nbsp;({{group.selected_leads_count}})</label>
 								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group" style="cursor: pointer; color: red">
 								<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
 								&nbsp;{{group.group_display_name}}</label>

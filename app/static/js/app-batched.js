@@ -273,6 +273,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.groups_of_leads[current_group].visible = false;
 				$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
 				$scope.groups_of_leads[current_group].leads_count = $scope.groups_of_leads[current_group].leads_list.length;
+				$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_count;
 				$scope.groups_of_leads[current_group].select_group = true;
 
 				if(!$scope.groups_of_leads[current_group].leads_count)
@@ -344,6 +345,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		for(i=0; i<$scope.groups_of_leads[current_group].leads_list.length; i++){
 			$scope.groups_of_leads[current_group].leads_list[i][3] = $scope.groups_of_leads[current_group].select_group;
 		}
+		$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_list.length;
 	};
 
 	/* ******************* Test Group for Lead ************************/
@@ -357,10 +359,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var current_group = i;
 		var all_true = true;
 		var all_false = true;
-
+		var selected_leads_count = 0;
 		for(var i=0; i<$scope.groups_of_leads[current_group].leads_list.length; i++){
-			if($scope.groups_of_leads[current_group].leads_list[i][3] == true)
+			if($scope.groups_of_leads[current_group].leads_list[i][3] == true){
 				all_false = false;
+				selected_leads_count++;
+			}
 			else
 				all_true = false;
 		}
@@ -374,6 +378,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.groups_of_leads[current_group].select_group = false;
 		else
 			$scope.groups_of_leads[current_group].select_group = true;
+			
+		$scope.groups_of_leads[current_group].selected_leads_count = selected_leads_count;
 	};
 
 	/* ******************* Expand-Collapse Group ***********************/
