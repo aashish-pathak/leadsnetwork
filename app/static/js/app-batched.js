@@ -109,11 +109,17 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.selectAll = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = true;
+			
+		for(var i=0;i<$scope.groups_of_leads.length;i++)
+			$scope.groups_of_leads[i].select_group = true;
 	};
 	
 	$scope.selectNone = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = false;		
+			
+		for(var i=0;i<$scope.groups_of_leads.length;i++)
+			$scope.groups_of_leads[i].select_group = false;
 	};
 
 	
@@ -247,6 +253,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* *********************** Fill Groups ****************************/
 	$scope.fillGroups = function() {
+		
+		// scan global leads_list to fill leads_list of each group
 		for(var current_lead=0; current_lead<$scope.leads_list.length; current_lead++){
 			
 			var group_id = $scope.leads_list[current_lead][2];
@@ -256,6 +264,125 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 					break;
 			
 			$scope.groups_of_leads[current_group].leads_list.push($scope.leads_list[current_lead]);
+		}
+		
+		// based on leads_list in each group, set it's parameters
+		for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++){
+			$rootScope.safeApply(function() {
+				
+				$scope.groups_of_leads[current_group].visible = false;
+				$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
+				$scope.groups_of_leads[current_group].leads_count = $scope.groups_of_leads[current_group].leads_list.length;
+				$scope.groups_of_leads[current_group].select_group = true;
+
+				if(!$scope.groups_of_leads[current_group].leads_count)
+					$scope.groups_of_leads[current_group].leads_empty = true;
+				else
+					$scope.groups_of_leads[current_group].leads_empty = false;
+			});
+		}
+		
+		console.log($scope.groups_of_leads);
+	};
+	
+	$scope.getDisplayNameFromName = function(name){
+		var group_display_name = '';
+		switch(name)
+		{
+			case 'Execs':
+			  group_display_name = 'Executive';
+			  break;
+			case 'PracticeHead':
+			  group_display_name = 'Practice Head';
+			  break;
+			case 'LSE':
+			  group_display_name = 'Lead Software Engineer';
+			  break;
+			case 'SSE':
+			  group_display_name = 'Senior Software Engineer';
+			  break;
+			case 'SE':
+			  group_display_name = 'Software Engineer';
+			  break;
+			case 'users':
+			  group_display_name = 'Others';
+			  break;
+			case 'TM':
+			  group_display_name = 'Talent Manager';
+			  break;
+			case 'Corp':
+			  group_display_name = 'Corporate Services';
+			  break;
+		}		
+		return group_display_name;
+	};
+
+	/* *********************** Toggle Group ***************************/
+	$scope.toggleGroup = function(group){
+		for(var i=0;i<$scope.groups_of_leads.length;i++){
+			if($scope.groups_of_leads[i].group_id == group.group_id){
+				$scope.groups_of_leads[i].visible = !$scope.groups_of_leads[i].visible;
+				break;
+			}
+		}
+	};
+
+	/* *********************** Select Group ***************************/
+	$scope.selectGroup = function(group){
+		
+		if(group.leads_empty)
+			return;
+			
+		for(var i=0; i<$scope.groups_of_leads.length; i++){
+			if($scope.groups_of_leads[i].group_id == group.group_id){
+				$scope.groups_of_leads[i].select_group = !$scope.groups_of_leads[i].select_group;
+				var current_group = i;
+				break;
+			}
+		}
+		
+		for(i=0; i<$scope.groups_of_leads[current_group].leads_list.length; i++){
+			$scope.groups_of_leads[current_group].leads_list[i][3] = $scope.groups_of_leads[current_group].select_group;
+		}
+	};
+
+	/* ******************* Test Group for Lead ************************/
+	$scope.testGroupForLead = function(lead){
+		var group_id = lead[2];
+		for(var i=0; i<$scope.groups_of_leads.length; i++){
+			if($scope.groups_of_leads[i].group_id == group_id)
+				break;
+		}
+
+		var current_group = i;
+		var all_true = true;
+		var all_false = true;
+
+		for(var i=0; i<$scope.groups_of_leads[current_group].leads_list.length; i++){
+			if($scope.groups_of_leads[current_group].leads_list[i][3] == true)
+				all_false = false;
+			else
+				all_true = false;
+		}
+		
+		if(all_true == true)
+			$scope.groups_of_leads[current_group].select_group = true;
+		else if(all_false == true)
+			$scope.groups_of_leads[current_group].select_group = false;
+	};
+
+	/* ******************* Expand-Collapse Group ***********************/
+	$scope.expandAll = function(group){
+		for(i=0; i<$scope.groups_of_leads.length; i++){
+			if(!$scope.groups_of_leads[i].leads_empty)
+				$scope.groups_of_leads[i].visible = true;
+		}
+	};
+
+	$scope.collapseAll = function(group){
+		for(i=0; i<$scope.groups_of_leads.length; i++){
+			if(!$scope.groups_of_leads[i].leads_empty)
+				$scope.groups_of_leads[i].visible = false;
 		}
 	};
 
@@ -702,6 +829,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.toggleLeadsDiv = function() {
 		$scope.show_leads = !$scope.show_leads;
 		$scope.leads_filter = '';
+		
+		// $scope.expandAll();
 		
 		// scroll to TOP when showing leads' list
 		if($scope.show_leads == true)

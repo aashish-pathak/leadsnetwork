@@ -25,6 +25,7 @@
 	<!--<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.min.css">-->
 	<!-- responsive -->
 	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
+	
 	<!-- twitter bootstrap 3.0-->
 	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.min.css" media="all">
 	<!-- main css -->
@@ -325,20 +326,53 @@
 					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All</button>
 					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="glyphicon glyphicon-unchecked"></span>&nbsp;&nbsp;None</button>
 					<br><br>
-					<input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
+					<!-- <input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead...."> -->
 					<br>
 				</div>
 				</center>
 				
 				<div id="leads_list">
+					<div id="expand-collapse" style="min-height:20px; margin-bottom:10px;">
+						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
+						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
+					</div>
+					<div id="group" class="well well-sm bottom-shadow" ng-repeat="group in groups_of_leads">
+						<div id="group-header">
+							<label ng-click="selectGroup(group)" ng-disabled="group.leads_empty" >
+							<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">
+							&nbsp;{{group.group_display_name}}</label>
+							<span ng-show="!group.leads_empty">
+								<span style="float: right; cursor:pointer;" ng-show="group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-minus"></span>
+								<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
+							</span>
+						</div>
+
+						<div id="group-body" ng-show="!group.leads_empty && group.visible">
+							<div class="bottom-shadow-light" style="margin-top:-15px">&nbsp;</div>
+							<ul class="unstyled center">
+								<li ng-repeat="lead in group.leads_list | filter: leads_filter">
+									<label style="font-weight:normal"><input type="checkbox" ng-click="testGroupForLead(lead)" ng-model="lead[3]">
+										&nbsp;{{lead[1]}}
+									</label>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!--
+					<div id="expand-collapse" style="min-height:20px; margin-bottom:10px;">
+						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
+						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
+					</div>
+					-->
+					<!--
 					<ul class="unstyled center">
-						
 						<li ng-repeat="lead in leads_list | filter: leads_filter">
 							<label><input type="checkbox" ng-model="lead[3]">
 							    {{lead[1]}}</label></li>
 					</ul>
+					-->
 				</div>
-				
+
 				<center>
 				<div id="leads_decide_footer">
 					<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
