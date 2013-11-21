@@ -337,20 +337,24 @@
 						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
 					</div>
 					<div id="group" class="well well-sm bottom-shadow" ng-repeat="group in groups_of_leads">
-						<div id="group-header" ng-click="selectGroup(group)" style="cursor:pointer">
-							<label ng-show="group.leads_empty" style="color:#888888">
-							<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
-							&nbsp;{{group.group_display_name}}</label>
-							<label ng-show="!group.leads_empty && group.select_group" style="color: green">
-							<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
-							&nbsp;{{group.group_display_name}}</label>
-							<label ng-show="!group.leads_empty && !group.select_group" style="color: red">
-							<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
-							&nbsp;{{group.group_display_name}}</label>
-							<span ng-show="!group.leads_empty">
-								<span style="float: right; cursor:pointer;" ng-show="group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-minus"></span>
-								<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
-							</span>
+						<div id="group-header">
+							<div id="group-header-name" style="left:0; display:inline">
+								<label ng-click="selectGroup(group)" ng-show="group.leads_empty" style="color:#888888">
+								<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
+								&nbsp;{{group.group_display_name}}</label>
+								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group" style="color: green">
+								<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
+								&nbsp;{{group.group_display_name}}</label>
+								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group" style="color: red">
+								<!--<input ng-disabled="group.leads_empty" type="checkbox" ng-model="group.select_group">-->
+								&nbsp;{{group.group_display_name}}</label>
+							</div>
+							<div id="group-header-rest" style="right:0; display:inline">
+								<span ng-show="!group.leads_empty">
+									<span style="float: right; cursor:pointer;" ng-show="group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-minus"></span>
+									<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
+								</span>
+							</div>
 							<div ng-show="!group.leads_empty && group.visible" class="bottom-shadow-light" style="margin-top:-15px">&nbsp;</div>
 						</div>
 
