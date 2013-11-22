@@ -343,10 +343,12 @@
 								<label ng-click="selectGroup(group)" ng-show="group.leads_empty" style="color:#888888">
 								{{group.group_display_name}}&nbsp;</label>
 
-								<label ng-show="!group.leads_empty && group.select_group" style="color: green">
+								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group" style="color: green; cursor:pointer">
+								<span class="glyphicon glyphicon-check" style="color: black"></span>
 								{{group.group_display_name}}&nbsp;({{group.selected_leads_count}})&nbsp;</label>
 
-								<label ng-show="!group.leads_empty && !group.select_group" style="color: red">
+								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group" style="color: red; cursor:pointer">
+								<span class="glyphicon glyphicon-unchecked" style="color: black"></span>
 								{{group.group_display_name}}&nbsp;</label>
 
 							</span>
@@ -361,10 +363,7 @@
 									<span style="float: right; cursor:pointer;" ng-show="group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-minus"></span>
 									<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
 								</span>
-							</div><br>
-							<a href="" style="text-decoration: none" ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group">[Select None]</a>
-							<a href="" style="text-decoration: none" ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group">[Select All]</a>
-							
+							</div>
 							<div ng-show="!group.leads_empty && group.visible" class="bottom-shadow-light" style="margin-top:-10px">&nbsp;</div>
 						</div>
 
