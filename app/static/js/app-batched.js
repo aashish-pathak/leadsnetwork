@@ -237,10 +237,21 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		return 0;
 	};
 
+	// compare between two numbers (needed for numerical sorting)
+	$scope.comparatorNumerical = function(a,b) {
+		if (a[2] < b[2]) return -1;
+		if (a[2] > b[2]) return 1;
+		return 0;
+	};
+
 	// compare between two group_ids (needed for sorting based on group_id)
 	$scope.comparatorGroupId = function(a,b) {
 		if (a[2] < b[2]) return -1;
 		if (a[2] > b[2]) return 1;
+		
+		// for same group_id, sort alphabetically
+		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
+		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
 		return 0;
 	};
 
