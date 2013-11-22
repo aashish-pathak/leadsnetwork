@@ -336,7 +336,7 @@
 						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
 						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
 					</div>
-					<div id="group" ng-repeat="group in groups_of_leads" class="well well-sm bottom-shadow">
+					<div id="group" ng-repeat="group in groups_of_leads" class="well bottom-shadow">
 						<div id="group-header">
 							<span id="group-header-name">
 
@@ -364,7 +364,7 @@
 									<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
 								</span>
 							</div>
-							<div ng-show="!group.leads_empty && group.visible" class="bottom-shadow-light" style="margin-top:-10px">&nbsp;</div>
+							<div ng-show="!group.leads_empty && group.visible" class="bottom-shadow-light" style="margin-top:-15px">&nbsp;</div>
 						</div>
 
 						<div id="group-body" ng-show="!group.leads_empty && group.visible">
