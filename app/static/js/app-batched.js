@@ -110,16 +110,20 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = true;
 			
-		for(var i=0;i<$scope.groups_of_leads.length;i++)
+		for(var i=0;i<$scope.groups_of_leads.length;i++){
 			$scope.groups_of_leads[i].select_group = true;
+			$scope.groups_of_leads[i].selected_leads_count = $scope.groups_of_leads[i].leads_list.length;
+		}
 	};
 	
 	$scope.selectNone = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = false;		
 			
-		for(var i=0;i<$scope.groups_of_leads.length;i++)
+		for(var i=0;i<$scope.groups_of_leads.length;i++){
 			$scope.groups_of_leads[i].select_group = false;
+			$scope.groups_of_leads[i].selected_leads_count = 0;
+		}
 	};
 
 	
