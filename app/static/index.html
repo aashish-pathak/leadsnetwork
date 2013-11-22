@@ -341,15 +341,15 @@
 							<span id="group-header-name">
 
 								<label ng-click="selectGroup(group)" ng-show="group.leads_empty" style="color:#888888">
-								{{group.group_display_name}}&nbsp;</label>
+								&nbsp;{{group.group_display_name}}&nbsp;</label>
 
 								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group" style="color: green; cursor:pointer">
 								<span class="glyphicon glyphicon-check" style="color: black"></span>
-								{{group.group_display_name}}&nbsp;({{group.selected_leads_count}})&nbsp;</label>
+								&nbsp;{{group.group_display_name}}&nbsp;({{group.selected_leads_count}})&nbsp;</label>
 
 								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group" style="color: red; cursor:pointer">
 								<span class="glyphicon glyphicon-unchecked" style="color: black"></span>
-								{{group.group_display_name}}&nbsp;</label>
+								&nbsp;{{group.group_display_name}}&nbsp;</label>
 
 							</span>
 							<div id="group-header-rest">
