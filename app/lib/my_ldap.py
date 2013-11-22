@@ -2,6 +2,12 @@ from conf import Config
 import ldap
 from flask import jsonify
 
+def getGroupName(roles):
+	groups = ['Null Group', 'Execs', 'PracticeHead', 'LSE', 'SSE', 'SE', 'users', 'TM', 'Corp']
+	for group in groups:
+		if group in roles:
+			return int(groups.index(group))
+
 class MyLDAP(Config):
 	
 	def __init__(self):
@@ -79,3 +85,52 @@ class MyLDAP(Config):
 		except Exception as e:
 			print e
 			return jsonify({'response':True, 'name':username})
+
+	def fetch_data_group_id(self, username):
+		print "fetch_data_group_id()"
+		# authenticate application
+		try:
+			l = ldap.initialize(self.gslab_url_test)
+			l.protocol_version = ldap.VERSION3
+			l.simple_bind_s(self.application_username, self.application_password)
+
+			# fetch data from ldap server
+			searchScope = ldap.SCOPE_SUBTREE
+			retrieveAttributes = None	# to get all attributes
+			
+			# search based on First-Name and Last-Name
+			fname, lname = username.split(' ')
+			searchFilter = "(&(cn=" + fname + ")(sn=" + lname + "))"
+
+			ldap_result_id = l.search(self.baseDN, searchScope, searchFilter, retrieveAttributes)
+			result_set = []
+			while 1:
+				result_type, result_data = l.result(ldap_result_id, 0)
+				if(result_data == []):
+					break;
+				else:
+					if result_type == ldap.RES_SEARCH_ENTRY:
+						result_set.append(result_data)
+
+			if(len(result_set) == 0):
+				try:
+					# no entry in LDAP Server
+					belongs_to = getGroupName(['users'])
+					return belongs_to
+				except Exception as e:
+					print e
+
+			else:
+				roles = []
+				for result in result_set:
+					# get all the roles
+					last_name = str(result[0][1]).split(',')[2][9:][:-3]
+					role = str(result[0][0]).split(',')[1][3:]
+					roles.append(role)
+
+				# set highest priority ROLE as GROUP-NAME
+				belongs_to = getGroupName(roles)
+				print "belongs to : " + str(belongs_to)
+				return belongs_to
+		except Exception as e:
+			print e

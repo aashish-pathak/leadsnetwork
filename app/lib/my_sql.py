@@ -34,6 +34,14 @@ class MySQL(Config):
 			print "unable to insert !!!!!!!!!!!!!!!!!!!!!!"
 			print e
 
+	def update_group_id(self, name, belongs_to):
+		try:
+			self.cursor.execute("""UPDATE people SET group_id = %s WHERE name = %s;""",(belongs_to, name))
+			print "update_group_id()"
+		except Exception as e:
+			print "unable to update group id !!!!!!!!!!!!!"
+			print e
+
 	def fetch_all(self, sql):
 		self.cursor.execute(sql)
 		print "fetch_all()"
