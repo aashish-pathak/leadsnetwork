@@ -332,34 +332,23 @@
 				</center>
 				
 				<div id="leads_list">
-					<!--
-					<div id="all-leads">
-						<input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
-						<div id="all-leads-list" ng-show="leads_filter">
-							<ul class="unstyled center">
-								<li ng-repeat="lead in leads_list | filter: leads_filter">
-									<label>
-										<input type="checkbox" ng-model="lead[3]">
-										{{lead[1]}} from {{lead[4] | uppercase}}
-									</label>
-								</li>
-							</ul>
-						</div>
-					</div>
-					-->
 					<div id="expand-collapse">
 						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
 						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
 					</div>
-					<div id="group" class="well well-sm bottom-shadow" ng-repeat="group in groups_of_leads">
+					<div id="group" ng-repeat="group in groups_of_leads" class="well well-sm bottom-shadow">
 						<div id="group-header">
 							<span id="group-header-name">
+
 								<label ng-click="selectGroup(group)" ng-show="group.leads_empty" style="color:#888888">
 								{{group.group_display_name}}&nbsp;</label>
-								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group" style="cursor: pointer; color: green">
+
+								<label ng-show="!group.leads_empty && group.select_group" style="color: green">
 								{{group.group_display_name}}&nbsp;({{group.selected_leads_count}})&nbsp;</label>
-								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group" style="cursor: pointer; color: red">
+
+								<label ng-show="!group.leads_empty && !group.select_group" style="color: red">
 								{{group.group_display_name}}&nbsp;</label>
+
 							</span>
 							<div id="group-header-rest">
 								<!--
@@ -372,8 +361,11 @@
 									<span style="float: right; cursor:pointer;" ng-show="group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-minus"></span>
 									<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
 								</span>
-							</div>
-							<div ng-show="!group.leads_empty && group.visible" class="bottom-shadow-light" style="margin-top:-15px">&nbsp;</div>
+							</div><br>
+							<a href="" style="text-decoration: none" ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group">[Select None]</a>
+							<a href="" style="text-decoration: none" ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group">[Select All]</a>
+							
+							<div ng-show="!group.leads_empty && group.visible" class="bottom-shadow-light" style="margin-top:-10px">&nbsp;</div>
 						</div>
 
 						<div id="group-body" ng-show="!group.leads_empty && group.visible">
@@ -385,6 +377,7 @@
 								</li>
 							</ul>
 						</div>
+
 					</div>
 					<!--
 					<div id="expand-collapse" style="min-height:20px; margin-bottom:10px;">
