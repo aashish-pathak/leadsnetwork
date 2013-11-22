@@ -370,7 +370,7 @@
 						<div id="group-body" ng-show="!group.leads_empty && group.visible">
 							<ul class="unstyled center">
 								<li ng-repeat="lead in group.leads_list | filter: leads_filter">
-									<label style="font-weight:normal"><input type="checkbox" ng-click="testGroupForLead(lead)" ng-model="lead[3]">
+									<label style="font-weight:normal; cursor: pointer"><input type="checkbox" ng-click="testGroupForLead(lead)" ng-model="lead[3]">
 										&nbsp;{{lead[1]}}
 									</label>
 								</li>
