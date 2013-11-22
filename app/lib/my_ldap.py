@@ -116,6 +116,7 @@ class MyLDAP(Config):
 				try:
 					# no entry in LDAP Server
 					belongs_to = getGroupName(['users'])
+					print "belongs to : " + str(belongs_to)
 					return belongs_to
 				except Exception as e:
 					print e
