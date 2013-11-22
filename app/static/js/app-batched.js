@@ -237,6 +237,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		return 0;
 	};
 
+	// compare between two group_ids (needed for sorting based on group_id)
+	$scope.comparatorGroupId = function(a,b) {
+		if (a[2] < b[2]) return -1;
+		if (a[2] > b[2]) return 1;
+		return 0;
+	};
+
 	// get the list of leads from backend DB
 	$scope.returnLeads = function() {
 		
@@ -248,7 +255,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.leads_list[i].push(true);
 		
 			$scope.safeApply(function() {
-				$scope.leads_list = $scope.leads_list.sort($scope.comparatorAlphabetical);
+				$scope.leads_list = $scope.leads_list.sort($scope.comparatorGroupId);
 			});
 
 			$scope.fillGroups();
@@ -747,19 +754,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		else {
 			$scope.createDialog("#common_connections");
 		}
-	};
-
-
-
-	/* ********************** Sort Connections ************************/
-
-	// create a watch on result list and sort whenever it changes
-	
-	// compare between two numbers (needed for numerical sorting)
-	$scope.comparatorNumerical = function(a,b) {
-		if (a < b) return -1;
-		if (a > b) return 1;
-		return 0;
 	};
 
 	/* ********************** Calculate Progress **********************/
