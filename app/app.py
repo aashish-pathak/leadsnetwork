@@ -92,17 +92,28 @@ def callback():
 		lnkdin = MyLinkedIn()
 		profile = lnkdin.get_profile_using_token(access_token_key, access_token_secret)
 		json_profile = json.loads(profile)
-		
-		# insert into db
+				
 		if 'id' in json_profile.keys():
+			
+			# set parameters
 			linkedin_id = json_profile['id']
 			firstName = json_profile['firstName']
 			lastName = json_profile['lastName']
 			name = firstName + " " + lastName
-					
+
+			# insert into db
 			from lib import MySQL
 			mysql = MySQL()
 			mysql.insert_into_people(name, linkedin_id, access_token_key, access_token_secret)
+			
+			# get his group-name from ldap server
+			from lib import MyLDAP
+			ldp = MyLDAP()
+			belongs_to = ldp.fetch_data_group_id(name)
+			
+			# update his/her group_id in database
+			mysql.update_group_id(name, belongs_to)
+			
 			
 	return make_response(open('static/index.html').read())
 

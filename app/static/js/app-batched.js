@@ -110,16 +110,20 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = true;
 			
-		for(var i=0;i<$scope.groups_of_leads.length;i++)
+		for(var i=0;i<$scope.groups_of_leads.length;i++){
 			$scope.groups_of_leads[i].select_group = true;
+			$scope.groups_of_leads[i].selected_leads_count = $scope.groups_of_leads[i].leads_list.length;
+		}
 	};
 	
 	$scope.selectNone = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = false;		
 			
-		for(var i=0;i<$scope.groups_of_leads.length;i++)
+		for(var i=0;i<$scope.groups_of_leads.length;i++){
 			$scope.groups_of_leads[i].select_group = false;
+			$scope.groups_of_leads[i].selected_leads_count = 0;
+		}
 	};
 
 	
@@ -233,6 +237,24 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		return 0;
 	};
 
+	// compare between two numbers (needed for numerical sorting)
+	$scope.comparatorNumerical = function(a,b) {
+		if (a[2] < b[2]) return -1;
+		if (a[2] > b[2]) return 1;
+		return 0;
+	};
+
+	// compare between two group_ids (needed for sorting based on group_id)
+	$scope.comparatorGroupId = function(a,b) {
+		if (a[2] < b[2]) return -1;
+		if (a[2] > b[2]) return 1;
+		
+		// for same group_id, sort alphabetically
+		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
+		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
+		return 0;
+	};
+
 	// get the list of leads from backend DB
 	$scope.returnLeads = function() {
 		
@@ -244,7 +266,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.leads_list[i].push(true);
 		
 			$scope.safeApply(function() {
-				$scope.leads_list = $scope.leads_list.sort($scope.comparatorAlphabetical);
+				$scope.leads_list = $scope.leads_list.sort($scope.comparatorGroupId);
 			});
 
 			$scope.fillGroups();
@@ -268,22 +290,22 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		// based on leads_list in each group, set it's parameters
 		for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++){
-			$rootScope.safeApply(function() {
-				
-				$scope.groups_of_leads[current_group].visible = false;
-				$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
-				$scope.groups_of_leads[current_group].leads_count = $scope.groups_of_leads[current_group].leads_list.length;
-				$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_count;
-				$scope.groups_of_leads[current_group].select_group = true;
+			$scope.groups_of_leads[current_group].visible = false;
+			$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
+			$scope.groups_of_leads[current_group].leads_count = $scope.groups_of_leads[current_group].leads_list.length;
+			$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_count;
+			$scope.groups_of_leads[current_group].select_group = true;
 
-				if(!$scope.groups_of_leads[current_group].leads_count)
-					$scope.groups_of_leads[current_group].leads_empty = true;
-				else
-					$scope.groups_of_leads[current_group].leads_empty = false;
-			});
+			if(!$scope.groups_of_leads[current_group].leads_count)
+				$scope.groups_of_leads[current_group].leads_empty = true;
+			else
+				$scope.groups_of_leads[current_group].leads_empty = false;
+			
+			for(var current_lead=0;current_lead<$scope.groups_of_leads[current_group].leads_list.length;current_lead++)
+				$scope.groups_of_leads[current_group].leads_list[current_lead].push($scope.groups_of_leads[current_group].group_display_name);
 		}
 		
-		console.log($scope.groups_of_leads);
+		//console.log($scope.groups_of_leads);
 	};
 	
 	$scope.getDisplayNameFromName = function(name){
@@ -743,19 +765,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		else {
 			$scope.createDialog("#common_connections");
 		}
-	};
-
-
-
-	/* ********************** Sort Connections ************************/
-
-	// create a watch on result list and sort whenever it changes
-	
-	// compare between two numbers (needed for numerical sorting)
-	$scope.comparatorNumerical = function(a,b) {
-		if (a < b) return -1;
-		if (a > b) return 1;
-		return 0;
 	};
 
 	/* ********************** Calculate Progress **********************/
