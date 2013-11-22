@@ -268,22 +268,22 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		// based on leads_list in each group, set it's parameters
 		for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++){
-			$rootScope.safeApply(function() {
-				
-				$scope.groups_of_leads[current_group].visible = false;
-				$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
-				$scope.groups_of_leads[current_group].leads_count = $scope.groups_of_leads[current_group].leads_list.length;
-				$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_count;
-				$scope.groups_of_leads[current_group].select_group = true;
+			$scope.groups_of_leads[current_group].visible = false;
+			$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
+			$scope.groups_of_leads[current_group].leads_count = $scope.groups_of_leads[current_group].leads_list.length;
+			$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_count;
+			$scope.groups_of_leads[current_group].select_group = true;
 
-				if(!$scope.groups_of_leads[current_group].leads_count)
-					$scope.groups_of_leads[current_group].leads_empty = true;
-				else
-					$scope.groups_of_leads[current_group].leads_empty = false;
-			});
+			if(!$scope.groups_of_leads[current_group].leads_count)
+				$scope.groups_of_leads[current_group].leads_empty = true;
+			else
+				$scope.groups_of_leads[current_group].leads_empty = false;
+			
+			for(var current_lead=0;current_lead<$scope.groups_of_leads[current_group].leads_list.length;current_lead++)
+				$scope.groups_of_leads[current_group].leads_list[current_lead].push($scope.groups_of_leads[current_group].group_display_name);
 		}
 		
-		console.log($scope.groups_of_leads);
+		//console.log($scope.groups_of_leads);
 	};
 	
 	$scope.getDisplayNameFromName = function(name){

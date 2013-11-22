@@ -332,6 +332,21 @@
 				</center>
 				
 				<div id="leads_list">
+					<!--
+					<div id="all-leads">
+						<input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead....">
+						<div id="all-leads-list" ng-show="leads_filter">
+							<ul class="unstyled center">
+								<li ng-repeat="lead in leads_list | filter: leads_filter">
+									<label>
+										<input type="checkbox" ng-model="lead[3]">
+										{{lead[1]}} from {{lead[4] | uppercase}}
+									</label>
+								</li>
+							</ul>
+						</div>
+					</div>
+					-->
 					<div id="expand-collapse">
 						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
 						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
