@@ -106,7 +106,7 @@ def add_account(add_account_parameter):
 	try:
 		row = mysql.fetch_one(query)
 		if(row[3] == True):
-			return make_response(open('static/dead_link.html').read())
+			return redirect('static/dead_link.html')
 		else:
 			from lib import MySQL
 			mysql = MySQL()
