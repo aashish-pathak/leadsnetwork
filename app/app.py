@@ -76,7 +76,8 @@ def invite():
 	if(random_string == ''):
 		import random
 		import string
-		add_account_parameter = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(64))
+		add_account_parameter = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for x in range(64))
+		mysql.insert_into_invitations(email, add_account_parameter)
 	else:
 		add_account_parameter = random_string
 
@@ -97,15 +98,14 @@ def add_account(add_account_parameter):
 	mysql = MySQL()
 	query = "SELECT * FROM invitations WHERE random_string='" + add_account_parameter + "'"
 	try:
-		row = mysql.fetch_one()
+		row = mysql.fetch_one(query)
 		if(row[3] == True):
 			return make_response(open('static/dead_link.html').read())
 		else:
 			from lib import MySQL
 			mysql = MySQL()
-			
-			
-			
+			mysql.update_invitations_set_used(add_account_parameter)
+
 			from lib import MyLinkedIn
 			lnkdin = MyLinkedIn()
 			auth_url = lnkdin.get_auth_url()

@@ -49,7 +49,7 @@ try:
 
 	try:
 		print 'create INVITATIONS'
-		cursor.execute("CREATE TABLE `invitations` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT,`email` varchar(50) DEFAULT NULL, `random_string` varchar(64) DEFAULT NULL,`used` BOOL NOT NULL DEFAULT '0',`create_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`modified_ts` timestamp NULL DEFAULT NULL,PRIMARY KEY (`id`))")
+		cursor.execute("CREATE TABLE `invitations` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT,`email` varchar(50) DEFAULT NULL, `random_string` varchar(64) DEFAULT NULL,`used` BOOL DEFAULT '0',`create_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`modified_ts` timestamp NULL DEFAULT NULL,PRIMARY KEY (`id`))")
 	except Exception as e:
 		print e
 		

@@ -29,6 +29,7 @@ class MySQL(Config):
 	def insert_into_people(self, name, linkedin_id, access_token_key, access_token_secret):
 		try:
 			self.cursor.execute("""INSERT INTO people (name, linkedin_id, access_token, access_secret) VALUES (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE access_token = %s, access_secret = %s;""",(name, linkedin_id, access_token_key, access_token_secret, access_token_key, access_token_secret))
+			self.connection.commit()
 			print "insert_into_people()"
 		except Exception as e:
 			print "unable to insert (PEOPLE) !!!!!!!!!!!!!!!!!!!!!!"
@@ -37,6 +38,7 @@ class MySQL(Config):
 	def update_group_id(self, name, belongs_to):
 		try:
 			self.cursor.execute("""UPDATE people SET group_id = %s WHERE name = %s;""",(belongs_to, name))
+			self.connection.commit()
 			print "update_group_id()"
 		except Exception as e:
 			print "unable to update group id !!!!!!!!!!!!!"
@@ -45,11 +47,21 @@ class MySQL(Config):
 	def insert_into_invitations(self, email, random_string):
 		try:
 			self.cursor.execute("""INSERT INTO invitations (email, random_string) VALUES (%s,%s);""",(email, random_string))
+			self.connection.commit()
 			print "insert_into_invitations()"
 		except Exception as e:
 			print "unable to insert (INVITATIONS) !!!!!!!!!!!!!!!!!!!!!!"
 			print e
 
+
+	def update_invitations_set_used(self, random_string):
+		try:
+			self.cursor.execute("""UPDATE invitations SET used = %s WHERE random_string = %s;""",(True, random_string))
+			self.connection.commit()
+			print "update_invitations_set_used()"
+		except Exception as e:
+			print "unable to update (INVITATIONS) !!!!!!!!!!!!!!!!!!!!!!"
+			print e
 
 	def fetch_all(self, sql):
 		self.cursor.execute(sql)
