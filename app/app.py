@@ -60,25 +60,48 @@ def invite():
 
 	email = request.args.get('email')
 	
-	import random
-	import string
+	# check for unused random_string for this email
+	from lib import MySQL
+	mysql = MySQL()
+	query = "SELECT * FROM invitations WHERE email='" + email + "'"
+	random_string = ''
+	try:
+		rows = mysql.fetch_all(query)
+		for row in rows:
+			if(row[3] == False):
+				random_string = row[2]
+	except Exception as e:
+		print e
 
-	random_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
-	print random_string
+	if(random_string == ''):
+		import random
+		import string
+		add_account_parameter = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(64))
+	else:
+		add_account_parameter = random_string
+
+	# generate add_account url and send it in email
+	from lib import Util
+	u = Util()
+	add_account_url = u.get_application_url() + "add_account/" + add_account_parameter
 	
 	return jsonify({'response':True, 'email':email})
 
-
 ############################__ADD ACCOUNT__#############################
-@app.route('/add_account')
-def add_account():
+@app.route('/add_account/<add_account_parameter>')
+def add_account(add_account_parameter):
+
+	print add_account_parameter
 	
+	"""
 	from lib import MyLinkedIn
 	lnkdin = MyLinkedIn()
 	auth_url = lnkdin.get_auth_url()
 	print auth_url
 	return auth_url	
-
+	"""
+	
+	return add_account_parameter
 ############################__CALLBACK__################################
 @app.route('/callback')
 def callback():
