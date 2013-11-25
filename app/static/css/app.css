@@ -109,6 +109,11 @@ input[type="text"]
     font-family: asap;
 }
 
+input[type="email"]
+{
+    font-family: asap;
+}
+
 .center {
      float: none;
      margin-left: auto;

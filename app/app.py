@@ -54,6 +54,21 @@ def login():
 	ldp = MyLDAP()
 	return ldp.authenticate(username, password)
 
+#########################__INVITE PEOPLE__##############################
+@app.route('/invite')
+def invite():
+
+	email = request.args.get('email')
+	
+	import random
+	import string
+
+	random_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
+	print random_string
+	
+	return jsonify({'response':True, 'email':email})
+
+
 ############################__ADD ACCOUNT__#############################
 @app.route('/add_account')
 def add_account():

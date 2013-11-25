@@ -114,6 +114,12 @@
 			</p>
 		</div>
 
+		<div id="invitation_sent" title="Success!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			The invitation has been sent successfully.
+			</p>
+		</div>
+
 		<!----------------------------------------------------------------->
 	
 		<div id="container_div">
@@ -394,9 +400,20 @@
 				</div>
 
 				<center>
-				<div id="leads_decide_footer">
-					<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
-				</div>
+					<div id="leads_decide_footer">
+						<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
+					</div>
+					
+					<div id="invitation" ng-show="is_admin" style="margin-top:50px; margin-bottom: 20px; max-width: 50%">
+						<label ng-click="toggleInvite()" style="cursor: pointer">Invite People</label>
+						<div id="invitation-box" ng-show="show_invitation_box">
+							 <form name="invitationForm" ng-submit="sendInvitation()">
+								<input type="email" name="email" ng-model="email_address" placeholder="example@gslab.com" required>
+								<br><br>
+								<button ng-disabled="!invitationForm.email.$valid" class="btn btn-blue"><span class="glyphicon glyphicon-comment"></span></button>
+							</form>
+						</div>
+					</div>
 				</center>
 			</div>
 		</div>

@@ -31,6 +31,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.selected_leads_count = 0;
 	$scope.groups_list = [];
 	$scope.groups_of_leads = [];
+	
+	// invitation details
+	$scope.email_address = '';
+	$scope.show_invitation_box = false;
 
 	// search parameters
 	$scope.fname = '';
@@ -391,11 +395,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				all_true = false;
 		}
 		
-/*		if(all_true == true)
-			$scope.groups_of_leads[current_group].select_group = true;
-		else if(all_false == true)
-			$scope.groups_of_leads[current_group].select_group = false;
-*/
 		if(all_false == true)
 			$scope.groups_of_leads[current_group].select_group = false;
 		else
@@ -417,6 +416,25 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			if(!$scope.groups_of_leads[i].leads_empty)
 				$scope.groups_of_leads[i].visible = false;
 		}
+	};
+
+	/* ********************** Invitation Box **************************/
+	$scope.toggleInvite = function(){
+		$scope.scrollBottom();
+		$scope.email_address = '';
+		$scope.show_invitation_box = !$scope.show_invitation_box;
+	};
+	
+	$scope.sendInvitation = function() {
+		var invitation_url = "/invite?email=" + $scope.email_address;
+		$http({method:'GET', url:invitation_url})
+		.success(function(data) {
+			$scope.createDialog("#invitation_sent");
+			$scope.email_address = '';
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
+		});
 	};
 
 	/* ************************* Start All ****************************/
@@ -844,6 +862,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$('html, body').animate({scrollTop: '0px'}, 0);
 	};
 
+	/* ******************* Scroll Bottom Element **********************/
+	
+	$scope.scrollBottom = function() {
+		//$('html, body').animate({scrollTop: $(document).height()}, 0);
+	};
+
 	/* ********************* Toggle Leads Div *************************/
 	
 	$scope.toggleLeadsDiv = function() {
@@ -855,6 +879,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		// scroll to TOP when showing leads' list
 		if($scope.show_leads == true)
 			$scope.scrollTop();
+			
+		// hide INVITATION BOX
+		$scope.show_invitation_box = false;
 	};
 
 	/* ********************* Test XHRs *************************/
