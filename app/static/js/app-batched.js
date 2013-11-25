@@ -428,11 +428,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.sendInvitation = function() {
-		var invitation_url = "/invite?email=" + $scope.email_address;
+		var email_address = $scope.email_address;
+		$scope.email_address = '';
+		var invitation_url = "/invite?email=" + email_address;
 		$http({method:'GET', url:invitation_url})
 		.success(function(data) {
 			$scope.createDialog("#invitation_sent");
-			$scope.email_address = '';
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");

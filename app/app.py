@@ -81,12 +81,18 @@ def invite():
 	else:
 		add_account_parameter = random_string
 
-	# generate add_account url and send it in email
+	# generate add_account url
 	from lib import Util
 	u = Util()
 	add_account_url = u.get_application_url() + "add_account/" + add_account_parameter
 	
 	print add_account_url
+	
+	# send invitation email
+	u = Util()
+	subject = "invitation to Leads' In"
+	text = "Click " + add_account_url + " to add account to Leads' In. Thank you."
+	u.send_invitation_email(email, subject, text)
 	
 	return jsonify({'response':True, 'email':email})
 
