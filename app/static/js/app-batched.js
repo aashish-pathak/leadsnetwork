@@ -159,8 +159,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		$http({method:'GET', url:add_account_url})
 		.success(function(data, status, headers, config) {
-			$scope.linkedin_url = data;
+			$scope.add_account_response = data;
 			$window.location.href = $scope.linkedin_url;
+			if($scope.add_account_response.used == true)
+				$scope.createDialog("#dead_link");
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");

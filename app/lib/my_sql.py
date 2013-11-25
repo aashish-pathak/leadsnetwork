@@ -31,7 +31,7 @@ class MySQL(Config):
 			self.cursor.execute("""INSERT INTO people (name, linkedin_id, access_token, access_secret) VALUES (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE access_token = %s, access_secret = %s;""",(name, linkedin_id, access_token_key, access_token_secret, access_token_key, access_token_secret))
 			print "insert_into_people()"
 		except Exception as e:
-			print "unable to insert !!!!!!!!!!!!!!!!!!!!!!"
+			print "unable to insert (PEOPLE) !!!!!!!!!!!!!!!!!!!!!!"
 			print e
 
 	def update_group_id(self, name, belongs_to):
@@ -41,6 +41,15 @@ class MySQL(Config):
 		except Exception as e:
 			print "unable to update group id !!!!!!!!!!!!!"
 			print e
+
+	def insert_into_invitations(self, email, random_string):
+		try:
+			self.cursor.execute("""INSERT INTO invitations (email, random_string) VALUES (%s,%s);""",(email, random_string))
+			print "insert_into_invitations()"
+		except Exception as e:
+			print "unable to insert (INVITATIONS) !!!!!!!!!!!!!!!!!!!!!!"
+			print e
+
 
 	def fetch_all(self, sql):
 		self.cursor.execute(sql)
@@ -68,3 +77,4 @@ class MySQL(Config):
 		row = self.cursor.fetchone()
 		print "fetch_random()"
 		return row
+		

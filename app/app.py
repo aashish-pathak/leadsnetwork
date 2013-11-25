@@ -85,23 +85,36 @@ def invite():
 	u = Util()
 	add_account_url = u.get_application_url() + "add_account/" + add_account_parameter
 	
+	print add_account_url
+	
 	return jsonify({'response':True, 'email':email})
 
 ############################__ADD ACCOUNT__#############################
 @app.route('/add_account/<add_account_parameter>')
 def add_account(add_account_parameter):
 
-	print add_account_parameter
+	from lib import MySQL
+	mysql = MySQL()
+	query = "SELECT * FROM invitations WHERE random_string='" + add_account_parameter + "'"
+	try:
+		row = mysql.fetch_one()
+		if(row[3] == True):
+			return make_response(open('static/dead_link.html').read())
+		else:
+			from lib import MySQL
+			mysql = MySQL()
+			
+			
+			
+			from lib import MyLinkedIn
+			lnkdin = MyLinkedIn()
+			auth_url = lnkdin.get_auth_url()
+			print auth_url
+			return redirect(auth_url)
+	except Exception as e:
+		print e
 	
-	"""
-	from lib import MyLinkedIn
-	lnkdin = MyLinkedIn()
-	auth_url = lnkdin.get_auth_url()
-	print auth_url
-	return auth_url	
-	"""
-	
-	return add_account_parameter
+	return make_response(open('static/dead_link.html').read())
 ############################__CALLBACK__################################
 @app.route('/callback')
 def callback():
