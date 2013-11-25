@@ -323,6 +323,12 @@ tr.t3 td {
 	height: 100%;
 }
 
+#invitation {
+	margin-top:50px;
+	margin-bottom: 20px;
+	max-width: 100%;
+}
+
 #results_div {
 	max-width: 95%;
 }
