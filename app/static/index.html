@@ -415,6 +415,9 @@
 						<div id="invitation-box" ng-show="show_invitation_box">
 							 <form name="invitationForm" ng-submit="sendInvitation()">
 								<input type="email" name="email" ng-model="email_address" placeholder="example@gslab.com" required>
+								<!--<div ng-controller="TypeaheadCtrl">
+									<input type="email" name="email" ng-model="email_address" typeahead="email for email in emails | filter:$viewValue | limitTo:8" placeholder="example@gslab.com" required>
+								</div>-->
 								<br><br>
 								<button ng-disabled="!invitationForm.email.$valid" class="btn btn-blue"><span class="glyphicon glyphicon-comment"></span></button>
 							</form>

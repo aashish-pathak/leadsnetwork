@@ -930,4 +930,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});
 	};
 	
+	/* ********************* Typeahead Example ************************/
+
+	$scope.TypeaheadCtrl = function ($scope) {
+		$scope.email_address = '';
+		$scope.emails = ['sangram.s.kapre@gmail.com', 'sangram.kapre@gslab.com', 'aashish@gslab.com', 'amol.pujari@gslab.com', 'example@gslab.com'];
+	};
 }]);
