@@ -115,6 +115,18 @@
 			</p>
 		</div>
 
+		<div id="invitation_sent" title="Success!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			The invitation has been sent successfully.
+			</p>
+		</div>
+
+		<div id="dead_link" title="Success!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			This link is dead. Please contact Admin for further details.
+			</p>
+		</div>
+
 		<!----------------------------------------------------------------->
 	
 		<div id="container_div">
@@ -146,7 +158,7 @@
 					&nbsp;{{ldap_name | uppercase}}</a>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Settings </a></li>
-						<li style="cursor: pointer"><a ng-disabled="show_always" ng-click="addAccount()"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add My Account </a></li>
+						<!--<li style="cursor: pointer"><a ng-disabled="show_always" ng-click="addAccount()"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add My Account </a></li>-->
 						<li style="cursor: pointer"><a ng-click="signOut()"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;Sign Out</a></li>
 					</ul>
 					</span>
@@ -395,9 +407,20 @@
 				</div>
 
 				<center>
-				<div id="leads_decide_footer">
-					<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
-				</div>
+					<div id="leads_decide_footer">
+						<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
+					</div>
+					
+					<div id="invitation" ng-show="is_admin">
+						<label ng-click="toggleInvite()" style="cursor: pointer">Invite People</label>
+						<div id="invitation-box" ng-show="show_invitation_box">
+							 <form name="invitationForm" ng-submit="sendInvitation()">
+								<input type="email" name="email" ng-model="email_address" placeholder="example@gslab.com" required>
+								<br><br>
+								<button ng-disabled="!invitationForm.email.$valid" class="btn btn-blue"><span class="glyphicon glyphicon-comment"></span></button>
+							</form>
+						</div>
+					</div>
 				</center>
 			</div>
 		</div>

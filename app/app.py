@@ -59,16 +59,73 @@ def login():
 	ldp = MyLDAP()
 	return ldp.authenticate(username, password)
 
-############################__ADD ACCOUNT__#############################
-@app.route('/add_account')
-def add_account():
-	
-	from lib import MyLinkedIn
-	lnkdin = MyLinkedIn()
-	auth_url = lnkdin.get_auth_url()
-	print auth_url
-	return auth_url	
+#########################__INVITE PEOPLE__##############################
+@app.route('/invite')
+def invite():
 
+	email = request.args.get('email')
+	
+	# check for unused random_string for this email
+	from lib import MySQL
+	mysql = MySQL()
+	query = "SELECT * FROM invitations WHERE email='" + email + "'"
+	random_string = ''
+	try:
+		rows = mysql.fetch_all(query)
+		for row in rows:
+			if(row[3] == False):
+				random_string = row[2]
+	except Exception as e:
+		print e
+
+	if(random_string == ''):
+		import random
+		import string
+		add_account_parameter = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for x in range(64))
+		mysql.insert_into_invitations(email, add_account_parameter)
+	else:
+		add_account_parameter = random_string
+
+	# generate add_account url
+	from lib import Util
+	u = Util()
+	add_account_url = u.get_application_url() + "add_account/" + add_account_parameter
+	
+	print add_account_url
+	
+	# send invitation email
+	u = Util()
+	subject = "Invitation to join Leads' In"
+	text = "Hello, \nPlease click " + add_account_url + " to add yourself to the list of leads in \"Leads' In\". \nThank you."
+	u.send_invitation_email(email, subject, text)
+	
+	return jsonify({'response':True, 'email':email})
+
+############################__ADD ACCOUNT__#############################
+@app.route('/add_account/<add_account_parameter>')
+def add_account(add_account_parameter):
+
+	from lib import MySQL
+	mysql = MySQL()
+	query = "SELECT * FROM invitations WHERE random_string='" + add_account_parameter + "'"
+	try:
+		row = mysql.fetch_one(query)
+		if(row[3] == True):
+			return redirect('static/dead_link.html')
+		else:
+			from lib import MySQL
+			mysql = MySQL()
+			mysql.update_invitations_set_used(add_account_parameter)
+
+			from lib import MyLinkedIn
+			lnkdin = MyLinkedIn()
+			auth_url = lnkdin.get_auth_url()
+			print auth_url
+			return redirect(auth_url)
+	except Exception as e:
+		print e
+	
+	return make_response(open('static/dead_link.html').read())
 ############################__CALLBACK__################################
 @app.route('/callback')
 def callback():

@@ -109,6 +109,11 @@ input[type="text"]
     font-family: asap;
 }
 
+input[type="email"]
+{
+    font-family: asap;
+}
+
 .center {
      float: none;
      margin-left: auto;
@@ -316,6 +321,12 @@ tr.t3 td {
 .settings_button {
 	float: left;
 	height: 100%;
+}
+
+#invitation {
+	margin-top:50px;
+	margin-bottom: 20px;
+	max-width: 100%;
 }
 
 #results_div {
