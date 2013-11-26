@@ -1,224 +1,440 @@
 <!-- Leads' Network : index.html -->
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="leadsApp">
 <head>
-	
-<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
-	<meta charset="utf-8">
+  
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" charset="utf-8" />
 	<title>Leads' Network!</title>
 	
-	<script src="static/js/jquery.js" ></script>
-	<script src="static/js/jquery-ui-leads.js" ></script>
-	<script src="static/lib/angular/angular.js"></script>
-	<script src="static/lib/angular/angular-cookies.js"></script>
-	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.js"></script>
-	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
-<!--<script src="bootstrap_js"></script>-->
-	<script src="static/js/app.js"></script>
-
-	<style type='text/css'>
-        
-    </style>
+	<script src="static/js/jquery.min.js" ></script>
+	<script src="static/js/jquery-ui-leads.min.js" ></script>
+	<script src="static/lib/angular/angular.min.js"></script>
+	<script src="static/lib/angular/angular-cookies.min.js"></script>
+	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
+	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
+	<!--<script src="static/js/app.js"></script>-->
+	<!--<script src="static/js/app-sequential.js"></script>-->
+	<script src="static/js/app-batched.js"></script>
+	<!--<script src="static/js/back-to-top.js"></script>-->
+	<!--<script src="static/js/jquery.clearsearch.js" ></script>-->
 	
-	<link rel="stylesheet" type="text/css" href="static/css/bootswatch.css">
-	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.css">
-	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.css" media="all">
-	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-leads.min.css">
+	<!-- buttons -->
 	<link rel="stylesheet" type="text/css" href="static/css/style_bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.css">
+	<!-- icons -->
+	<!--<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.min.css">-->
+	<!-- responsive -->
+	<link rel="stylesheet" type="text/css" href="static/lib/ui-bootstrap/assets/bootstrap-responsive.css" media="all">
+	
+	<!-- twitter bootstrap 3.0-->
+	<link rel="stylesheet" type="text/css" href="static/lib/bootstrap/dist/css/bootstrap.min.css" media="all">
+	<!-- main css -->
 	<link rel="stylesheet" type="text/css" href="static/css/app.css">
+	<!-- desktop css -->
+	<link rel="stylesheet" type="text/css" href="static/css/desktop.css">
+	<!-- tab css -->
+	<link rel="stylesheet" type="text/css" href="static/css/tab.css">
+	<!-- mobile css -->
+	<link rel="stylesheet" type="text/css" href="static/css/mobile.css">
+	<!-- fonts css -->
+	<link rel="stylesheet" type="text/css" href="static/css/fonts.css">
+	<!-- progress bar css -->
+	<link rel="stylesheet" type="text/css" href="static/css/progress-bar.css">
+
+	<!-- favicon -->
+	<link rel="shortcut icon" href="static/img/ghost.ico">
+
 </head>
 
 <body>
-	
-	<!-- JQuery Dialogs -->
-	<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
-		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-		The person '{{fname}} {{lname}}' from '{{cname}}' is not on linkedin.
-		</p>
-	</div>
+  
+  <div ng-controller="mainCtrl">
 
-	<div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
-		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-		The person '{{fname}} {{lname}}' is not on linkedin.
-		</p>
-	</div>
-
-	<div id="at_least_one_lead" title="No lead selected!" class="ui-helper-hidden">
-		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-		Please select at least one lead!
-		</p>
-	</div>
-
-	<div id="http_error" title="Ooops!" class="ui-helper-hidden">
-		<p><span class="icon-large icon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-		HTTP Error. Unable to connect to server.
-		</p>
-	</div>
-	<!------------------->
-	
-	
-	
-	
-	<div id="parent" ng-controller="parentCtrl">
-		<div class="login font" id="login" ng-controller="loginCtrl" ng-hide="is_old_user">
-			<form ng-submit="signIn()">
-				<center>
-				<img class="loginImage" src="static/img/login-icon.png">
-				<h1 class="h_login">Username</h1> <input type="text" name="username" ng-model="username" placeholder="LDAP Username" required><br>
-				<h1 class="h_login">Password</h1> <input type="password" name="password" ng-model="password" placeholder="LDAP Password" required><br><br>
-				<button class="btn btn-custom-signin"><i class="icon-large icon-linkedin"></i></button>
-				</center>
-			</form>
+		<!-- for clearing textbox -->
+		<!--
+		<script type="text/javascript">
+			$('.clearable').clearSearch();
+		</script>
+		-->
+		
+		<!-- JQuery Dialogs -->
+		<div id="invalid_username" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Username is invalid. Please provide LDAP Username.
+			</p>
 		</div>
 		
-		<div id="page" ng-controller="pageCtrl" ng-show="is_old_user">
-			<div id="header" ng-controller="headerCtrl">
-				<br>
-				<div class="header_contents">
-					<!--  
-				<span class="user_name">
-					<span class="glyphicon glyphicon-user"></span>  You are logged in as : {{name | uppercase}}</span>
-					-->
-				<a style="color: hsl(195, 79%, 43%)" target="_new" href="http://www.gslab.com"><img src="static/img/gslab_logo.png" class="gslab_logo"/></a>
-				<span class="app_name" align="center"><a style="color: hsl(195, 79%, 43%)" href="reload()">Leads' Network!</a></span>
-				<!--
-				<span class="signout_button"><button class="btn btn-custom-signout" ng-click="signOut()">
-					<span class="glyphicon glyphicon-off"></span>	Sign Out</button></span>	-->
-
-					<!-- Dropdown logout link -->
-					<div class="settings_button user_button">
-						<span class="btn-group">
-						  <button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown">
-							  <span class="glyphicon glyphicon-user"></span>
-								{{name | uppercase}}  <span class="caret"></span>
-						  </button>
-						  <ul class="dropdown-menu" role="menu">
-							<li style="cursor: pointer"><a ng-click="signOut()">Sign Out</a></li>
-						  </ul>
-						</span>
-					</div>
-				</div>
-			</div>
-
-
-			<div id="wrapper" ng-controller="wrapperCtrl">
-				<div class="font" id="navigation" ng-controller="navigationCtrl">
-					<div class="navigation_contents">
-						<div class="search_form">
-						<form method='GET' ng-submit="people_search()">
-							
-							<h1 class="h1_navigation" align="center">First Name</h1>
-							<input class="input_navigation" type="text" ng-model="fname" placeholder="First Name" required>
-							
-							<h1 class="h1_navigation" align="center">Last Name</h1>
-							<input class="input_navigation" type="text" ng-model="lname" placeholder="Last Name" required>
-							
-							<h1 class="h1_navigation" align="center">Company Name</h1>
-							<input class="input_navigation" type="text" ng-model="cname" placeholder="Company Name">
-							
-							<p ng-show="fname"><h1 class="h1_navigation" align="center">{{fname | uppercase}} {{lname | uppercase}}</h1></p>
-							<p align="center"><button class="btn btn-custom"><span class="glyphicon glyphicon-search"></span>	Search</button></p>
-						</form>
-						</div>
-						
-
-						<hr class="hr_style">
-						<div class="leads_info">
-							<div class="leads font">
-							<p align="center"><button class="btn btn-custom" ng-click="add_account()"><span class="icon icon-plus"></span>	Add Account</button><br></p>
-							<p align="center">
-								<button class="btn btn-mini" ng-click="select_all()"><span class="icon icon-check"></span></button>
-								<font size="5%">Leads</font>
-								<button class="btn btn-mini" ng-click="select_none()"><span class="icon icon-check-empty"></span></button>
-							</p>
-								<div class="leads_list">
-								<ul class="unstyled">
-									<li ng-repeat="lead in leads | orderBy:alphabetical">
-										<input type="checkbox" ng-model="lead[2]">
-										<!--<i class="icon-linkedin-sign"></i>-->    {{lead[1]}}</li>
-								</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="content_alt" ng-hide="fname">
-					
-				</div>
-				<div class="font" id="content" ng-controller="contentCtrl"  ng-show="fname">
-					<br><br>
-					
-					<div class="search_summary">
-					<button class="btn btn-custom-stop" ng-click="stop()" ng-show="fname">
-						<span class="glyphicon glyphicon-stop"></span>	Stop</button><br>
-					<!--<p ng-show="fname">	Searching for {{fname | uppercase}} {{lname | uppercase}} through {{leads.length}} leads.</p>-->
-					<p ng-show="fname">	Number of linkedin users with name {{fname | uppercase}} {{lname | uppercase}} : {{data.numResults}}</p>
-					<!-- <p ng-show="fname">	Search results for {{fname | uppercase}} {{lname | uppercase}}.</p> -->
-					<!--<p ng-show="fname">Progress : {{progress}}</p>-->
-
-					</div>
-
-					<div class="results font" ng-show="fname">
-						
-							<!-- JQuery Dialog -->
-							<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
-								<p><span class="icon-large icon-group" style="float: left; margin: 0 7px 50px 0;"></span>
-								<b>The following connections are common with "{{fname}} {{lname}}" :</b></p>
-								<ol>
-									<li ng-repeat="c in common_connections"> {{c}} </li>
-								</ol>
-							</div>
-							<!------------------->
-							
-					<table class="table table-hover">
-						<tr class="table_header">
-							<td>Degree</td>
-							<td>Connected Through</td>
-							<td>Common Connections</td>
-						</tr>
-						<tr ng-class="connection.row_type" ng-repeat="connection in connections.all">
-							<td ng-click="view_profile(connection)">{{connection.distance}}</td>
-							<td ng-click="view_profile(connection)">{{connection.through}}</td>
-							<td ng-click="view_connections(connection)">{{connection.relationToViewer.connections._total}}</td>
-						</tr>
-					</table>
-					</div>
-					
-
-<!--					<ol>
-						<p>All Connections : </p>
-						<li ng-repeat="connection in connections.all | orderBy:predicate:connection.distance">{{connection}}</li>
-					</ol>
--->
-
-<!--
-					<ol>
-						<p>First Degree Connections</p>
-						<li ng-repeat="connection in connections.first">{{connection}}</li>
-					</ol>
-					<ol>
-						<p>Second Degree Connections</p>
-						<li ng-repeat="connection in connections.second">{{connection}}</li>
-					</ol>	
-					<ol>
-						<p>Third Degree Connections</p>
-						<li ng-repeat="connection in connections.third">{{connection}}</li>
-					</ol>	
--->
-
-<!--					<p>Through lead {{lead_number}} : {{profile_data}}</p>-->
-				</div>
-			</div>
-			
-			<div id="footer" ng-controller="footerCtrl">
-				<br>
-				<p align="center" style="color:black">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 Great Software Laboratory Pvt. Ltd. All Rights Reserved.</p>
-			</div>
+		<div id="invalid_password" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Password is invalid. Please provide LDAP Password.
+			</p>
+		</div>
+		
+		<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			The person '{{fname}} {{lname}}' from '{{cname}}' is not on linkedin.
+			</p>
 		</div>
 
+		<div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			The person '{{fname}} {{lname}}' is not on linkedin.
+			</p>
+		</div>
+
+		<div id="at_least_one_lead" title="No lead selected!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Please select at least one lead!
+			</p>
+		</div>
+
+		<div id="both_fname_lname_error" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			<!--Do you want to search using both first-name and last-name?-->
+			Please enter both First Name and Last Name !
+			</p>
+		</div>
+
+		<div id="both_username_password_error" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Please enter both Username and Password (LDAP Credentials) !
+			</p>
+		</div>
+
+		<div id="http_error" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			HTTP Error. Unable to connect to server.
+			</p>
+		</div>
+
+
+		<div id="url_undefined" title="Ooops!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			Public profile for this person is not available.
+			</p>
+		</div>
+
+		<div id="invitation_sent" title="Success!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			The invitation has been sent successfully.
+			</p>
+		</div>
+
+		<div id="dead_link" title="Success!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			This link is dead. Please contact Admin for further details.
+			</p>
+		</div>
+
+		<!----------------------------------------------------------------->
+	
+		<div id="container_div">
+
+		<!----------------------------Header--------------------------->		
+		
+		<div id="header_div" ng-show="show_always">
+			<!--for bottom shadow-->
+			<div class="bottom-shadow-inset">
+				<div class="header_left">
+					<a href="." data-toggle="tooltip" title="List of leads !">
+					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in && !show_leads">
+						<!--<span class="button-logo-leads">-->
+						<span class="glyphicon glyphicon-th-list" style="color: white"></span>
+						<!--<span class="button-text-leads" style="color: white">Leads</span>-->
+					</button> <!-- with normal background : button not pressed-->
+					<button class="btn button-leads" style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in && show_leads">
+						<!--<span class="button-logo-leads">-->
+						<span class="glyphicon glyphicon-list" style="color: #888888"></span>
+						<!--<span class="button-text-leads" style="color: white">Leads</span>-->
+					</button> <!-- with dark background : button pressed-->
+					
+					</a>
+				</div>
+				<div class="header_right">
+					<span class="btn-group" ng-show="is_logged_in" style="float: right">
+					<a class="dropdown-toggle" style="cursor: pointer; color: white; text-decoration: none">
+					<span class="glyphicon glyphicon-user" style="color: white"></span>
+					&nbsp;{{ldap_name | uppercase}}</a>
+					<ul class="dropdown-menu pull-right" role="menu">
+						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Settings </a></li>
+						<!--<li style="cursor: pointer"><a ng-disabled="show_always" ng-click="addAccount()"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add My Account </a></li>-->
+						<li style="cursor: pointer"><a ng-click="signOut()"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;Sign Out</a></li>
+					</ul>
+					</span>
+				</div>			
+				
+			<div id="header_center" class="center app_name">
+					<a style="text-decoration: none; color: hsl(195, 79%, 43%);" href="reload()">
+						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
+				</div>
+			</div>
+				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+						<br>
+						<div id="results_summary" class="well well-sm bottom-shadow">
+							Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
+							Leads selected : <b>{{selected_leads_count}}</b>.<br>
+							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
+							<span ng-show="done_searching"><b>Searching done !</b></span>
+						</div>
+						<div style="width: 98%; margin-left: 1%;">
+							<span ng-hide="done_searching">
+								<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+							</span>
+							<span ng-show="done_searching">
+								<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
+							</span>
+						</div>
+						<center>
+							<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Search again</button>
+							<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
+						</center>
+						<hr>
+				</div>
+			
+		</div>
+
+		<!---------------------------Main DIV-------------------------->
+		<div id="main_div" class="center">
+		
+			<!-- "Back To Top" button-->
+			<a href="#" class="back-to-top" style="background: transparent; text-decoration: none"><span class="glyphicon glyphicon-arrow-up"></span></a>
+			<!------------------------Sub-Header----------------------->
+			<!--
+			<center>
+			
+			<div id="sub_header">
+				<div class="sub_header_left">
+					<a href="." data-toggle="tooltip" title="List of leads !">
+					<button class="btn " style="background: transparent" ng-click="leadsDiv()" ng-show="is_logged_in">
+					<i class="icon-large icon-group" style="color: #666666"></i></button></a>
+				</div>
+				
+				<div class="sub_header_right">
+					<span class="btn-group" ng-show="is_logged_in" style="float: right">
+					<span class="glyphicon glyphicon-user" style="color: #666666"></span>
+					<a class="dropdown-toggle" style="cursor: pointer; color: #666666">
+					{{ldap_name | uppercase}}</a>
+					<ul class="dropdown-menu pull-right" role="menu">
+						<li style="cursor: pointer" ng-show="is_admin"><a ng-click=""> <i class="icon-large icon-cog"></i>	Settings </a></li>
+						<li style="cursor: pointer"><a ng-click="signOut()"> <i class="icon-large icon-off"></i>	Sign Out</a></li>
+					</ul>
+					</span>
+				</div>
+			</div>
+			</center>
+			<br><br>
+			-->
+			<!---------------------------LOG IN------------------------>
+			<div id="login_div" class="center" ng-hide="is_logged_in">
+				<form ng-submit="signIn()">
+					<center><img class="login_image bottom-shadow-image" src="static/img/networking.jpg"></center>
+						
+						<div class="username-password">
+							<div class="center input-ldap">
+								<input type="text" class="center form-control" name="username" ng-model="login_username" placeholder="*LDAP Username">
+							</div>
+							<br>
+							<div class="center input-ldap">
+								<input type="password" class="center form-control" name="password" ng-model="login_password" placeholder="*LDAP Password">
+							</div>
+							<br>
+							<center>
+								<button class="btn btn-red center button-login">
+									<span class="glyphicon glyphicon-log-in"></span>
+									<!--<span class="button-text-login">Log In</span>-->
+								</button>
+							</center>
+						</div>
+				</form>
+			</div>
+			
+			<!-------------------------Search Form--------------------->
+			<div id="search_div" class="center" ng-show="is_logged_in && show_search_form && !show_results && !show_leads">
+				<center>
+				
+				<form method='GET' ng-submit="theSearch()">
+					 
+					<input type="text" class="form-control" ng-model="fname" placeholder="*First Name"><br>
+					 <br>
+					<input type="text" class="form-control" ng-model="lname" placeholder="*Last Name"><br>
+					 <br>
+					<input type="text" class="form-control" ng-model="cname" placeholder="Company Name"><br>
+
+					<div class="well well-sm" style="background: #CCCCCC; color: #666666" ng-show="!show_always">
+						<label style="cursor: pointer"><input type="checkbox" ng-model="both_fname_lname">
+							Search using both first-name and last-name.</label>
+					</div>
+					<b><span>&nbsp;{{fname | uppercase}} {{lname | uppercase}}</span>
+						<span ng-show="cname"> from {{cname | uppercase}}</span></b>
+					<button ng-disabled="enable_search" class="btn btn-blue button-search" style="display: block"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search</button>
+				</form>
+				</center>
+			</div>
+			
+			<!-------------------------Results DIV--------------------->
+			
+			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+			
+				<div id="results_table">
+				
+					<!-- JQuery Dialog -->
+					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
+						<p><span class="glyphicon glyphicon-tags" style="float: left; margin: 0 7px 50px 0;"></span>
+						<b>"{{fname | uppercase}} {{lname | uppercase}}" is reachable via :</b></p>
+						<ol>
+							<li ng-repeat="c in common_connections"> {{c}} </li>
+						</ol>
+					</div>
+					<!------------------->
+					
+					<table class="table">
+						<thead>
+							<tr class="tr_th">
+								<td>Degree</td>
+								<td>Connected Through</td>
+								<td>Reachable via</td>
+								<td>Picture</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="my_tr" ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle">{{connection.distance}}</td>
+								<td style="vertical-align: middle">{{connection.through}}</td>
+								<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+								<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
+							</tr>
+							<tr ng-class="connection.row_type" ng-repeat="connection in connections.second | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle">{{connection.distance}}</td>
+								<td style="vertical-align: middle">{{connection.through}}</td>
+								<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+								<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
+							</tr>
+							<tr ng-class="connection.row_type" ng-repeat="connection in connections.third | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle">{{connection.distance}}</td>
+								<td style="vertical-align: middle">{{connection.through}}</td>
+								<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+								<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>						
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--
+				<div id="results_footer">
+					<center>
+						<button class="btn btn-blue responsive-button" ng-click="goBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
+					</center>
+				</div>
+				-->
+			</div>
+			
+			<!--------------------------Leads DIV---------------------->
+			<div id="leads_div" class="center" ng-show="is_logged_in && show_leads">
+				<center>
+				<div id="leads_add_account_header">
+					
+				</div>
+				<br>
+				<div id="leads_select_header" class="row-fluid">
+					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="glyphicon glyphicon-unchecked"></span>&nbsp;&nbsp;None</button>
+					<br><br>
+					<!-- <input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead...."> -->
+					<br>
+				</div>
+				</center>
+				
+				<div id="leads_list">
+					<div id="expand-collapse">
+						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
+						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
+					</div>
+					<div id="group" ng-repeat="group in groups_of_leads" class="well bottom-shadow">
+						<div id="group-header">
+							<span id="group-header-name">
+
+								<label ng-click="selectGroup(group)" ng-show="group.leads_empty" style="color:#888888">
+								&nbsp;{{group.group_display_name}}&nbsp;</label>
+
+								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && group.select_group" style="color: green; cursor:pointer">
+								<span class="glyphicon glyphicon-check" style="color: black"></span>
+								&nbsp;{{group.group_display_name}}&nbsp;({{group.selected_leads_count}})&nbsp;</label>
+
+								<label ng-click="selectGroup(group)" ng-show="!group.leads_empty && !group.select_group" style="color: red; cursor:pointer">
+								<span class="glyphicon glyphicon-unchecked" style="color: black"></span>
+								&nbsp;{{group.group_display_name}}&nbsp;</label>
+
+							</span>
+							<div id="group-header-rest">
+								<!--
+								<div id="group-select-all-none">
+									<a href="" ng-show="!group.leads_empty && group.select_group" ng-click="selectGroup(group)">select none</a>
+									<a href="" ng-show="!group.leads_empty && !group.select_group" ng-click="selectGroup(group)">select all</a>
+								</div>
+								-->
+								<span ng-show="!group.leads_empty">
+									<span style="float: right; cursor:pointer;" ng-show="group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-minus"></span>
+									<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
+								</span>
+							</div>
+							<div ng-show="!group.leads_empty && group.visible" class="bottom-shadow-light" style="margin-top:-15px">&nbsp;</div>
+						</div>
+
+						<div id="group-body" ng-show="!group.leads_empty && group.visible">
+							<ul class="unstyled center">
+								<li ng-repeat="lead in group.leads_list | filter: leads_filter">
+									<label style="font-weight:normal; cursor: pointer"><input type="checkbox" ng-click="testGroupForLead(lead)" ng-model="lead[3]">
+										&nbsp;{{lead[1]}}
+									</label>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+					<!--
+					<div id="expand-collapse" style="min-height:20px; margin-bottom:10px;">
+						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
+						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
+					</div>
+					-->
+					<!--
+					<ul class="unstyled center">
+						<li ng-repeat="lead in leads_list | filter: leads_filter">
+							<label><input type="checkbox" ng-model="lead[3]">
+							    {{lead[1]}}</label></li>
+					</ul>
+					-->
+				</div>
+
+				<center>
+					<div id="leads_decide_footer">
+						<button class="btn btn-blue responsive-button" ng-click="selectBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
+					</div>
+					
+					<div id="invitation" ng-show="is_admin">
+						<label ng-click="toggleInvite()" style="cursor: pointer">Invite People</label>
+						<div id="invitation-box" ng-show="show_invitation_box">
+							 <form name="invitationForm" ng-submit="sendInvitation()">
+								<input type="email" name="email" ng-model="email_address" placeholder="example@gslab.com" required>
+								<br><br>
+								<button ng-disabled="!invitationForm.email.$valid" class="btn btn-blue"><span class="glyphicon glyphicon-comment"></span></button>
+							</form>
+						</div>
+					</div>
+				</center>
+			</div>
+		</div>
+		<!-----------------------------Footer-------------------------->
+		<div id="footer_div" class="center top-shadow-inset" ng-show="show_always">
+			<div class="span6 center" style="text-align:center; margin-top:7px;">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 
+			<a style="color: hsl(195, 79%, 43%)" target="_new" href="http://www.gslab.com">Great Software Laboratory Pvt. Ltd. </a><br>All Rights Reserved.
+			</div>
+		</div>
 	</div>
+      </div>
+    </div>
+  
+<!------------------------------------------------------------------->
 </body>
 
 </html>
