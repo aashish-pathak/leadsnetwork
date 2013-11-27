@@ -782,7 +782,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		}
 
 		if($scope.common_connections.length == 0)
-			alert("Names of common connections are private!");
+			$scope.createDialog("#common_connections_are_private");
 		else {
 			$scope.createDialog("#common_connections");
 		}
