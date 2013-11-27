@@ -147,6 +147,20 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		else
 			$scope.toggleLeadsDiv();
 	};
+
+	$scope.toggleLeadsDiv = function() {
+		$scope.show_leads = !$scope.show_leads;
+		$scope.leads_filter = '';
+		
+		// $scope.expandAll();
+		
+		// scroll to TOP when showing leads' list
+		if($scope.show_leads == true)
+			$scope.scrollTop();
+			
+		// hide INVITATION BOX
+		$scope.show_invitation_box = false;
+	};
 	
 	/* ************************* Add Account **************************/
 	
@@ -869,22 +883,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	$scope.scrollBottom = function() {
 		//$('html, body').animate({scrollTop: $(document).height()}, 0);
-	};
-
-	/* ********************* Toggle Leads Div *************************/
-	
-	$scope.toggleLeadsDiv = function() {
-		$scope.show_leads = !$scope.show_leads;
-		$scope.leads_filter = '';
-		
-		// $scope.expandAll();
-		
-		// scroll to TOP when showing leads' list
-		if($scope.show_leads == true)
-			$scope.scrollTop();
-			
-		// hide INVITATION BOX
-		$scope.show_invitation_box = false;
 	};
 
 	/* ********************* Test XHRs *************************/
