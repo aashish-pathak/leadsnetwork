@@ -63,6 +63,33 @@ class MySQL(Config):
 			print "unable to update (INVITATIONS) !!!!!!!!!!!!!!!!!!!!!!"
 			print e
 
+	def insert_into_fnames(self, fname):
+		try:
+			self.cursor.execute("""INSERT INTO fnames (fname) VALUES (%s);""",(fname))
+			self.connection.commit()
+			print "insert_into_fnames()"
+		except Exception as e:
+			print "unable to insert (FNAMES) !"
+			print e
+
+	def insert_into_lnames(self, lname):
+		try:
+			self.cursor.execute("""INSERT INTO lnames (lname) VALUES (%s);""",(lname))
+			self.connection.commit()
+			print "insert_into_lnames()"
+		except Exception as e:
+			print "unable to insert (LNAMES) !"
+			print e
+
+	def insert_into_cnames(self, cname):
+		try:
+			self.cursor.execute("""INSERT INTO cnames (cname) VALUES (%s);""",(cname))
+			self.connection.commit()
+			print "insert_into_cnames()"
+		except Exception as e:
+			print "unable to insert (CNAMES) !"
+			print e
+
 	def fetch_all(self, sql):
 		self.cursor.execute(sql)
 		print "fetch_all()"

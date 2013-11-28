@@ -245,7 +245,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.groups_of_leads.push(group_obj);
 		}
 		
-		$scope.returnLeads();
+		//$scope.returnLeads();
 	};
 	
 	/* *********************** Return Leads ***************************/
@@ -289,7 +289,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.leads_list = $scope.leads_list.sort($scope.comparatorGroupId);
 			});
 
-			$scope.fillGroups();
+			//$scope.fillGroups();
 		});
 	};
 	
@@ -326,6 +326,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		}
 		
 		//console.log($scope.groups_of_leads);
+		//$scope.returnSuggestions();
 	};
 	
 	$scope.getDisplayNameFromName = function(name){
@@ -359,6 +360,37 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		}		
 		return group_display_name;
 	};
+
+	/* ******************** Return Suggestions ************************/
+
+	// get the list suggestion names from DB
+	$scope.returnSuggestions = function() {
+		
+		var suggestions_url = '/return_suggestions';
+		$http({method:'GET', url:suggestions_url})
+		.success(function(data) {
+			$scope.fnames = data.fnames;
+			$scope.lnames = data.lnames;
+			$scope.cnames = data.cnames;
+	
+			console.log($scope.fnames);
+			console.log($scope.lnames);
+			console.log($scope.cnames);
+		});
+	};
+
+	/* ************************* Start All ****************************/
+
+	$scope.startAll = function() {
+		$scope.returnGroups();
+		$scope.initGroups();
+		$scope.returnLeads();
+		$scope.fillGroups();
+		$scope.returnSuggestions();
+	};
+	
+	$scope.startAll();
+	//$scope.returnGroups();
 
 	/* *********************** Toggle Group ***************************/
 	$scope.toggleGroup = function(group){
@@ -453,18 +485,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.createDialog("#http_error");
 		});
 	};
-
-	/* ************************* Start All ****************************/
-
-	$scope.startAll = function() {
-		$scope.returnGroups();
-		$scope.initGroups();
-		$scope.returnLeads();
-		$scope.fillGroups();
-	};
-	
-	//$scope.startAll();
-	$scope.returnGroups();
 
 	/* *********************** Check Cookie ***************************/
 	

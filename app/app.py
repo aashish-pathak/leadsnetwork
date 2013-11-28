@@ -172,17 +172,15 @@ def callback():
 ########################__PEOPLE SEARCH API__###########################
 @app.route('/search')
 def people_search():
-	
 
 	# get parameters : fname, lname and cname
 	fname = request.args.get('fname')
 	lname = request.args.get('lname')
 	cname = request.args.get('cname')
 	
-	# fetch random lead through which a people_search api will be called
+	# fetch random lead through which a people_search api will be called	
 	from lib import MySQL
 	mysql = MySQL()
-	
 	row = mysql.fetch_random()
 	
 	name = row[1]
@@ -195,6 +193,12 @@ def people_search():
 	lnkdin.create_token(token_key, token_secret)
 	lnkdin.prepare_client()
 	searched_people = lnkdin.call_people_search(token_key, token_secret, fname, lname, cname)
+
+	# insert names into suggestion tables
+	if(json.loads(searched_people)[u'numResults'] > 0):
+		mysql.insert_into_fnames(fname)
+		mysql.insert_into_lnames(lname)
+		mysql.insert_into_cnames(cname)
 
 	return searched_people
 
