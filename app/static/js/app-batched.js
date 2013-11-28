@@ -91,119 +91,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});		
 	};
 
-
-	/* ************************ Select Leads **************************/
-
-	$scope.leadsDiv = function() {
-		// check that at least one lead is selected
-		var none = true;
-		for(var i=0;i<$scope.leads_list.length;i++) {
-			if($scope.leads_list[i][3] == true) {
-				none = false;
-				break;
-			}
-		}
-		
-		if( none == true)
-			$scope.createDialog("#at_least_one_lead");
-		else
-			$scope.toggleLeadsDiv();
-	};
-	
-	$scope.selectAll = function() {
-		for(var i=0;i<$scope.leads_list.length;i++)
-			$scope.leads_list[i][3] = true;
-			
-		for(var i=0;i<$scope.groups_of_leads.length;i++){
-			$scope.groups_of_leads[i].select_group = true;
-			$scope.groups_of_leads[i].selected_leads_count = $scope.groups_of_leads[i].leads_list.length;
-		}
-	};
-	
-	$scope.selectNone = function() {
-		for(var i=0;i<$scope.leads_list.length;i++)
-			$scope.leads_list[i][3] = false;		
-			
-		for(var i=0;i<$scope.groups_of_leads.length;i++){
-			$scope.groups_of_leads[i].select_group = false;
-			$scope.groups_of_leads[i].selected_leads_count = 0;
-		}
-	};
-
-	
-	$scope.selectBack = function() {
-		// check that at least one lead is selected
-		var none = true;
-		$scope.selected_leads_count = 0;
-		for(var i=0;i<$scope.leads_list.length;i++) {
-			if($scope.leads_list[i][3] == true) {
-				none = false;
-				break;
-			}
-		}
-		
-		if( none == true)
-			$scope.createDialog("#at_least_one_lead");
-		else
-			$scope.toggleLeadsDiv();
-	};
-	
-	/* ************************* Add Account **************************/
-	
-	$scope.addAccount = function() {
-
-		// stop pending AJAX requests first
-		$scope.stopRequests();
-
-		var add_account_url = "/add_account";
-		
-		$http({method:'GET', url:add_account_url})
-		.success(function(data, status, headers, config) {
-			$scope.add_account_response = data;
-			$window.location.href = $scope.linkedin_url;
-			if($scope.add_account_response.used == true)
-				$scope.createDialog("#dead_link");
-		})
-		.error(function() {
-			$scope.createDialog("#http_error");
-		});
-	};
-	
-	// reload after adding account
-	$scope.$watch(
-		function() {return $location.absUrl();},
-		function() {
-			if($location.absUrl().indexOf("#") != -1) {
-				$scope.goTo("/");
-			}
-		}
-	);
-
-	/* *********************** Stop Requests **************************/
-
-	$scope.stopRequests = function() {
-		
-		$scope.safeApply(function() {
-		
-			// abort requests
-			for(var i=0;i<$scope.canceler.length;i++)
-				$scope.canceler[i].resolve();
-				
-			// complete progress
-			$scope.progress = 100;
-			$scope.setProgressBar();
-			$scope.done_searching = true;
-			//console.log("Progress : " + $scope.progress);
-		});
-	};
-
-	/* ************************** Go Back *****************************/
-
-	$scope.goBack = function() {
-		$scope.searchAgain();
-		$scope.scrollTop();
-	};
-
 	/* *********************** Return Groups **************************/
 
 	// get the list groups of leads from backend DB
@@ -311,7 +198,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.groups_of_leads[current_group].leads_list[current_lead].push($scope.groups_of_leads[current_group].group_display_name);
 		}
 		
-		//console.log($scope.groups_of_leads);
+		$scope.returnSuggestions();
 	};
 	
 	$scope.getDisplayNameFromName = function(name){
@@ -344,6 +231,159 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			  break;
 		}		
 		return group_display_name;
+	};
+
+	/* ******************** Return Suggestions ************************/
+
+	// get the list suggestion names from DB
+	$scope.returnSuggestions = function() {
+		
+		var suggestions_url = '/return_suggestions';
+		$http({method:'GET', url:suggestions_url})
+		.success(function(data) {
+			$scope.suggestions = data;
+	
+			console.log($scope.suggestions);
+		});
+	};
+
+	/* ************************* Start All ****************************/
+
+	$scope.startAll = function() {
+		$scope.returnGroups();
+		$scope.initGroups();
+		$scope.returnLeads();
+		$scope.fillGroups();
+		$scope.returnSuggestions();
+	};
+	
+	//$scope.startAll();
+	$scope.returnGroups();
+
+	/* ************************ Select Leads **************************/
+
+	$scope.leadsDiv = function() {
+		// check that at least one lead is selected
+		var none = true;
+		for(var i=0;i<$scope.leads_list.length;i++) {
+			if($scope.leads_list[i][3] == true) {
+				none = false;
+				break;
+			}
+		}
+		
+		if( none == true)
+			$scope.createDialog("#at_least_one_lead");
+		else
+			$scope.toggleLeadsDiv();
+	};
+	
+	$scope.selectAll = function() {
+		for(var i=0;i<$scope.leads_list.length;i++)
+			$scope.leads_list[i][3] = true;
+			
+		for(var i=0;i<$scope.groups_of_leads.length;i++){
+			$scope.groups_of_leads[i].select_group = true;
+			$scope.groups_of_leads[i].selected_leads_count = $scope.groups_of_leads[i].leads_list.length;
+		}
+	};
+	
+	$scope.selectNone = function() {
+		for(var i=0;i<$scope.leads_list.length;i++)
+			$scope.leads_list[i][3] = false;		
+			
+		for(var i=0;i<$scope.groups_of_leads.length;i++){
+			$scope.groups_of_leads[i].select_group = false;
+			$scope.groups_of_leads[i].selected_leads_count = 0;
+		}
+	};
+
+	
+	$scope.selectBack = function() {
+		// check that at least one lead is selected
+		var none = true;
+		$scope.selected_leads_count = 0;
+		for(var i=0;i<$scope.leads_list.length;i++) {
+			if($scope.leads_list[i][3] == true) {
+				none = false;
+				break;
+			}
+		}
+		
+		if( none == true)
+			$scope.createDialog("#at_least_one_lead");
+		else
+			$scope.toggleLeadsDiv();
+	};
+
+	$scope.toggleLeadsDiv = function() {
+		$scope.show_leads = !$scope.show_leads;
+		$scope.leads_filter = '';
+		
+		// $scope.expandAll();
+		
+		// scroll to TOP when showing leads' list
+		if($scope.show_leads == true)
+			$scope.scrollTop();
+			
+		// hide INVITATION BOX
+		$scope.show_invitation_box = false;
+	};
+	
+	/* ************************* Add Account **************************/
+	
+	$scope.addAccount = function() {
+
+		// stop pending AJAX requests first
+		$scope.stopRequests();
+
+		var add_account_url = "/add_account";
+		
+		$http({method:'GET', url:add_account_url})
+		.success(function(data, status, headers, config) {
+			$scope.add_account_response = data;
+			$window.location.href = $scope.linkedin_url;
+			if($scope.add_account_response.used == true)
+				$scope.createDialog("#dead_link");
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
+		});
+	};
+	
+	// reload after adding account
+	$scope.$watch(
+		function() {return $location.absUrl();},
+		function() {
+			if($location.absUrl().indexOf("#") != -1) {
+				$scope.goTo("/");
+			}
+		}
+	);
+
+	/* *********************** Stop Requests **************************/
+
+	$scope.stopRequests = function() {
+		
+		$scope.safeApply(function() {
+		
+			// abort requests
+			for(var i=0;i<$scope.canceler.length;i++)
+				$scope.canceler[i].resolve();
+				
+			// complete progress
+			$scope.progress = 100;
+			$scope.setProgressBar();
+			$scope.done_searching = true;
+			//console.log("Progress : " + $scope.progress);
+		});
+	};
+
+	/* ************************** Go Back *****************************/
+
+	$scope.goBack = function() {
+		$scope.searchAgain();
+		$scope.scrollTop();
 	};
 
 	/* *********************** Toggle Group ***************************/
@@ -439,18 +479,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.createDialog("#http_error");
 		});
 	};
-
-	/* ************************* Start All ****************************/
-
-	$scope.startAll = function() {
-		$scope.returnGroups();
-		$scope.initGroups();
-		$scope.returnLeads();
-		$scope.fillGroups();
-	};
-	
-	//$scope.startAll();
-	$scope.returnGroups();
 
 	/* *********************** Check Cookie ***************************/
 	
@@ -782,7 +810,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		}
 
 		if($scope.common_connections.length == 0)
-			alert("Names of common connections are private!");
+			$scope.createDialog("#common_connections_are_private");
 		else {
 			$scope.createDialog("#common_connections");
 		}
@@ -871,22 +899,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		//$('html, body').animate({scrollTop: $(document).height()}, 0);
 	};
 
-	/* ********************* Toggle Leads Div *************************/
-	
-	$scope.toggleLeadsDiv = function() {
-		$scope.show_leads = !$scope.show_leads;
-		$scope.leads_filter = '';
-		
-		// $scope.expandAll();
-		
-		// scroll to TOP when showing leads' list
-		if($scope.show_leads == true)
-			$scope.scrollTop();
-			
-		// hide INVITATION BOX
-		$scope.show_invitation_box = false;
-	};
-
 	/* ********************* Test XHRs *************************/
 	
 	$scope.testXhrs = function() {
@@ -930,4 +942,14 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});
 	};
 	
+	/* ********************* Typeahead Example ************************/
+
+	$scope.startsWith = function(name, viewValue) {
+	  return name.substr(0, viewValue.length).toLowerCase() == viewValue.toLowerCase();
+	} 
+
+	$scope.TypeaheadCtrl = function ($scope) {
+		$scope.email_address = '';
+		$scope.emails = ['sangram.s.kapre@gmail.com', 'sangram.kapre@gslab.com', 'aashish@gslab.com', 'amol.pujari@gslab.com', 'example@gslab.com'];
+	};
 }]);

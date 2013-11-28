@@ -46,6 +46,36 @@ def return_leads():
 		
 	return json.dumps(leads)
 
+#######################__RETURN_SUGGESTIONS__###########################
+@app.route('/return_suggestions')
+def return_suggestions():
+
+	# read all leads from 'people' table and return their names
+	from lib import MySQL
+	mysql = MySQL()
+	
+	suggestions = {}
+
+	suggestions['fnames'] = []
+	sql = "select * from fnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['fnames'].append(row[0])
+
+	suggestions['lnames'] = []
+	sql = "select * from lnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['lnames'].append(row[0])
+
+	suggestions['cnames'] = []
+	sql = "select * from cnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['cnames'].append(row[0])
+			
+	return json.dumps(suggestions)
+
 ############################__LOG IN__##################################
 @app.route('/login', methods=['POST'])
 def login():
@@ -177,17 +207,15 @@ def callback():
 ########################__PEOPLE SEARCH API__###########################
 @app.route('/search')
 def people_search():
-	
 
 	# get parameters : fname, lname and cname
 	fname = request.args.get('fname')
 	lname = request.args.get('lname')
 	cname = request.args.get('cname')
 	
-	# fetch random lead through which a people_search api will be called
+	# fetch random lead through which a people_search api will be called	
 	from lib import MySQL
 	mysql = MySQL()
-	
 	row = mysql.fetch_random()
 	
 	name = row[1]
@@ -200,6 +228,15 @@ def people_search():
 	lnkdin.create_token(token_key, token_secret)
 	lnkdin.prepare_client()
 	searched_people = lnkdin.call_people_search(token_key, token_secret, fname, lname, cname)
+
+	# insert names into suggestion tables
+	if(json.loads(searched_people)[u'numResults'] > 0):
+		if(len(fname) > 1):
+			mysql.insert_into_fnames(fname)
+		if(len(lname) > 1):
+			mysql.insert_into_lnames(lname)
+		if(len(cname) > 1):
+			mysql.insert_into_cnames(cname)
 
 	return searched_people
 
