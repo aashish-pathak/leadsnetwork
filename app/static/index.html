@@ -259,7 +259,7 @@
 				
 				<form method='GET' ng-submit="theSearch()">
 					 
-					<input type="text" class="form-control" ng-model="fname" typeahead="fname for fname in suggestions.fnames | filter:$viewValue | limitTo:8" placeholder="*First Name"><br>
+					<input type="text" class="form-control" ng-model="fname" typeahead="fname for fname in suggestions.fnames | filter:$viewValue:startsWith | limitTo:8" placeholder="*First Name"><br>
 					<br>
 					<input type="text" class="form-control" ng-model="lname" typeahead="lname for lname in suggestions.lnames | filter:$viewValue | limitTo:8" placeholder="*Last Name"><br>
 					<br>

@@ -944,6 +944,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* ********************* Typeahead Example ************************/
 
+	$scope.startsWith = function(name, viewValue) {
+	  return name.substr(0, viewValue.length).toLowerCase() == viewValue.toLowerCase();
+	} 
+
 	$scope.TypeaheadCtrl = function ($scope) {
 		$scope.email_address = '';
 		$scope.emails = ['sangram.s.kapre@gmail.com', 'sangram.kapre@gslab.com', 'aashish@gslab.com', 'amol.pujari@gslab.com', 'example@gslab.com'];

@@ -227,11 +227,11 @@ def people_search():
 	# insert names into suggestion tables
 	if(json.loads(searched_people)[u'numResults'] > 0):
 		if(len(fname) > 1):
-			mysql.insert_into_fnames(fname.lower)
+			mysql.insert_into_fnames(fname)
 		if(len(lname) > 1):
-			mysql.insert_into_lnames(lname.lower)
+			mysql.insert_into_lnames(lname)
 		if(len(cname) > 1):
-			mysql.insert_into_cnames(cname.lower)
+			mysql.insert_into_cnames(cname)
 
 	return searched_people
 
