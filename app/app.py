@@ -41,6 +41,36 @@ def return_leads():
 		
 	return json.dumps(leads)
 
+#######################__RETURN_SUGGESTIONS__###########################
+@app.route('/return_suggestions')
+def return_suggestions():
+
+	# read all leads from 'people' table and return their names
+	from lib import MySQL
+	mysql = MySQL()
+	
+	suggestions = {}
+
+	suggestions['fnames'] = []
+	sql = "select * from fnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['fnames'].append(row[0])
+
+	suggestions['lnames'] = []
+	sql = "select * from lnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['lnames'].append(row[0])
+
+	suggestions['cnames'] = []
+	sql = "select * from cnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['cnames'].append(row[0])
+			
+	return json.dumps(suggestions)
+
 ############################__LOG IN__##################################
 @app.route('/login', methods=['POST'])
 def login():
@@ -196,9 +226,12 @@ def people_search():
 
 	# insert names into suggestion tables
 	if(json.loads(searched_people)[u'numResults'] > 0):
-		mysql.insert_into_fnames(fname)
-		mysql.insert_into_lnames(lname)
-		mysql.insert_into_cnames(cname)
+		if(len(fname) > 1):
+			mysql.insert_into_fnames(fname.lower)
+		if(len(lname) > 1):
+			mysql.insert_into_lnames(lname.lower)
+		if(len(cname) > 1):
+			mysql.insert_into_cnames(cname.lower)
 
 	return searched_people
 

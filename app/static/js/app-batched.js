@@ -91,6 +91,174 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});		
 	};
 
+	/* *********************** Return Groups **************************/
+
+	// get the list groups of leads from backend DB
+	$scope.returnGroups = function() {
+		
+		var groups_url = '/return_groups';
+		$http({method:'GET', url:groups_url})
+		.success(function(data) {
+			$scope.groups_list = data;
+			
+			$scope.initGroups();
+		});
+	};
+
+	/* ********************* Initialize Groups ************************/
+
+	$scope.initGroups = function() {
+		//scan groups list and initialize
+		for(var i=0;i<$scope.groups_list.length;i++){
+			// create object and push into groups_of_leads
+			var group_obj = {};
+			group_obj.group_id = $scope.groups_list[i][0];
+			group_obj.group_name = $scope.groups_list[i][1];
+			group_obj.leads_list = [];
+			$scope.groups_of_leads.push(group_obj);
+		}
+		
+		$scope.returnLeads();
+	};
+	
+	/* *********************** Return Leads ***************************/
+
+	// compare between two string (needed for alphabetical sorting)
+	$scope.comparatorAlphabetical = function(a,b) {
+		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
+		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
+		return 0;
+	};
+
+	// compare between two numbers (needed for numerical sorting)
+	$scope.comparatorNumerical = function(a,b) {
+		if (a[2] < b[2]) return -1;
+		if (a[2] > b[2]) return 1;
+		return 0;
+	};
+
+	// compare between two group_ids (needed for sorting based on group_id)
+	$scope.comparatorGroupId = function(a,b) {
+		if (a[2] < b[2]) return -1;
+		if (a[2] > b[2]) return 1;
+		
+		// for same group_id, sort alphabetically
+		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
+		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
+		return 0;
+	};
+
+	// get the list of leads from backend DB
+	$scope.returnLeads = function() {
+		
+		var leads_url = '/return_leads';
+		$http({method:'GET', url:leads_url})
+		.success(function(data) {
+			$scope.leads_list = data;
+			for(var i=0; i<$scope.leads_list.length;i++)
+				$scope.leads_list[i].push(true);
+		
+			$scope.safeApply(function() {
+				$scope.leads_list = $scope.leads_list.sort($scope.comparatorGroupId);
+			});
+
+			$scope.fillGroups();
+		});
+	};
+	
+	/* *********************** Fill Groups ****************************/
+	$scope.fillGroups = function() {
+		
+		// scan global leads_list to fill leads_list of each group
+		for(var current_lead=0; current_lead<$scope.leads_list.length; current_lead++){
+			
+			var group_id = $scope.leads_list[current_lead][2];
+			
+			for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++)
+				if($scope.groups_of_leads[current_group].group_id == group_id)
+					break;
+			
+			$scope.groups_of_leads[current_group].leads_list.push($scope.leads_list[current_lead]);
+		}
+		
+		// based on leads_list in each group, set it's parameters
+		for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++){
+			$scope.groups_of_leads[current_group].visible = false;
+			$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
+			$scope.groups_of_leads[current_group].leads_count = $scope.groups_of_leads[current_group].leads_list.length;
+			$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_count;
+			$scope.groups_of_leads[current_group].select_group = true;
+
+			if(!$scope.groups_of_leads[current_group].leads_count)
+				$scope.groups_of_leads[current_group].leads_empty = true;
+			else
+				$scope.groups_of_leads[current_group].leads_empty = false;
+			
+			for(var current_lead=0;current_lead<$scope.groups_of_leads[current_group].leads_list.length;current_lead++)
+				$scope.groups_of_leads[current_group].leads_list[current_lead].push($scope.groups_of_leads[current_group].group_display_name);
+		}
+		
+		$scope.returnSuggestions();
+	};
+	
+	$scope.getDisplayNameFromName = function(name){
+		var group_display_name = '';
+		switch(name)
+		{
+			case 'Execs':
+			  group_display_name = 'Executive';
+			  break;
+			case 'PracticeHead':
+			  group_display_name = 'Practice Head';
+			  break;
+			case 'LSE':
+			  group_display_name = 'Lead Software Engineer';
+			  break;
+			case 'SSE':
+			  group_display_name = 'Senior Software Engineer';
+			  break;
+			case 'SE':
+			  group_display_name = 'Software Engineer';
+			  break;
+			case 'users':
+			  group_display_name = 'Others';
+			  break;
+			case 'TM':
+			  group_display_name = 'Talent Manager';
+			  break;
+			case 'Corp':
+			  group_display_name = 'Corporate Services';
+			  break;
+		}		
+		return group_display_name;
+	};
+
+	/* ******************** Return Suggestions ************************/
+
+	// get the list suggestion names from DB
+	$scope.returnSuggestions = function() {
+		
+		var suggestions_url = '/return_suggestions';
+		$http({method:'GET', url:suggestions_url})
+		.success(function(data) {
+			$scope.suggestions = data;
+	
+			console.log($scope.suggestions);
+		});
+	};
+
+	/* ************************* Start All ****************************/
+
+	$scope.startAll = function() {
+		$scope.returnGroups();
+		$scope.initGroups();
+		$scope.returnLeads();
+		$scope.fillGroups();
+		$scope.returnSuggestions();
+	};
+	
+	//$scope.startAll();
+	$scope.returnGroups();
 
 	/* ************************ Select Leads **************************/
 
@@ -217,180 +385,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.searchAgain();
 		$scope.scrollTop();
 	};
-
-	/* *********************** Return Groups **************************/
-
-	// get the list groups of leads from backend DB
-	$scope.returnGroups = function() {
-		
-		var groups_url = '/return_groups';
-		$http({method:'GET', url:groups_url})
-		.success(function(data) {
-			$scope.groups_list = data;
-			
-			$scope.initGroups();
-		});
-	};
-
-	/* ********************* Initialize Groups ************************/
-
-	$scope.initGroups = function() {
-		//scan groups list and initialize
-		for(var i=0;i<$scope.groups_list.length;i++){
-			// create object and push into groups_of_leads
-			var group_obj = {};
-			group_obj.group_id = $scope.groups_list[i][0];
-			group_obj.group_name = $scope.groups_list[i][1];
-			group_obj.leads_list = [];
-			$scope.groups_of_leads.push(group_obj);
-		}
-		
-		//$scope.returnLeads();
-	};
-	
-	/* *********************** Return Leads ***************************/
-
-	// compare between two string (needed for alphabetical sorting)
-	$scope.comparatorAlphabetical = function(a,b) {
-		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
-		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
-		return 0;
-	};
-
-	// compare between two numbers (needed for numerical sorting)
-	$scope.comparatorNumerical = function(a,b) {
-		if (a[2] < b[2]) return -1;
-		if (a[2] > b[2]) return 1;
-		return 0;
-	};
-
-	// compare between two group_ids (needed for sorting based on group_id)
-	$scope.comparatorGroupId = function(a,b) {
-		if (a[2] < b[2]) return -1;
-		if (a[2] > b[2]) return 1;
-		
-		// for same group_id, sort alphabetically
-		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
-		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
-		return 0;
-	};
-
-	// get the list of leads from backend DB
-	$scope.returnLeads = function() {
-		
-		var leads_url = '/return_leads';
-		$http({method:'GET', url:leads_url})
-		.success(function(data) {
-			$scope.leads_list = data;
-			for(var i=0; i<$scope.leads_list.length;i++)
-				$scope.leads_list[i].push(true);
-		
-			$scope.safeApply(function() {
-				$scope.leads_list = $scope.leads_list.sort($scope.comparatorGroupId);
-			});
-
-			//$scope.fillGroups();
-		});
-	};
-	
-	/* *********************** Fill Groups ****************************/
-	$scope.fillGroups = function() {
-		
-		// scan global leads_list to fill leads_list of each group
-		for(var current_lead=0; current_lead<$scope.leads_list.length; current_lead++){
-			
-			var group_id = $scope.leads_list[current_lead][2];
-			
-			for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++)
-				if($scope.groups_of_leads[current_group].group_id == group_id)
-					break;
-			
-			$scope.groups_of_leads[current_group].leads_list.push($scope.leads_list[current_lead]);
-		}
-		
-		// based on leads_list in each group, set it's parameters
-		for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++){
-			$scope.groups_of_leads[current_group].visible = false;
-			$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
-			$scope.groups_of_leads[current_group].leads_count = $scope.groups_of_leads[current_group].leads_list.length;
-			$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_count;
-			$scope.groups_of_leads[current_group].select_group = true;
-
-			if(!$scope.groups_of_leads[current_group].leads_count)
-				$scope.groups_of_leads[current_group].leads_empty = true;
-			else
-				$scope.groups_of_leads[current_group].leads_empty = false;
-			
-			for(var current_lead=0;current_lead<$scope.groups_of_leads[current_group].leads_list.length;current_lead++)
-				$scope.groups_of_leads[current_group].leads_list[current_lead].push($scope.groups_of_leads[current_group].group_display_name);
-		}
-		
-		//console.log($scope.groups_of_leads);
-		//$scope.returnSuggestions();
-	};
-	
-	$scope.getDisplayNameFromName = function(name){
-		var group_display_name = '';
-		switch(name)
-		{
-			case 'Execs':
-			  group_display_name = 'Executive';
-			  break;
-			case 'PracticeHead':
-			  group_display_name = 'Practice Head';
-			  break;
-			case 'LSE':
-			  group_display_name = 'Lead Software Engineer';
-			  break;
-			case 'SSE':
-			  group_display_name = 'Senior Software Engineer';
-			  break;
-			case 'SE':
-			  group_display_name = 'Software Engineer';
-			  break;
-			case 'users':
-			  group_display_name = 'Others';
-			  break;
-			case 'TM':
-			  group_display_name = 'Talent Manager';
-			  break;
-			case 'Corp':
-			  group_display_name = 'Corporate Services';
-			  break;
-		}		
-		return group_display_name;
-	};
-
-	/* ******************** Return Suggestions ************************/
-
-	// get the list suggestion names from DB
-	$scope.returnSuggestions = function() {
-		
-		var suggestions_url = '/return_suggestions';
-		$http({method:'GET', url:suggestions_url})
-		.success(function(data) {
-			$scope.fnames = data.fnames;
-			$scope.lnames = data.lnames;
-			$scope.cnames = data.cnames;
-	
-			console.log($scope.fnames);
-			console.log($scope.lnames);
-			console.log($scope.cnames);
-		});
-	};
-
-	/* ************************* Start All ****************************/
-
-	$scope.startAll = function() {
-		$scope.returnGroups();
-		$scope.initGroups();
-		$scope.returnLeads();
-		$scope.fillGroups();
-		$scope.returnSuggestions();
-	};
-	
-	$scope.startAll();
-	//$scope.returnGroups();
 
 	/* *********************** Toggle Group ***************************/
 	$scope.toggleGroup = function(group){
