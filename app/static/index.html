@@ -261,9 +261,9 @@
 					 
 					<input type="text" class="form-control" ng-model="fname" typeahead="fname for fname in suggestions.fnames | filter:$viewValue:startsWith | limitTo:8" placeholder="*First Name"><br>
 					<br>
-					<input type="text" class="form-control" ng-model="lname" typeahead="lname for lname in suggestions.lnames | filter:$viewValue | limitTo:8" placeholder="*Last Name"><br>
+					<input type="text" class="form-control" ng-model="lname" typeahead="lname for lname in suggestions.lnames | filter:$viewValue:startsWith | limitTo:8" placeholder="*Last Name"><br>
 					<br>
-					<input type="text" class="form-control" ng-model="cname" typeahead="cname for cname in suggestions.cnames | filter:$viewValue | limitTo:8" placeholder="Company Name"><br>
+					<input type="text" class="form-control" ng-model="cname" typeahead="cname for cname in suggestions.cnames | filter:$viewValue:startsWith | limitTo:8" placeholder="Company Name"><br>
 
 					<div class="well well-sm" style="background: #CCCCCC; color: #666666" ng-show="!show_always">
 						<label style="cursor: pointer"><input type="checkbox" ng-model="both_fname_lname">
