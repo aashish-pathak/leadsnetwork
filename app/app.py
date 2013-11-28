@@ -130,31 +130,15 @@ def invite():
 @app.route('/add_account/<add_account_parameter>')
 def add_account(add_account_parameter):
 
-	# code for allowing auth_url to be clicked multiple times (no limit on number of times the link is used)
-	from lib import MySQL
-	mysql = MySQL()
-	query = "SELECT * FROM invitations WHERE random_string='" + add_account_parameter + "'"
-	try:
-		row = mysql.fetch_one(query)
-		if(row[3] == True):
-			pass
-		else:
-			from lib import MySQL
-			mysql = MySQL()
-			mysql.update_invitations_set_used(add_account_parameter)
-
-		from lib import MyLinkedIn
-		lnkdin = MyLinkedIn()
-		auth_url = lnkdin.get_auth_url()
-		print auth_url
-		return redirect(auth_url)
-	except Exception as e:
-		print e
-
-
+	# auth_url is allowed to be used multiple times
+	from lib import MyLinkedIn
+	lnkdin = MyLinkedIn()
+	auth_url = lnkdin.get_auth_url()
+	print auth_url
+	return redirect(auth_url)
+	
 	"""
-	# code for allowing auth_url to be clicked only once
-
+	# auth_url is allowed to be used only once
 	from lib import MySQL
 	mysql = MySQL()
 	query = "SELECT * FROM invitations WHERE random_string='" + add_account_parameter + "'"
@@ -174,8 +158,10 @@ def add_account(add_account_parameter):
 			return redirect(auth_url)
 	except Exception as e:
 		print e
-	"""
+	
 	return make_response(open('static/dead_link.html').read())
+	"""
+
 ############################__CALLBACK__################################
 @app.route('/callback')
 def callback():
