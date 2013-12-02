@@ -236,13 +236,17 @@ def people_search():
 	searched_people = lnkdin.call_people_search(token_key, token_secret, fname, lname, cname)
 
 	# insert names into suggestion tables
-	if(json.loads(searched_people)[u'numResults'] > 0):
-		if(len(fname) > 1):
-			mysql.insert_into_fnames(fname)
-		if(len(lname) > 1):
-			mysql.insert_into_lnames(lname)
-		if(len(cname) > 1):
-			mysql.insert_into_cnames(cname)
+	print searched_people
+	searched_people_json = json.loads(searched_people)
+	if(u'numResults' in searched_people_json):
+		print "inserting logs"
+		if(searched_people_json[u'numResults'] > 0):
+			if(len(fname) > 1):
+				mysql.insert_into_fnames(fname)
+			if(len(lname) > 1):
+				mysql.insert_into_lnames(lname)
+			if(len(cname) > 1):
+				mysql.insert_into_cnames(cname)
 
 	return searched_people
 
