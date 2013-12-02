@@ -640,9 +640,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.data = data;
 			if(!$scope.data.numResults) {
 				$scope.enable_search = false;
-				if($scope.cname == '') {
+
+				if($scope.cname == '')
 					$scope.createDialog("#not_on_linkedin_without_cname");
-				}
+
+				else if($scope.fname == '' && $scope.lname == '')
+					$scope.createDialog("#not_on_linkedin_only_cname");
+
 				else {
 					$scope.createDialog("#not_on_linkedin_with_cname");
 				}

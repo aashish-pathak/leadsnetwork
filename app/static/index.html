@@ -72,13 +72,19 @@
 		
 		<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
 			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The person '{{fname}} {{lname}}' from '{{cname}}' is not on linkedin.
+			The person <span ng-show="fname"><b>{{fname}}</b></span> <span ng-show="lname"><b>{{lname}}</b></span><span ng-show="cname"> from <b>{{cname}}</b> </span> is not on linkedin.
 			</p>
 		</div>
 
 		<div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
 			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			The person '{{fname}} {{lname}}' is not on linkedin.
+			</p>
+		</div>
+
+		<div id="not_on_linkedin_only_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			The company <b>{{cname}}</b> is not on linkedin.
 			</p>
 		</div>
 
