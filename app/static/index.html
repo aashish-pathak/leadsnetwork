@@ -177,7 +177,7 @@
 						<br>
 						<div id="results_summary" class="well well-sm bottom-shadow">
 							<span ng-show="fname || lname">
-								Found <b>{{data.people._total}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span>on LinkedIn.<br>
+								Found <b>{{data.people._total}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
 							</span>
 							<span ng-show="!fname && !lname">
 								Found <b>{{data.people._total}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
@@ -266,9 +266,9 @@
 				
 				<form method='GET' ng-submit="theSearch()">
 					 
-					<input type="text" class="form-control" ng-model="fname" typeahead="fname for fname in suggestions.fnames | filter:$viewValue:startsWith | limitTo:8" placeholder="*First Name"><br>
+					<input type="text" class="form-control" ng-model="fname" typeahead="fname for fname in suggestions.fnames | filter:$viewValue:startsWith | limitTo:8" placeholder="First Name"><br>
 					<br>
-					<input type="text" class="form-control" ng-model="lname" typeahead="lname for lname in suggestions.lnames | filter:$viewValue:startsWith | limitTo:8" placeholder="*Last Name"><br>
+					<input type="text" class="form-control" ng-model="lname" typeahead="lname for lname in suggestions.lnames | filter:$viewValue:startsWith | limitTo:8" placeholder="Last Name"><br>
 					<br>
 					<input type="text" class="form-control" ng-model="cname" typeahead="cname for cname in suggestions.cnames | filter:$viewValue:startsWith | limitTo:8" placeholder="Company Name"><br>
 
