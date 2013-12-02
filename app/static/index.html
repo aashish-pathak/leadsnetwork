@@ -176,7 +176,14 @@
 				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
 						<br>
 						<div id="results_summary" class="well well-sm bottom-shadow">
-							Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
+							<span ng-show="fname || lname">
+								Found <b>{{data.people._total}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span>on LinkedIn.<br>
+							</span>
+							<span ng-show="!fname && !lname">
+								Found <b>{{data.people._total}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
+							</span>
+							
+							<!--Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
 							Leads selected : <b>{{selected_leads_count}}</b>.<br>
 							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
 							<span ng-show="done_searching"><b>Searching done !</b></span>

@@ -40,7 +40,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.fname = '';
 	$scope.lname = '';
 	$scope.cname = '';
-	$scope.both_fname_lname = true;
 	$scope.enable_search = false;
 
 	// result sets
@@ -627,12 +626,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
-		if($scope.both_fname_lname == true)
+		if($scope.cname == '') {
 			if($scope.fname == '' || $scope.lname == '') {
 				$scope.createDialog("#both_fname_lname_error");
 				$scope.enable_search = false;
 				return;
 			}
+		}
 
 		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
 		$http({method:'GET', url:search_url})
@@ -670,7 +670,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.current_xhr = 0;
 		
 		// limit the number of calls to 25 if more....
-		var numResults = $scope.data.numResults;
+		var numResults = $scope.data.people._total;
 		if (numResults > 25)
 			numResults = 25;
 
