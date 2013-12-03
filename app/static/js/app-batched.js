@@ -712,7 +712,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************* People Search More ************************/
 	$scope.peopleSearchMore = function() {
 		
-		console.log("calling more....");
 		var list_of_ids = [];
 		var count = 10;
 		$scope.people_search_start = $scope.people_search_start + count;
@@ -743,7 +742,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ****************** Get PEOPLE_SEARCH Profiles ******************/
 
 	$scope.getSearchedPeopleProfiles = function(list_of_ids) {
-		console.log(list_of_ids);
+		//console.log(list_of_ids);
 		
 		$scope.canceler = [];
 		$scope.promises = [];
