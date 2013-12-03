@@ -127,6 +127,10 @@
 			</p>
 		</div>
 
+		<div id="throttle_limit_reached" title="Sorry!" class="ui-helper-hidden">
+			<p>Throttle limit for this application has reached. Please come back <b>after 5.30 am</b>. Thank you.</p>
+		</div>
+
 		<div id="invitation_sent" title="Success!" class="ui-helper-hidden">
 			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			The invitation has been sent successfully.
@@ -204,10 +208,10 @@
 					<br>
 					<div id="results_summary" class="well well-sm bottom-shadow">
 						<span ng-show="fname || lname">
-							Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
+							Selected <b>{{people_search_selected_count}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
 						</span>
 						<span ng-show="!fname && !lname">
-							Found <b>{{people_search_end}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
+							Selected <b>{{people_search_selected_count}}</b> employee(s) from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
 						</span>
 						
 						<!--Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->

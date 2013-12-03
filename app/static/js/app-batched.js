@@ -620,14 +620,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_search_form = true;
 		$scope.show_people_search = false;
 		$scope.show_results = false;
-		$scope.stopRequests();
 		$scope.enable_search = false;
-	};
-
-	/* *********************** PeopleSearchGo *************************/
-	$scope.peopleSearchGo = function() {
-		$scope.show_people_search = false;
-		$scope.show_results = true;
+		$scope.stopRequests();
+		
+		$scope.people_search_profiles = [];
+		$scope.people_search_selected_all = false;
+		$scope.people_search_selected_count = 0;
 	};
 
 	/* ************************* The Search ***************************/
@@ -669,6 +667,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + $scope.people_search_start;
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
+			
+			// check if Throttle Limit is reached
+			if('errorCode' in data)
+				if('message' in data && data.message == 'Throttle limit for calls to this resource is reached.') {
+					$scope.enable_search = false;
+					$scope.createDialog("#throttle_limit_reached");
+					return;
+				}
+			
 			$scope.people_search = data;
 			$scope.people_search_end = data.people._total;
 			if(!$scope.people_search.people._total) {
@@ -810,6 +817,20 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.people_search_selected_count = 0;
 	};
 
+	/* *********************** PeopleSearchGo *************************/
+	$scope.peopleSearchGo = function() {
+
+		if($scope.people_search_selected_count == 0) {
+			alert("please select at least one person....");
+			return;
+		}
+
+		$scope.show_people_search = false;
+		$scope.show_results = true;
+		
+		$scope.findConnections();
+	};
+
 	/* ********************** Find Connections ************************/
 
 	$scope.findConnections = function() {
@@ -821,15 +842,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.progress = 0;
 		$scope.total_xhr = 0;
 		$scope.current_xhr = 0;
-		
-		// limit the number of calls to 25 if more....
-		var numResults = $scope.people_search.people._total;
-		if (numResults > 25)
-			numResults = 25;
 
 		$scope.people_search_ids=[];
-		for(var i=0;i<numResults;i++)
-			$scope.people_search_ids.push($scope.people_search.people.values[i].id);
+		for(var i=0; i<$scope.people_search_profiles.length; i++)
+			$scope.people_search_ids.push($scope.people_search_profiles.id);
 		
 		var profile_id="";
 		var fetch_profile_url="";
