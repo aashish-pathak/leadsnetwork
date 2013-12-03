@@ -56,6 +56,15 @@ class MyLinkedIn(Config):
 		print "get_profile_using_id()"
 		return content
 
+	def get_profile_using_id_random(self, oauth_key, oauth_secret, profile_id):
+		self.url_profile = self.get_cfg("LinkedIn", "url_profile")
+		self.create_token(oauth_key, oauth_secret)
+		self.prepare_client()
+		self.fetch_profile_query = profile_id + ":(id,first-name,last-name,headline,public-profile-url,picture-url::(original))?format=json&count=20"
+		resp, content = self.client.request(self.url_profile + self.fetch_profile_query)
+		print "get_profile_using_id()"
+		return content
+
 	def get_profile_using_token(self, oauth_key, oauth_secret):
 		self.url_self = self.get_cfg("LinkedIn", "url_self")
 		self.create_token(oauth_key, oauth_secret)

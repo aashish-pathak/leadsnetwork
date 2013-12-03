@@ -6,7 +6,7 @@
  *	
  */
 
-var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies']);
+var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies', 'infinite-scroll']);
 
 leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', '$location', function($scope, $rootScope, $http, $cookies, $window, $q, $modal, $location) {
 
@@ -15,7 +15,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.is_logged_in = false;
 	$scope.is_admin = false;
 	$scope.show_search_form = true;
-	$scope.show_people_search = false;
 	$scope.show_results = false;
 	$scope.show_leads = false;
 	$scope.leads_filter = '';
@@ -42,6 +41,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.lname = '';
 	$scope.cname = '';
 	$scope.enable_search = false;
+	
+	// people search results
+	$scope.show_people_search = false;
+	$scope.people_search_busy = true;
 
 	// result sets
 	$scope.connections={};
@@ -653,6 +656,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			}
 		}
 
+		$scope.people_search_busy = true;
+
 		//to store profiles of all people from search results
 		$scope.people_search_profiles = [];
 		$scope.people_search_start = 0;
@@ -698,6 +703,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************* People Search More ************************/
 	$scope.peopleSearchMore = function() {
 		
+		console.log("calling more....");
 		var list_of_ids = [];
 		var count = 10;
 		$scope.people_search_start = $scope.people_search_start + count;
@@ -706,6 +712,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			alert("no more results....!");
 			return;
 		}
+
+		$scope.people_search_busy = true;
 
 		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + $scope.people_search_start;
 		$http({method:'GET', url:search_url})
@@ -727,6 +735,39 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	$scope.getSearchedPeopleProfiles = function(list_of_ids) {
 		console.log(list_of_ids);
+		
+		$scope.canceler = [];
+		$scope.promises = [];
+		var promises = [];
+		
+		for(var i=0;i<list_of_ids.length;i++) {
+			var profile_id = list_of_ids[i];
+			var fetch_profile_random_url = "/fetch_profile_random?profile_id=" + profile_id;
+			
+			$scope.canceler.push($q.defer());
+			
+			var promise = $http({method:'GET', url:fetch_profile_random_url, timeout: $scope.canceler[i].promise})
+			.success(function(data) {
+
+				// add default profile picture for connections under degree 3
+				if(!('pictureUrl' in data)) {
+					data.pictureUrl = '/static/img/ghost_profile.png';
+				}
+				
+				if(!('errorCode' in data))
+					$scope.people_search_profiles.push(data);
+				
+			})
+			.error(function() {
+				// nothing to do....
+			});
+		
+			$scope.promises.push(promise);
+		}
+		
+		$q.all($scope.promises).then(function() {
+			$scope.people_search_busy = false;
+		});
 	};
 
 	/* ********************** Find Connections ************************/
@@ -1023,4 +1064,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.email_address = '';
 		$scope.emails = ['sangram.s.kapre@gmail.com', 'sangram.kapre@gslab.com', 'aashish@gslab.com', 'amol.pujari@gslab.com', 'example@gslab.com'];
 	};
+
+	/* ********************* Typeahead Example ************************/
+	
+	$scope.testInfiniteScroll = function() {
+		if($scope.show_people_search)
+			console.log("reached bottom....");
+	};
+	
 }]);
+

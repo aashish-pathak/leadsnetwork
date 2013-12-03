@@ -283,6 +283,33 @@ def fetch_profile():
 	
 	return json.dumps(json_profile)
 
+#####################__FETCH PROFILE RANDOM API__#######################
+# /fetch_profile_random?profile_id=abcd
+@app.route('/fetch_profile_random')
+def fetch_profile_random():
+
+	# read parameter : profile_id
+	profile_id = request.args.get('profile_id')
+
+	# fetch random lead through which a profile will be fetched
+	from lib import MySQL
+	mysql = MySQL()
+	row = mysql.fetch_random()
+	
+	name = row[1]
+	oauth_token_key = row[3]
+	oauth_token_secret = row[4]
+
+	# fetch profile with 'profile_id' through corresponding lead's 'access_tokens'
+	from lib import MyLinkedIn
+	lnkdin = MyLinkedIn()
+	profile = lnkdin.get_profile_using_id_random(oauth_token_key, oauth_token_secret, profile_id)
+	json_profile = json.loads(profile)
+	
+	json_profile['selected'] = False
+
+	return json.dumps(json_profile)
+
 ###########################__For Testing Multiple AJAX Requests__###############################
 @app.route('/xhr')
 def xhr():

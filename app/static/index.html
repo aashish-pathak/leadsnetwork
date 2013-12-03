@@ -9,6 +9,7 @@
 	<script src="static/js/jquery.min.js" ></script>
 	<script src="static/js/jquery-ui-leads.min.js" ></script>
 	<script src="static/lib/angular/angular.min.js"></script>
+	<script src="static/js/ng-infinite-scroll.min.js"></script>
 	<script src="static/lib/angular/angular-cookies.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
@@ -312,26 +313,30 @@
 			<div id="people_search_div" class="center" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
 				
 				<div id="people_search_table">
-					
+
 					<table class="table">
 						<thead>
 							<tr class="tr_th">
-								<td><label><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All/None</label></td>
+								<td><span class="glyphicon glyphicon-check" ng-click="selectAllNonePeopleSearch()"></span></td>
 								<td>Name</td>
 								<td>Headline</td>
 								<td>Picture</td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="my_tr" ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
-								<td style="vertical-align: middle">{{connection.distance}}</td>
-								<td style="vertical-align: middle">{{connection.through}}</td>
-								<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
-								<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
+							<tr class="my_tr" ng-repeat="person in people_search_profiles" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle"><input type="checkbox" ng-click="" ng-model="person.selected"></td>
+								<td style="vertical-align: middle">{{person.firstName}} {{person.lastName}}</td>
+								<td style="vertical-align: middle" >{{person.headline}}</td>
+								<td><img class="profile_pic" src="{{person.pictureUrl}}" ng-click="viewProfile(person)"></td>
 							</tr>
 						</tbody>
 					</table>
-					<a href="" ng-click="peopleSearchMore()"><div style="float:right">More</div></a>
+					<div>
+						<div style="float: left" ng-show="people_search_busy">Loading Results....</div>
+						<div style="float: left" ng-hide="people_search_busy">Done !</div>
+						<div style="float:right"><a href="" ng-click="peopleSearchMore()">More</a></div>
+					</div>
 				</div>
 			</div>
 			
