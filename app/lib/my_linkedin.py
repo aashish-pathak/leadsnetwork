@@ -27,7 +27,7 @@ class MyLinkedIn(Config):
 		self.client = oauth.Client(self.consumer, self.token)
 		print "prepare_client()"
 
-	def call_people_search(self, oauth_key, oauth_secret, first_name, last_name, company_name):
+	def call_people_search(self, oauth_key, oauth_secret, first_name, last_name, company_name, start):
 		self.url_search = self.get_cfg("LinkedIn", "url_search")
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
@@ -41,6 +41,7 @@ class MyLinkedIn(Config):
 			search_query += "&company-name=" + company_name
 			
 		search_query += "&current-company=true"
+		search_query += "&start=" + start
 		
 		resp, content = self.client.request(self.url_search + search_query)
 		print "call_people_search()"

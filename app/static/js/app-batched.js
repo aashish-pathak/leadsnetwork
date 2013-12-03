@@ -696,7 +696,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************* People Search More ************************/
 	$scope.peopleSearchMore = function() {
 		
-		count = 25;
+		var list_of_ids = [];
+		var count = 25;
 		$scope.people_search_start = $scope.people_search_start + count;
 
 		if($scope.people_search_start >= $scope.people_search.people._total) {
@@ -722,8 +723,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* ****************** Get PEOPLE_SEARCH Profiles ******************/
 
-	$scope.getPeopleProfiles = function() {
-		alert("HTTP calls to get profiles from ids");
+	$scope.getPeopleProfiles = function(list_of_ids) {
+		alert("list of ids : " + list_of_ids);
 	};
 
 	/* ********************** Find Connections ************************/

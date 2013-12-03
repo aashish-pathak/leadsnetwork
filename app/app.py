@@ -218,6 +218,7 @@ def people_search():
 	fname = request.args.get('fname')
 	lname = request.args.get('lname')
 	cname = request.args.get('cname')
+	start = request.args.get('start')
 	
 	# fetch random lead through which a people_search api will be called	
 	from lib import MySQL
@@ -233,7 +234,7 @@ def people_search():
 	lnkdin = MyLinkedIn()
 	lnkdin.create_token(token_key, token_secret)
 	lnkdin.prepare_client()
-	searched_people = lnkdin.call_people_search(token_key, token_secret, fname, lname, cname)
+	searched_people = lnkdin.call_people_search(token_key, token_secret, fname, lname, cname, start)
 
 	# insert names into suggestion tables
 	searched_people_json = json.loads(searched_people)

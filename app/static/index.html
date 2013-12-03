@@ -180,6 +180,25 @@
 						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
 				</div>
 			</div>
+			<div id="people_search_header" class="bottom-shadow" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
+					<br>
+					<div id="people_search_summary" class="well well-sm bottom-shadow">
+						<span ng-show="fname || lname">
+							Found <b>{{people_search.people._total}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
+						</span>
+						<span ng-show="!fname && !lname">
+							Found <b>{{people_search.people._total}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
+						</span>
+						
+						<!--Found <b>{{people_search.numResults}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
+						Leads selected : <b>{{selected_leads_count}}</b>.<br>
+					</div>
+					<center>
+						<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
+						<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchGo()"><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;Go</button><br>
+					</center>
+					<hr>
+			</div>
 			<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_people_search && !show_search_form && show_results && !show_leads">
 					<br>
 					<div id="results_summary" class="well well-sm bottom-shadow">
@@ -209,27 +228,7 @@
 					</center>
 					<hr>
 			</div>
-			<div id="people_search_header" class="bottom-shadow" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
-					<br>
-					<div id="people_search_summary" class="well well-sm bottom-shadow">
-						<span ng-show="fname || lname">
-							Found <b>{{people_search.people._total}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
-						</span>
-						<span ng-show="!fname && !lname">
-							Found <b>{{people_search.people._total}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
-						</span>
-						
-						<!--Found <b>{{people_search.numResults}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
-						Leads selected : <b>{{selected_leads_count}}</b>.<br>
-					</div>
-					<center>
-						<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
-						<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchGo()"><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;Go</button><br>
-					</center>
-					<hr>
-			</div>
 		</div>
-
 		<!---------------------------Main DIV-------------------------->
 		<div id="main_div" class="center">
 		
@@ -312,22 +311,12 @@
 			
 			<div id="people_search_div" class="center" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
 				
-				<div id="people_show_table">
-				
-					<!-- JQuery Dialog -->
-					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
-						<p><span class="glyphicon glyphicon-tags" style="float: left; margin: 0 7px 50px 0;"></span>
-						<b>"{{fname | uppercase}} {{lname | uppercase}}" is reachable via :</b></p>
-						<ol>
-							<li ng-repeat="c in common_connections"> {{c}} </li>
-						</ol>
-					</div>
-					<!------------------->
+				<div id="people_search_table">
 					
 					<table class="table">
 						<thead>
 							<tr class="tr_th">
-								<td>All/None</td>
+								<td><label><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All/None</label></td>
 								<td>Name</td>
 								<td>Headline</td>
 								<td>Picture</td>
@@ -342,6 +331,7 @@
 							</tr>
 						</tbody>
 					</table>
+					<a href="" ng-click="peopleSearchMore()"><div style="float:right">More</div></a>
 				</div>
 			</div>
 			
