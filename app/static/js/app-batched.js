@@ -15,6 +15,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.is_logged_in = false;
 	$scope.is_admin = false;
 	$scope.show_search_form = true;
+	$scope.show_people_search = false;
 	$scope.show_results = false;
 	$scope.show_leads = false;
 	$scope.leads_filter = '';
@@ -577,6 +578,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		// delete cookie
 		delete $cookies.leadsApp;
 		$scope.show_search_form = true;
+		$scope.show_people_search = false;
 		$scope.show_results = false;
 		$scope.show_leads = false;
 		
@@ -601,17 +603,32 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************ Search Again **************************/
 	$scope.searchAgain = function() {
 		$scope.show_search_form = true;
+		$scope.show_people_search = false;
 		$scope.show_results = false;		
 		$scope.resetProgressBar();
 		$scope.stopRequests();
 		$scope.enable_search = false;
 	};
 
+	/* ********************** PeopleSearchBack ************************/
+	$scope.peopleSearchBack = function() {
+		$scope.show_search_form = true;
+		$scope.show_people_search = false;
+		$scope.show_results = false;
+		$scope.stopRequests();
+		$scope.enable_search = false;
+	};
+
+	/* *********************** PeopleSearchGo *************************/
+	$scope.peopleSearchGo = function() {
+		$scope.show_people_search = false;
+		$scope.show_results = true;
+	};
+
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
 
-	$scope.enable_search = true;
-		
+		$scope.enable_search = true;
 		$scope.selected_leads_count = 0;
 		// count number of selected leads
 		var count = 0;
@@ -623,9 +640,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		$scope.peopleSearch();
 	};
-
+	
 	/* *********************** People Search **************************/
-	$scope.peopleSearch = function() {
+	$scope.peopleSearch = function(start) {
+
 		if($scope.cname == '') {
 			if($scope.fname == '' || $scope.lname == '') {
 				$scope.createDialog("#both_fname_lname_error");
@@ -637,8 +655,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
-			$scope.data = data;
-			if(!$scope.data.numResults) {
+			$scope.people_search = data;
+			if(!$scope.people_search.people._total) {
 				$scope.enable_search = false;
 
 				if($scope.cname == '')
@@ -652,7 +670,28 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				}
 			}
 			else {
-				$scope.findConnections();
+				$scope.getPeopleProfiles();
+			}			
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
+			$scope.enable_search = false;
+		});
+	};
+
+	/* ********************* People Search More ************************/
+	$scope.peopleSearchMore = function() {
+
+		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
+		$http({method:'GET', url:search_url})
+		.success(function(data) {
+			$scope.people_search = data;
+			if(!$scope.people_search.people._total) {
+
+				}
+			}
+			else {
+				$scope.getPeopleProfiles();
 			}			
 		})
 		.error(function() {
@@ -661,6 +700,28 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});
 	};
 	
+	/* ****************** Get PEOPLE_SEARCH Profiles ******************/
+
+	$scope.getPeopleProfiles = function() {
+		
+		$scope.show_search_form = false;
+		$scope.show_people_search = true;
+
+		$scope.people_search_ids=[];
+		for(var i=0;i<numResults;i++)
+			$scope.people_search_ids.push($scope.people_search.people.values[i].id);
+			
+		
+		
+		$scope.connections.all=[];
+		$scope.connections.first=[];
+		$scope.connections.second=[];
+		$scope.connections.third=[];
+
+		// call batched form of findConnections
+		$scope.findConnectionsBatched(0, total_leads, numResults);
+	};
+
 	/* ********************** Find Connections ************************/
 
 	$scope.findConnections = function() {
@@ -674,13 +735,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.current_xhr = 0;
 		
 		// limit the number of calls to 25 if more....
-		var numResults = $scope.data.people._total;
+		var numResults = $scope.people_search.people._total;
 		if (numResults > 25)
 			numResults = 25;
 
 		$scope.people_search_ids=[];
 		for(var i=0;i<numResults;i++)
-			$scope.people_search_ids.push($scope.data.people.values[i].id);
+			$scope.people_search_ids.push($scope.people_search.people.values[i].id);
 		
 		var profile_id="";
 		var fetch_profile_url="";
@@ -688,7 +749,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var total_calls = total_leads * numResults;
 		
 		$scope.current_lead="";
-		$scope.searching_message = "";
 		$scope.connections.all=[];
 		$scope.connections.first=[];
 		$scope.connections.second=[];
@@ -829,7 +889,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				selected_leads++;
 		}
 		
-		var numResults = $scope.data.numResults;
+		var numResults = $scope.people_search.people._total;
 		if (numResults > 25)
 			numResults = 25;
 		

@@ -13,6 +13,7 @@
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
 	<!--<script src="static/js/app.js"></script>-->
+	<!--<script src="static/js/app.js"></script>-->
 	<!--<script src="static/js/app-sequential.js"></script>-->
 	<script src="static/js/app-batched.js"></script>
 	<!--<script src="static/js/back-to-top.js"></script>-->
@@ -179,36 +180,54 @@
 						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
 				</div>
 			</div>
-				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
-						<br>
-						<div id="results_summary" class="well well-sm bottom-shadow">
-							<span ng-show="fname || lname">
-								Found <b>{{data.people._total}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
-							</span>
-							<span ng-show="!fname && !lname">
-								Found <b>{{data.people._total}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
-							</span>
-							
-							<!--Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
-							Leads selected : <b>{{selected_leads_count}}</b>.<br>
-							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
-							<span ng-show="done_searching"><b>Searching done !</b></span>
-						</div>
-						<div style="width: 98%; margin-left: 1%;">
-							<span ng-hide="done_searching">
-								<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
-							</span>
-							<span ng-show="done_searching">
-								<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
-							</span>
-						</div>
-						<center>
-							<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Search again</button>
-							<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
-						</center>
-						<hr>
-				</div>
-			
+			<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_people_search && !show_search_form && show_results && !show_leads">
+					<br>
+					<div id="results_summary" class="well well-sm bottom-shadow">
+						<span ng-show="fname || lname">
+							Found <b>{{people_search.people._total}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
+						</span>
+						<span ng-show="!fname && !lname">
+							Found <b>{{people_search.people._total}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
+						</span>
+						
+						<!--Found <b>{{people_search.numResults}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
+						Leads selected : <b>{{selected_leads_count}}</b>.<br>
+						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
+						<span ng-show="done_searching"><b>Searching done !</b></span>
+					</div>
+					<div style="width: 98%; margin-left: 1%;">
+						<span ng-hide="done_searching">
+							<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+						</span>
+						<span ng-show="done_searching">
+							<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
+						</span>
+					</div>
+					<center>
+						<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Search again</button>
+						<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
+					</center>
+					<hr>
+			</div>
+			<div id="people_search_header" class="bottom-shadow" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
+					<br>
+					<div id="people_search_summary" class="well well-sm bottom-shadow">
+						<span ng-show="fname || lname">
+							Found <b>{{people_search.people._total}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
+						</span>
+						<span ng-show="!fname && !lname">
+							Found <b>{{people_search.people._total}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
+						</span>
+						
+						<!--Found <b>{{people_search.numResults}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
+						Leads selected : <b>{{selected_leads_count}}</b>.<br>
+					</div>
+					<center>
+						<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
+						<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchGo()"><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;Go</button><br>
+					</center>
+					<hr>
+			</div>
 		</div>
 
 		<!---------------------------Main DIV-------------------------->
