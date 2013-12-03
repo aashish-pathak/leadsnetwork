@@ -10,9 +10,11 @@
 	<script src="static/js/jquery.min.js" ></script>
 	<script src="static/js/jquery-ui-leads.min.js" ></script>
 	<script src="static/lib/angular/angular.min.js"></script>
+	<script src="static/js/ng-infinite-scroll.min.js"></script>
 	<script src="static/lib/angular/angular-cookies.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-0.6.0.min.js"></script>
 	<script src="static/lib/ui-bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
+	<!--<script src="static/js/app.js"></script>-->
 	<!--<script src="static/js/app.js"></script>-->
 	<!--<script src="static/js/app-sequential.js"></script>-->
 	<script src="static/js/app-batched.js"></script>
@@ -73,13 +75,19 @@
 		
 		<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
 			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The person '{{fname}} {{lname}}' from '{{cname}}' is not on linkedin.
+			The person <span ng-show="fname"><b>{{fname}}</b></span> <span ng-show="lname"><b>{{lname}}</b></span><span ng-show="cname"> from <b>{{cname}}</b> </span> is not on linkedin.
 			</p>
 		</div>
 
 		<div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
 			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The person '{{fname}} {{lname}}' is not on linkedin.
+			The person <b>{{fname}} {{lname}}</b> is not on linkedin.
+			</p>
+		</div>
+
+		<div id="not_on_linkedin_only_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+			The company <b>{{cname}}</b> is not on linkedin.
 			</p>
 		</div>
 
@@ -118,6 +126,10 @@
 			<p><span class="glyphicon glyphicon-exclamation-sign" style="float: left; margin: 0 7px 50px 0;"></span>
 			The names of common connections are private!
 			</p>
+		</div>
+
+		<div id="throttle_limit_reached" title="Sorry!" class="ui-helper-hidden">
+			<p>Throttle limit for this application has reached. Please come back <b>after 5.30 am</b>. Thank you.</p>
 		</div>
 
 		<div id="invitation_sent" title="Success!" class="ui-helper-hidden">
@@ -174,31 +186,55 @@
 						Leads'<img class="app_logo" src="static/img/linkedin_in.png"></a>
 				</div>
 			</div>
-				<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
-						<br>
-						<div id="results_summary" class="well well-sm bottom-shadow">
-							Found <b>{{data.numResults}} {{fname | uppercase}} {{lname | uppercase}}</b> on LinkedIn.<br>
-							Leads selected : <b>{{selected_leads_count}}</b>.<br>
-							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
-							<span ng-show="done_searching"><b>Searching done !</b></span>
-						</div>
-						<div style="width: 98%; margin-left: 1%;">
-							<span ng-hide="done_searching">
-								<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
-							</span>
-							<span ng-show="done_searching">
-								<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
-							</span>
-						</div>
-						<center>
-							<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Search again</button>
-							<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
-						</center>
-						<hr>
+			<div id="people_search_header" class="bottom-shadow" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
+				<br>
+				<div id="people_search_summary" class="well well-sm bottom-shadow">
+					<span ng-show="fname || lname">
+						Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
+					</span>
+					<span ng-show="!fname && !lname">
+						Found <b>{{people_search_end}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
+					</span>
+					
+					<!--Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
+					Leads selected : <b>{{selected_leads_count}}</b>.<br>
 				</div>
-			
+				<center>
+					<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchGo()"><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;Go</button><br>
+				</center>
+				<hr>
+			</div>
+			<div id="results_header" class="bottom-shadow" ng-show="is_logged_in && !show_people_search && !show_search_form && show_results && !show_leads">
+					<br>
+					<div id="results_summary" class="well well-sm bottom-shadow">
+						<span ng-show="fname || lname">
+							Selected <b>{{people_search_selected_count}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
+						</span>
+						<span ng-show="!fname && !lname">
+							Selected <b>{{people_search_selected_count}}</b> employee(s) from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
+						</span>
+						
+						<!--Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
+						Leads selected : <b>{{selected_leads_count}}</b>.<br>
+						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
+						<span ng-show="done_searching"><b>Searching done !</b></span>
+					</div>
+					<div style="width: 98%; margin-left: 1%;">
+						<span ng-hide="done_searching">
+							<progress percent="progressBar" class="progress-striped active" style="background: transparent"></progress>
+						</span>
+						<span ng-show="done_searching">
+							<progress percent="progressBar" class="progress-striped" style="background: transparent"></progress>
+						</span>
+					</div>
+					<center>
+						<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Search again</button>
+						<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
+					</center>
+					<hr>
+			</div>
 		</div>
-
 		<!---------------------------Main DIV-------------------------->
 		<div id="main_div" class="center">
 		
@@ -260,9 +296,9 @@
 				
 				<form method='GET' ng-submit="theSearch()">
 					 
-					<input type="text" class="form-control" ng-model="fname" typeahead="fname for fname in suggestions.fnames | filter:$viewValue:startsWith | limitTo:8" placeholder="*First Name"><br>
+					<input type="text" class="form-control" ng-model="fname" typeahead="fname for fname in suggestions.fnames | filter:$viewValue:startsWith | limitTo:8" placeholder="First Name"><br>
 					<br>
-					<input type="text" class="form-control" ng-model="lname" typeahead="lname for lname in suggestions.lnames | filter:$viewValue:startsWith | limitTo:8" placeholder="*Last Name"><br>
+					<input type="text" class="form-control" ng-model="lname" typeahead="lname for lname in suggestions.lnames | filter:$viewValue:startsWith | limitTo:8" placeholder="Last Name"><br>
 					<br>
 					<input type="text" class="form-control" ng-model="cname" typeahead="cname for cname in suggestions.cnames | filter:$viewValue:startsWith | limitTo:8" placeholder="Company Name"><br>
 
@@ -276,10 +312,47 @@
 				</form>
 				</center>
 			</div>
+
+			<!-------------------------People Search DIV--------------------->
+			
+			<div id="people_search_div" class="center" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
+				
+				<div id="people_search_table">
+
+					<div style="color:green; font-weight:bold" ng-show="people_search_selected_count">Number of persons selected : {{people_search_selected_count}}</div>
+					<div style="color:red; font-weight:bold" ng-hide="people_search_selected_count">No person is selected yet.</div><br>
+					<table class="table">
+						<thead>
+							<tr class="tr_th">
+								<td>
+									<span style="cursor:pointer" ng-show="people_search_selected_all" class="glyphicon glyphicon-check" ng-click="toggleSelectPeopleSearch()"></span>
+									<span style="cursor:pointer" ng-hide="people_search_selected_all" class="glyphicon glyphicon-unchecked" ng-click="toggleSelectPeopleSearch()"></span>
+								</td>
+								<td>Name</td>
+								<td>Headline</td>
+								<td>Picture</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="my_tr" ng-repeat="person in people_search_profiles" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle"><input type="checkbox" ng-click="testPeopleSearchAllNone()" ng-model="person.selected"></td>
+								<td style="vertical-align: middle">{{person.firstName}} {{person.lastName}}</td>
+								<td style="vertical-align: middle" >{{person.headline}}</td>
+								<td><img class="profile_pic" src="{{person.pictureUrl}}" ng-click="viewProfile(person)"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div>
+						<div style="float: left" ng-show="people_search_busy">Searching....</div>
+						<div style="float: left" ng-hide="people_search_busy">Done !</div>
+						<div style="float:right"><a href="" ng-click="peopleSearchMore()">More</a></div>
+					</div>
+				</div>
+			</div>
 			
 			<!-------------------------Results DIV--------------------->
 			
-			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+			<div id="results_div" class="center" ng-show="is_logged_in && !show_people_search && !show_search_form && show_results && !show_leads">
 			
 				<div id="results_table">
 				
@@ -324,13 +397,6 @@
 						</tbody>
 					</table>
 				</div>
-				<!--
-				<div id="results_footer">
-					<center>
-						<button class="btn btn-blue responsive-button" ng-click="goBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
-					</center>
-				</div>
-				-->
 			</div>
 			
 			<!--------------------------Leads DIV---------------------->
@@ -341,8 +407,8 @@
 				</div>
 				<br>
 				<div id="leads_select_header" class="row-fluid">
-					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All</button>
-					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="glyphicon glyphicon-unchecked"></span>&nbsp;&nbsp;None</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectAllLeads()"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectNoneLeads()"><span class="glyphicon glyphicon-unchecked"></span>&nbsp;&nbsp;None</button>
 					<br><br>
 					<!-- <input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead...."> -->
 					<br>
@@ -371,12 +437,6 @@
 
 							</span>
 							<div id="group-header-rest">
-								<!--
-								<div id="group-select-all-none">
-									<a href="" ng-show="!group.leads_empty && group.select_group" ng-click="selectGroup(group)">select none</a>
-									<a href="" ng-show="!group.leads_empty && !group.select_group" ng-click="selectGroup(group)">select all</a>
-								</div>
-								-->
 								<span ng-show="!group.leads_empty">
 									<span style="float: right; cursor:pointer;" ng-show="group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-minus"></span>
 									<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
@@ -396,19 +456,6 @@
 						</div>
 
 					</div>
-					<!--
-					<div id="expand-collapse" style="min-height:20px; margin-bottom:10px;">
-						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
-						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
-					</div>
-					-->
-					<!--
-					<ul class="unstyled center">
-						<li ng-repeat="lead in leads_list | filter: leads_filter">
-							<label><input type="checkbox" ng-model="lead[3]">
-							    {{lead[1]}}</label></li>
-					</ul>
-					-->
 				</div>
 
 				<center>
@@ -421,9 +468,6 @@
 						<div id="invitation-box" ng-show="show_invitation_box">
 							 <form name="invitationForm" ng-submit="sendInvitation()">
 								<input type="email" name="email" ng-model="email_address" placeholder="example@gslab.com" required>
-								<!--<div ng-controller="TypeaheadCtrl">
-									<input type="email" name="email" ng-model="email_address" typeahead="email for email in emails | filter:$viewValue | limitTo:8" placeholder="example@gslab.com" required>
-								</div>-->
 								<br><br>
 								<button ng-disabled="!invitationForm.email.$valid" class="btn btn-blue"><span class="glyphicon glyphicon-comment"></span></button>
 							</form>

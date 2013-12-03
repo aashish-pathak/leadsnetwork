@@ -27,7 +27,7 @@ class MyLinkedIn(Config):
 		self.client = oauth.Client(self.consumer, self.token)
 		print "prepare_client()"
 
-	def call_people_search(self, oauth_key, oauth_secret, first_name, last_name, company_name):
+	def call_people_search(self, oauth_key, oauth_secret, first_name, last_name, company_name, start):
 		self.url_search = self.get_cfg("LinkedIn", "url_search")
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
@@ -40,6 +40,9 @@ class MyLinkedIn(Config):
 		if company_name != "":
 			search_query += "&company-name=" + company_name
 			
+		search_query += "&current-company=true"
+		search_query += "&start=" + start
+		
 		resp, content = self.client.request(self.url_search + search_query)
 		print "call_people_search()"
 		return content
@@ -49,6 +52,15 @@ class MyLinkedIn(Config):
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
 		self.fetch_profile_query = profile_id + ":(id,first-name,last-name,distance,relation-to-viewer,public-profile-url,picture-url::(original))?format=json&count=20"
+		resp, content = self.client.request(self.url_profile + self.fetch_profile_query)
+		print "get_profile_using_id()"
+		return content
+
+	def get_profile_using_id_random(self, oauth_key, oauth_secret, profile_id):
+		self.url_profile = self.get_cfg("LinkedIn", "url_profile")
+		self.create_token(oauth_key, oauth_secret)
+		self.prepare_client()
+		self.fetch_profile_query = profile_id + ":(id,first-name,last-name,headline,public-profile-url,picture-url::(original))?format=json&count=20"
 		resp, content = self.client.request(self.url_profile + self.fetch_profile_query)
 		print "get_profile_using_id()"
 		return content

@@ -57,7 +57,25 @@
 		top: 55px;
 	}
 
+	#people_search_header {
+		color: black;
+		
+		background-color: #f1f1f1;
+		background-color: #f9f9f9;
+
+		/*margin-left: 1%;*/
+		max-width: 100%;
+		top: 55px;
+	}
+
 	#results_table {
+		color: black;
+		margin-top: 31%;
+		margin-top: 250px;
+		margin-bottom: 100px;
+	}
+
+	#people_search_table {
 		color: black;
 		margin-top: 31%;
 		margin-top: 250px;

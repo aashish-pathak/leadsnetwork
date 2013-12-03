@@ -6,7 +6,7 @@
  *	
  */
 
-var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies']);
+var leadsApp = angular.module('leadsApp', ['ui.bootstrap', 'ngCookies', 'infinite-scroll']);
 
 leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$window', '$q', '$modal', '$location', function($scope, $rootScope, $http, $cookies, $window, $q, $modal, $location) {
 
@@ -40,8 +40,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.fname = '';
 	$scope.lname = '';
 	$scope.cname = '';
-	$scope.both_fname_lname = true;
 	$scope.enable_search = false;
+	
+	// people search parameters
+	$scope.show_people_search = false;
+	$scope.people_search_busy = true;
+	$scope.people_search_selected_all = false;
+	$scope.people_search_selected_count = 0;
 
 	// result sets
 	$scope.connections={};
@@ -278,7 +283,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.toggleLeadsDiv();
 	};
 	
-	$scope.selectAll = function() {
+	$scope.selectAllLeads = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = true;
 			
@@ -288,7 +293,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		}
 	};
 	
-	$scope.selectNone = function() {
+	$scope.selectNoneLeads = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = false;		
 			
@@ -552,7 +557,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.scrollTop();
 				
 				// select all leads initially
-				$scope.selectAll();
+				$scope.selectAllLeads();
 			}
 			
 			// unsuccessful login
@@ -578,6 +583,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		// delete cookie
 		delete $cookies.leadsApp;
 		$scope.show_search_form = true;
+		$scope.show_people_search = false;
 		$scope.show_results = false;
 		$scope.show_leads = false;
 		
@@ -602,17 +608,30 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************ Search Again **************************/
 	$scope.searchAgain = function() {
 		$scope.show_search_form = true;
+		$scope.show_people_search = false;
 		$scope.show_results = false;		
 		$scope.resetProgressBar();
 		$scope.stopRequests();
 		$scope.enable_search = false;
 	};
 
+	/* ********************** PeopleSearchBack ************************/
+	$scope.peopleSearchBack = function() {
+		$scope.show_search_form = true;
+		$scope.show_people_search = false;
+		$scope.show_results = false;
+		$scope.enable_search = false;
+		$scope.stopRequests();
+		
+		$scope.people_search_profiles = [];
+		$scope.people_search_selected_all = false;
+		$scope.people_search_selected_count = 0;
+	};
+
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
 
-	$scope.enable_search = true;
-		
+		$scope.enable_search = true;
 		$scope.selected_leads_count = 0;
 		// count number of selected leads
 		var count = 0;
@@ -624,39 +643,194 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		$scope.peopleSearch();
 	};
-
+	
 	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
-		if($scope.both_fname_lname == true)
+
+		// check if required search parameters are provided
+		if($scope.cname == '') {
 			if($scope.fname == '' || $scope.lname == '') {
 				$scope.createDialog("#both_fname_lname_error");
 				$scope.enable_search = false;
 				return;
 			}
+		}
 
-		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
+		$scope.people_search_busy = true;
+
+		//to store profiles of all people from search results
+		$scope.people_search_profiles = [];
+		$scope.people_search_start = 0;
+		$scope.people_search_end = 0;
+		var list_of_ids = [];
+
+		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + $scope.people_search_start;
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
-			$scope.data = data;
-			if(!$scope.data.numResults) {
-				$scope.enable_search = false;
-				if($scope.cname == '') {
-					$scope.createDialog("#not_on_linkedin_without_cname");
+			
+			// check if Throttle Limit is reached
+			if('errorCode' in data)
+				if('message' in data && data.message == 'Throttle limit for calls to this resource is reached.') {
+					$scope.enable_search = false;
+					$scope.createDialog("#throttle_limit_reached");
+					return;
 				}
+			
+			$scope.people_search = data;
+			$scope.people_search_end = data.people._total;
+			if(!$scope.people_search.people._total) {
+				$scope.enable_search = false;
+
+				if($scope.cname == '')
+					$scope.createDialog("#not_on_linkedin_without_cname");
+
+				else if($scope.fname == '' && $scope.lname == '')
+					$scope.createDialog("#not_on_linkedin_only_cname");
+
 				else {
 					$scope.createDialog("#not_on_linkedin_with_cname");
 				}
 			}
 			else {
-				$scope.findConnections();
-			}			
+				// change DIVs
+				$scope.show_search_form = false;
+				$scope.show_people_search = true;
+				$scope.done_searching = false;
+				
+				// create temp array of ids and call getProfiles
+				for(var i=0;i<$scope.people_search.people.values.length;i++)
+					list_of_ids.push($scope.people_search.people.values[i].id);
+				
+				$scope.getSearchedPeopleProfiles(list_of_ids);
+			}
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");
 			$scope.enable_search = false;
+		});	};
+
+	/* ********************* People Search More ************************/
+	$scope.peopleSearchMore = function() {
+		
+		console.log("calling more....");
+		var list_of_ids = [];
+		var count = 10;
+		$scope.people_search_start = $scope.people_search_start + count;
+
+		if($scope.people_search_start >= $scope.people_search.people._total) {
+			alert("no more results....!");
+			return;
+		}
+
+		$scope.people_search_busy = true;
+
+		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + $scope.people_search_start;
+		$http({method:'GET', url:search_url})
+		.success(function(data) {
+
+			$scope.people_search = data;
+			// create temp array of ids and call getProfiles
+			for(var i=0;i<$scope.people_search.people.values.length;i++)
+				list_of_ids.push($scope.people_search.people.values[i].id);
+			
+			$scope.getSearchedPeopleProfiles(list_of_ids);
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
 		});
 	};
 	
+	/* ****************** Get PEOPLE_SEARCH Profiles ******************/
+
+	$scope.getSearchedPeopleProfiles = function(list_of_ids) {
+		console.log(list_of_ids);
+		
+		$scope.canceler = [];
+		$scope.promises = [];
+		var promises = [];
+		
+		for(var i=0;i<list_of_ids.length;i++) {
+			var profile_id = list_of_ids[i];
+			var fetch_profile_random_url = "/fetch_profile_random?profile_id=" + profile_id;
+			
+			$scope.canceler.push($q.defer());
+			
+			var promise = $http({method:'GET', url:fetch_profile_random_url, timeout: $scope.canceler[i].promise})
+			.success(function(data) {
+
+				// add default profile picture for connections under degree 3
+				if(!('pictureUrl' in data)) {
+					data.pictureUrl = '/static/img/ghost_profile.png';
+				}
+				
+				if(!('errorCode' in data))
+					$scope.people_search_profiles.push(data);
+				
+			})
+			.error(function() {
+				// nothing to do....
+			});
+		
+			$scope.promises.push(promise);
+		}
+		
+		$q.all($scope.promises).then(function() {
+			$scope.people_search_busy = false;
+		});
+	};
+
+	/* **************** Test PeopleSearch All None *********************/
+	$scope.testPeopleSearchAllNone = function(){
+		
+		var current_group = i;
+		var all_true = true;
+		var all_false = true;
+		var selected_persons_count = 0;
+		for(var i=0; i<$scope.people_search_profiles.length; i++){
+			if($scope.people_search_profiles[i].selected == true){
+				all_false = false;
+				selected_persons_count++;
+			}
+			else
+				all_true = false;
+		}
+		
+		if(all_false == true)
+			$scope.people_search_selected_all = false;
+		else
+			$scope.people_search_selected_all = true;
+			
+		$scope.people_search_selected_count = selected_persons_count;
+	};
+
+	/* **************** Toggle Select PeopleSearch *********************/
+	$scope.toggleSelectPeopleSearch = function(){
+
+		$scope.people_search_selected_all = !$scope.people_search_selected_all;
+		
+		for(var i=0; i<$scope.people_search_profiles.length; i++)
+			$scope.people_search_profiles[i].selected = $scope.people_search_selected_all;
+			
+		if($scope.people_search_selected_all)
+			$scope.people_search_selected_count = $scope.people_search_profiles.length;
+		else
+			$scope.people_search_selected_count = 0;
+	};
+
+	/* *********************** PeopleSearchGo *************************/
+	$scope.peopleSearchGo = function() {
+
+		if($scope.people_search_selected_count == 0) {
+			alert("please select at least one person....");
+			return;
+		}
+
+		$scope.show_people_search = false;
+		$scope.show_results = true;
+		
+		$scope.findConnections();
+	};
+
 	/* ********************** Find Connections ************************/
 
 	$scope.findConnections = function() {
@@ -668,15 +842,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.progress = 0;
 		$scope.total_xhr = 0;
 		$scope.current_xhr = 0;
-		
-		// limit the number of calls to 25 if more....
-		var numResults = $scope.data.numResults;
-		if (numResults > 25)
-			numResults = 25;
 
 		$scope.people_search_ids=[];
-		for(var i=0;i<numResults;i++)
-			$scope.people_search_ids.push($scope.data.people.values[i].id);
+		for(var i=0; i<$scope.people_search_profiles.length; i++)
+			$scope.people_search_ids.push($scope.people_search_profiles.id);
 		
 		var profile_id="";
 		var fetch_profile_url="";
@@ -684,7 +853,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var total_calls = total_leads * numResults;
 		
 		$scope.current_lead="";
-		$scope.searching_message = "";
 		$scope.connections.all=[];
 		$scope.connections.first=[];
 		$scope.connections.second=[];
@@ -825,7 +993,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				selected_leads++;
 		}
 		
-		var numResults = $scope.data.numResults;
+		var numResults = $scope.people_search.people._total;
 		if (numResults > 25)
 			numResults = 25;
 		
@@ -952,4 +1120,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.email_address = '';
 		$scope.emails = ['sangram.s.kapre@gmail.com', 'sangram.kapre@gslab.com', 'aashish@gslab.com', 'amol.pujari@gslab.com', 'example@gslab.com'];
 	};
+
+	/* ********************* Typeahead Example ************************/
+	
+	$scope.testInfiniteScroll = function() {
+		if($scope.show_people_search)
+			console.log("reached bottom....");
+	};
+	
 }]);
+
