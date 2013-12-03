@@ -40,6 +40,8 @@ class MyLinkedIn(Config):
 		if company_name != "":
 			search_query += "&company-name=" + company_name
 			
+		search_query += "&current-company=true"
+		
 		resp, content = self.client.request(self.url_search + search_query)
 		print "call_people_search()"
 		return content
