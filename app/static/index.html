@@ -307,10 +307,47 @@
 				</form>
 				</center>
 			</div>
+
+			<!-------------------------People Search DIV--------------------->
+			
+			<div id="people_search_div" class="center" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
+				
+				<div id="people_show_table">
+				
+					<!-- JQuery Dialog -->
+					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
+						<p><span class="glyphicon glyphicon-tags" style="float: left; margin: 0 7px 50px 0;"></span>
+						<b>"{{fname | uppercase}} {{lname | uppercase}}" is reachable via :</b></p>
+						<ol>
+							<li ng-repeat="c in common_connections"> {{c}} </li>
+						</ol>
+					</div>
+					<!------------------->
+					
+					<table class="table">
+						<thead>
+							<tr class="tr_th">
+								<td>All/None</td>
+								<td>Name</td>
+								<td>Headline</td>
+								<td>Picture</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="my_tr" ng-class="connection.row_type" ng-repeat="connection in connections.first | orderBy:'-relationToViewer.connections._total'" ng-animate="{enter: 'result-enter'}">
+								<td style="vertical-align: middle">{{connection.distance}}</td>
+								<td style="vertical-align: middle">{{connection.through}}</td>
+								<td style="vertical-align: middle" class="view_connections" ng-click="viewConnections(connection)">{{connection.relationToViewer.connections._total}}</td>
+								<td><img class="profile_pic" src="{{connection.pictureUrl}}" ng-click="viewProfile(connection)"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 			
 			<!-------------------------Results DIV--------------------->
 			
-			<div id="results_div" class="center" ng-show="is_logged_in && !show_search_form && show_results && !show_leads">
+			<div id="results_div" class="center" ng-show="is_logged_in && !show_people_search && !show_search_form && show_results && !show_leads">
 			
 				<div id="results_table">
 				

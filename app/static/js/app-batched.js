@@ -676,6 +676,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				}
 			}
 			else {
+				// change DIVs
+				$scope.show_search_form = false;
+				$scope.show_people_search = true;
+				$scope.done_searching = false;
+				
 				// create temp array of ids and call getProfiles
 				for(var i=0;i<$scope.people_search.people.values.length;i++)
 					list_of_ids.push($scope.people_search.people.values[i].id);
