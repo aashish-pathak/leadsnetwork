@@ -656,12 +656,14 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		//to store profiles of all people from search results
 		$scope.people_search_profiles = [];
 		$scope.people_search_start = 0;
+		$scope.people_search_end = 0;
 		var list_of_ids = [];
 
 		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + $scope.people_search_start;
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
 			$scope.people_search = data;
+			$scope.people_search_end = data.people._total;
 			if(!$scope.people_search.people._total) {
 				$scope.enable_search = false;
 
@@ -685,7 +687,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				for(var i=0;i<$scope.people_search.people.values.length;i++)
 					list_of_ids.push($scope.people_search.people.values[i].id);
 				
-				$scope.getPeopleProfiles(list_of_ids);
+				$scope.getSearchedPeopleProfiles(list_of_ids);
 			}
 		})
 		.error(function() {
@@ -714,7 +716,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			for(var i=0;i<$scope.people_search.people.values.length;i++)
 				list_of_ids.push($scope.people_search.people.values[i].id);
 			
-			$scope.getPeopleProfiles(list_of_ids);
+			$scope.getSearchedPeopleProfiles(list_of_ids);
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");
@@ -723,8 +725,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* ****************** Get PEOPLE_SEARCH Profiles ******************/
 
-	$scope.getPeopleProfiles = function(list_of_ids) {
-		alert("list of ids : " + list_of_ids);
+	$scope.getSearchedPeopleProfiles = function(list_of_ids) {
+		
 	};
 
 	/* ********************** Find Connections ************************/
