@@ -344,6 +344,13 @@ tr.t3 td {
 	/*font-size: 110%;*/
 }
 
+#people_search_summary {
+	background:rgba(255,255,255,0.1);
+	width: 98%;
+	margin-left: 1%;
+	/*font-size: 110%;*/
+}
+
 .button-border {
 	border-style: solid;
 	border-color: white;

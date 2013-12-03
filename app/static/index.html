@@ -314,10 +314,15 @@
 				
 				<div id="people_search_table">
 
+					<div style="color:green; font-weight:bold" ng-show="people_search_selected_count">Number of persons selected : {{people_search_selected_count}}</div>
+					<div style="color:red; font-weight:bold" ng-hide="people_search_selected_count">No person is selected yet.</div><br>
 					<table class="table">
 						<thead>
 							<tr class="tr_th">
-								<td><span class="glyphicon glyphicon-check" ng-click="selectAllNonePeopleSearch()"></span></td>
+								<td>
+									<span style="cursor:pointer" ng-show="people_search_selected_all" class="glyphicon glyphicon-check" ng-click="toggleSelectPeopleSearch()"></span>
+									<span style="cursor:pointer" ng-hide="people_search_selected_all" class="glyphicon glyphicon-unchecked" ng-click="toggleSelectPeopleSearch()"></span>
+								</td>
 								<td>Name</td>
 								<td>Headline</td>
 								<td>Picture</td>
@@ -325,7 +330,7 @@
 						</thead>
 						<tbody>
 							<tr class="my_tr" ng-repeat="person in people_search_profiles" ng-animate="{enter: 'result-enter'}">
-								<td style="vertical-align: middle"><input type="checkbox" ng-click="" ng-model="person.selected"></td>
+								<td style="vertical-align: middle"><input type="checkbox" ng-click="testPeopleSearchAllNone()" ng-model="person.selected"></td>
 								<td style="vertical-align: middle">{{person.firstName}} {{person.lastName}}</td>
 								<td style="vertical-align: middle" >{{person.headline}}</td>
 								<td><img class="profile_pic" src="{{person.pictureUrl}}" ng-click="viewProfile(person)"></td>
@@ -333,7 +338,7 @@
 						</tbody>
 					</table>
 					<div>
-						<div style="float: left" ng-show="people_search_busy">Loading Results....</div>
+						<div style="float: left" ng-show="people_search_busy">Searching....</div>
 						<div style="float: left" ng-hide="people_search_busy">Done !</div>
 						<div style="float:right"><a href="" ng-click="peopleSearchMore()">More</a></div>
 					</div>
@@ -387,13 +392,6 @@
 						</tbody>
 					</table>
 				</div>
-				<!--
-				<div id="results_footer">
-					<center>
-						<button class="btn btn-blue responsive-button" ng-click="goBack()"><span class="icon-large icon-mail-reply"></span>	Back</button>
-					</center>
-				</div>
-				-->
 			</div>
 			
 			<!--------------------------Leads DIV---------------------->
@@ -404,8 +402,8 @@
 				</div>
 				<br>
 				<div id="leads_select_header" class="row-fluid">
-					<button class="btn btn-blue responsive-button-half" ng-click="selectAll()"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All</button>
-					<button class="btn btn-blue responsive-button-half" ng-click="selectNone()"><span class="glyphicon glyphicon-unchecked"></span>&nbsp;&nbsp;None</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectAllLeads()"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;All</button>
+					<button class="btn btn-blue responsive-button-half" ng-click="selectNoneLeads()"><span class="glyphicon glyphicon-unchecked"></span>&nbsp;&nbsp;None</button>
 					<br><br>
 					<!-- <input type="text" class="form-control center input-ldap" name="filter_lead" ng-model="leads_filter" placeholder="Search lead...."> -->
 					<br>
@@ -434,12 +432,6 @@
 
 							</span>
 							<div id="group-header-rest">
-								<!--
-								<div id="group-select-all-none">
-									<a href="" ng-show="!group.leads_empty && group.select_group" ng-click="selectGroup(group)">select none</a>
-									<a href="" ng-show="!group.leads_empty && !group.select_group" ng-click="selectGroup(group)">select all</a>
-								</div>
-								-->
 								<span ng-show="!group.leads_empty">
 									<span style="float: right; cursor:pointer;" ng-show="group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-minus"></span>
 									<span style="float: right; cursor:pointer;" ng-show="!group.visible" ng-click="toggleGroup(group)" class="glyphicon glyphicon-plus"></span>
@@ -459,19 +451,6 @@
 						</div>
 
 					</div>
-					<!--
-					<div id="expand-collapse" style="min-height:20px; margin-bottom:10px;">
-						<a href="" ng-click="expandAll()"><div style="float:left">Expand All</div></a>
-						<a href="" ng-click="collapseAll()"><div style="float:right">Collapse All</div></a>
-					</div>
-					-->
-					<!--
-					<ul class="unstyled center">
-						<li ng-repeat="lead in leads_list | filter: leads_filter">
-							<label><input type="checkbox" ng-model="lead[3]">
-							    {{lead[1]}}</label></li>
-					</ul>
-					-->
 				</div>
 
 				<center>
@@ -484,9 +463,6 @@
 						<div id="invitation-box" ng-show="show_invitation_box">
 							 <form name="invitationForm" ng-submit="sendInvitation()">
 								<input type="email" name="email" ng-model="email_address" placeholder="example@gslab.com" required>
-								<!--<div ng-controller="TypeaheadCtrl">
-									<input type="email" name="email" ng-model="email_address" typeahead="email for email in emails | filter:$viewValue | limitTo:8" placeholder="example@gslab.com" required>
-								</div>-->
 								<br><br>
 								<button ng-disabled="!invitationForm.email.$valid" class="btn btn-blue"><span class="glyphicon glyphicon-comment"></span></button>
 							</form>

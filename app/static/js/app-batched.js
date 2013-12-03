@@ -42,9 +42,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.cname = '';
 	$scope.enable_search = false;
 	
-	// people search results
+	// people search parameters
 	$scope.show_people_search = false;
 	$scope.people_search_busy = true;
+	$scope.people_search_selected_all = false;
+	$scope.people_search_selected_count = 0;
 
 	// result sets
 	$scope.connections={};
@@ -281,7 +283,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.toggleLeadsDiv();
 	};
 	
-	$scope.selectAll = function() {
+	$scope.selectAllLeads = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = true;
 			
@@ -291,7 +293,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		}
 	};
 	
-	$scope.selectNone = function() {
+	$scope.selectNoneLeads = function() {
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = false;		
 			
@@ -555,7 +557,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.scrollTop();
 				
 				// select all leads initially
-				$scope.selectAll();
+				$scope.selectAllLeads();
 			}
 			
 			// unsuccessful login
@@ -768,6 +770,44 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$q.all($scope.promises).then(function() {
 			$scope.people_search_busy = false;
 		});
+	};
+
+	/* **************** Test PeopleSearch All None *********************/
+	$scope.testPeopleSearchAllNone = function(){
+		
+		var current_group = i;
+		var all_true = true;
+		var all_false = true;
+		var selected_persons_count = 0;
+		for(var i=0; i<$scope.people_search_profiles.length; i++){
+			if($scope.people_search_profiles[i].selected == true){
+				all_false = false;
+				selected_persons_count++;
+			}
+			else
+				all_true = false;
+		}
+		
+		if(all_false == true)
+			$scope.people_search_selected_all = false;
+		else
+			$scope.people_search_selected_all = true;
+			
+		$scope.people_search_selected_count = selected_persons_count;
+	};
+
+	/* **************** Toggle Select PeopleSearch *********************/
+	$scope.toggleSelectPeopleSearch = function(){
+
+		$scope.people_search_selected_all = !$scope.people_search_selected_all;
+		
+		for(var i=0; i<$scope.people_search_profiles.length; i++)
+			$scope.people_search_profiles[i].selected = $scope.people_search_selected_all;
+			
+		if($scope.people_search_selected_all)
+			$scope.people_search_selected_count = $scope.people_search_profiles.length;
+		else
+			$scope.people_search_selected_count = 0;
 	};
 
 	/* ********************** Find Connections ************************/
