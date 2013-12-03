@@ -642,8 +642,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	/* *********************** People Search **************************/
-	$scope.peopleSearch = function(start) {
+	$scope.peopleSearch = function() {
 
+		// check if required search parameters are provided
 		if($scope.cname == '') {
 			if($scope.fname == '' || $scope.lname == '') {
 				$scope.createDialog("#both_fname_lname_error");
@@ -652,7 +653,59 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			}
 		}
 
-		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
+		//to store profiles of all people from search results
+		$scope.people_search_profiles = [];
+		$scope.people_search_start = 0;
+
+		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + start;
+		$http({method:'GET', url:search_url})
+		.success(function(data) {
+			$scope.people_search = data;
+			if(!$scope.people_search.people._total) {
+
+				}
+			}
+			else {
+				$scope.getPeopleProfiles();
+			}			
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
+			$scope.enable_search = false;
+		});	};
+
+	/* ********************* People Search More ************************/
+	$scope.peopleSearchMore = function() {
+
+		if(start >= $scope.people_search.people._total) {
+			alert("no more results....!");
+			return;
+		}
+
+		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + start;
+		$http({method:'GET', url:search_url})
+		.success(function(data) {
+			$scope.people_search = data;
+			if(!$scope.people_search.people._total) {
+
+				}
+			}
+			else {
+				$scope.getPeopleProfiles();
+			}			
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
+			$scope.enable_search = false;
+		});
+	};
+
+	/* ****************** Get PEOPLE_SEARCH IDs ******************/
+
+	$scope.getPeopleSearchIds = function() {
+		
+		// get 25 ids of people_search result
+		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + $scope.people_search_start;
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
 			$scope.people_search = data;
@@ -678,27 +731,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.enable_search = false;
 		});
 	};
-
-	/* ********************* People Search More ************************/
-	$scope.peopleSearchMore = function() {
-
-		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname;
-		$http({method:'GET', url:search_url})
-		.success(function(data) {
-			$scope.people_search = data;
-			if(!$scope.people_search.people._total) {
-
-				}
-			}
-			else {
-				$scope.getPeopleProfiles();
-			}			
-		})
-		.error(function() {
-			$scope.createDialog("#http_error");
-			$scope.enable_search = false;
-		});
-	};
 	
 	/* ****************** Get PEOPLE_SEARCH Profiles ******************/
 
@@ -711,15 +743,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		for(var i=0;i<numResults;i++)
 			$scope.people_search_ids.push($scope.people_search.people.values[i].id);
 			
-		
-		
-		$scope.connections.all=[];
-		$scope.connections.first=[];
-		$scope.connections.second=[];
-		$scope.connections.third=[];
-
-		// call batched form of findConnections
-		$scope.findConnectionsBatched(0, total_leads, numResults);
 	};
 
 	/* ********************** Find Connections ************************/
