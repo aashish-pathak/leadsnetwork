@@ -248,7 +248,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.success(function(data) {
 			$scope.suggestions = data;
 	
-			console.log($scope.suggestions);
+			//console.log($scope.suggestions);
 		});
 	};
 
@@ -795,7 +795,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 					var already_present = false;
 					for(var i=0; i<$scope.people_search_profiles.length; i++)
 						if($scope.people_search_profiles[i].id == data.id) {
-							console.log("duplicate entry");
+							//console.log("duplicate entry");
 							already_present = true;
 							break;
 						}
@@ -900,8 +900,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var total_leads = $scope.selected_leads_count;
 		var numResults = $scope.people_search_ids.length;
 		var total_calls = total_leads * numResults;
-		
-		console.log(total_calls);
 		
 		$scope.current_lead="";
 		$scope.connections.all=[];
