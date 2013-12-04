@@ -228,7 +228,7 @@
 						</span>
 						
 						<!--Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
-						Leads selected : <b>{{selected_leads_count}}</b>.<br>
+						Leads selected : <b>{{selected_leads_count_while_searching}}</b>.<br>
 						<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
 						<span ng-show="done_searching"><b>Searching done !</b></span>
 					</div>
@@ -362,7 +362,7 @@
 					<div>
 						<div style="float: left" ng-show="people_search_busy">Searching....</div>
 						<div style="float: left" ng-hide="people_search_busy">Done !</div>
-						<div style="float:right"><a href="" ng-click="peopleSearchMore()">More</a></div>
+						<div style="float:right"><a href="" style="text-decoration: none" ng-click="peopleSearchMore()">More</a></div>
 					</div>
 				</div>
 			</div>
@@ -376,7 +376,7 @@
 					<!-- JQuery Dialog -->
 					<div id="common_connections" title="Common Connections" class="ui-helper-hidden">
 						<p><span class="glyphicon glyphicon-tags" style="float: left; margin: 0 7px 50px 0;"></span>
-						<b>"{{fname | uppercase}} {{lname | uppercase}}" is reachable via :</b></p>
+						<b>{{temp_fname | uppercase}} {{temp_lname | uppercase}} is reachable via :</b></p>
 						<ol>
 							<li ng-repeat="c in common_connections"> {{c}} </li>
 						</ol>
