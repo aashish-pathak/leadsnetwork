@@ -673,6 +673,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_results = false;
 		$scope.enable_search = false;
 		$scope.stopRequests();
+		$scope.resetProgressBar();
 		
 		$scope.people_search_profiles = [];
 		$scope.people_search_selected_all = false;
@@ -909,6 +910,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		// cancel pending requests of people-search
 		$scope.stopRequests();
+		
+		// reset progressbar
+		$scope.finishProgressBar();
 
 		$scope.show_people_search = false;
 		$scope.show_results = true;
