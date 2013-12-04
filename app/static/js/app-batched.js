@@ -793,11 +793,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 					
 					// test for duplicate entry first
 					var already_present = false;
-					for(var i=0; i<$scope.people_search.profiles.length; i++) {
-						if($scope.people_search.profiles[i].id == data.id)
+					for(var i=0; i<$scope.people_search_profiles.length; i++)
+						if($scope.people_search_profiles[i].id == data.id) {
+							console.log("duplicate entry");
 							already_present = true;
 							break;
-					}
+						}
 					
 					if(!already_present)
 						$scope.people_search_profiles.push(data);
