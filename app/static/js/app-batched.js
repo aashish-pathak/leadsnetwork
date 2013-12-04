@@ -419,10 +419,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.groups_of_leads[current_group].leads_list[i][3] = $scope.groups_of_leads[current_group].select_group;
 		}
 		$scope.groups_of_leads[current_group].selected_leads_count = $scope.groups_of_leads[current_group].leads_list.length;
+		
+		// set selected_leads_count overall
+		$scope.setSelectedLeadsCount();
+
 	};
 
 	/* ******************* Test Group for Lead ************************/
 	$scope.testGroupForLead = function(lead){
+		
+		// set selected_leads_count for corresponding group
 		var group_id = lead[2];
 		for(var i=0; i<$scope.groups_of_leads.length; i++){
 			if($scope.groups_of_leads[i].group_id == group_id)
@@ -448,6 +454,19 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.groups_of_leads[current_group].select_group = true;
 			
 		$scope.groups_of_leads[current_group].selected_leads_count = selected_leads_count;
+		
+		// set selected_leads_count overall
+		$scope.setSelectedLeadsCount();
+	};
+
+	/* ****************** Set Selected Leads Count *********************/
+	$scope.setSelectedLeadsCount = function(){
+		selected_leads_count = 0;
+		for(var i=0; i<$scope.leads_list.length; i++){
+			if($scope.leads_list[i][3] == true)
+				selected_leads_count++;
+		}
+		$scope.selected_leads_count = selected_leads_count;
 	};
 
 	/* ******************* Expand-Collapse Group ***********************/
@@ -663,8 +682,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.people_search_start = 0;
 		$scope.people_search_end = 0;
 		var list_of_ids = [];
-
 		var search_url = "/search?fname=" + $scope.fname + "&lname=" + $scope.lname + "&cname=" + $scope.cname + "&start=" + $scope.people_search_start;
+		
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
 			
@@ -747,6 +766,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.canceler = [];
 		$scope.promises = [];
 		var promises = [];
+
+		$scope.canceler.push($q.defer());
 		
 		for(var i=0;i<list_of_ids.length;i++) {
 			var profile_id = list_of_ids[i];
@@ -776,6 +797,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$q.all($scope.promises).then(function() {
 			$scope.people_search_busy = false;
 		});
+	};
+
+	/* ****************** Toggle Select Person ************************/
+	$scope.toggleSelectPerson = function(person){
+		person.selected = !person.selected;
+		$scope.testPeopleSearchAllNone();
 	};
 
 	/* **************** Test PeopleSearch All None *********************/
@@ -820,9 +847,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.peopleSearchGo = function() {
 
 		if($scope.people_search_selected_count == 0) {
-			alert("please select at least one person....");
+			$scope.createDialog("#at_least_one_person");
 			return;
 		}
+		
+		// cancel pending requests of people-search
+		$scope.stopRequests();
 
 		$scope.show_people_search = false;
 		$scope.show_results = true;
@@ -842,14 +872,18 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.total_xhr = 0;
 		$scope.current_xhr = 0;
 
-		$scope.people_search_ids=[];
+		$scope.people_search_ids = [];
 		for(var i=0; i<$scope.people_search_profiles.length; i++)
-			$scope.people_search_ids.push($scope.people_search_profiles.id);
+			if($scope.people_search_profiles[i].selected == true)
+				$scope.people_search_ids.push($scope.people_search_profiles[i].id);
 		
 		var profile_id="";
 		var fetch_profile_url="";
-		var total_leads = $scope.leads_list.length;
+		var total_leads = $scope.selected_leads_count;
+		var numResults = $scope.people_search_ids.length;
 		var total_calls = total_leads * numResults;
+		
+		console.log(total_calls);
 		
 		$scope.current_lead="";
 		$scope.connections.all=[];
@@ -984,19 +1018,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 
 	/* ********************** Calculate Progress **********************/
-	$scope.calculateTotalCalls = function() {
-		
-		var selected_leads = 0;
-		for(var i = 0; i < $scope.leads_list.length; i++){
-			if($scope.leads_list[i][3] == true)
-				selected_leads++;
-		}
-		
-		var numResults = $scope.people_search.people._total;
-		if (numResults > 25)
-			numResults = 25;
-		
-		return selected_leads * (numResults);
+	$scope.calculateTotalCalls = function() {		
+		return $scope.selected_leads_count * $scope.people_search_ids.length;
 	};
 
 	/* ************************* Progress Bar *************************/
