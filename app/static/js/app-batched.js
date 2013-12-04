@@ -923,7 +923,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.stopRequests();
 		
 		// reset progressbar
-		$scope.finishProgressBar();
+		$scope.resetProgressBar();
 
 		$scope.show_people_search = false;
 		$scope.show_results = true;
