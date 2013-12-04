@@ -652,6 +652,17 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	};
 
+	/* ************************ Results Back **************************/
+	$scope.resultsBack = function() {
+		console.log("resultsBack");
+		
+		// stop pending requests
+		$scope.stopRequests();
+				
+		$scope.show_people_search = true;
+		$scope.show_results = false;
+	};
+
 	/* ************************ Search Again **************************/
 	$scope.searchAgain = function() {
 		console.log("searchAgain");
@@ -785,7 +796,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 			$scope.people_search = data;
 			
-			if(data.people._total > $scope.people_search_start)
+			if($scope.people_search_start > data.people._total)
 				$scope.people_search_busy = false;
 			else {
 				// create temp array of ids and call getProfiles
@@ -831,7 +842,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 					var already_present = false;
 					for(var i=0; i<$scope.people_search_profiles.length; i++)
 						if($scope.people_search_profiles[i].id == data.id) {
-							//console.log("duplicate entry");
+							console.log("duplicate entry");
 							already_present = true;
 							break;
 						}
