@@ -1,6 +1,9 @@
 <!-- Leads' Network : index.html -->
+
 <!DOCTYPE html>
+
 <html ng-app="leadsApp">
+
 <head>
   
 	<meta name="HandheldFriendly" content="True" />
@@ -59,91 +62,101 @@
 			$('.clearable').clearSearch();
 		</script>
 		-->
-		
-		<!-- JQuery Dialogs -->
-		<div id="invalid_username" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			Username is invalid. Please provide LDAP Username.
-			</p>
-		</div>
-		
-		<div id="invalid_password" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			Password is invalid. Please provide LDAP Password.
-			</p>
-		</div>
-		
-		<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The person <span ng-show="fname"><b>{{fname}}</b></span> <span ng-show="lname"><b>{{lname}}</b></span><span ng-show="cname"> from <b>{{cname}}</b> </span> is not on linkedin.
-			</p>
-		</div>
+		<div id="jquery-dialogs">
+			<!-- JQuery Dialogs -->
+			<div id="invalid_username" title="Ooops!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				Username is invalid. Please provide LDAP Username.
+				</p>
+			</div>
+			
+			<div id="invalid_password" title="Ooops!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				Password is invalid. Please provide LDAP Password.
+				</p>
+			</div>
+			
+			<div id="not_on_linkedin_with_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				The person <span ng-show="fname"><b>{{fname}}</b></span> <span ng-show="lname"><b>{{lname}}</b></span><span ng-show="cname"> from <b>{{cname}}</b> </span> is not on linkedin.
+				</p>
+			</div>
 
-		<div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The person <b>{{fname}} {{lname}}</b> is not on linkedin.
-			</p>
-		</div>
+			<div id="not_on_linkedin_without_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				The person <b>{{fname}} {{lname}}</b> is not on linkedin.
+				</p>
+			</div>
 
-		<div id="not_on_linkedin_only_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The company <b>{{cname}}</b> is not on linkedin.
-			</p>
-		</div>
+			<div id="not_on_linkedin_only_cname" title="Not on LinkedIn!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				The company <b>{{cname}}</b> is not on linkedin.
+				</p>
+			</div>
 
-		<div id="at_least_one_lead" title="No lead selected!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			Please select at least one lead!
-			</p>
-		</div>
+			<div id="at_least_one_lead" title="No lead selected!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				Please select at least one lead!
+				</p>
+			</div>
 
-		<div id="both_fname_lname_error" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			<!--Do you want to search using both first-name and last-name?-->
-			Please enter both First Name and Last Name !
-			</p>
-		</div>
+			<div id="at_least_one_person" title="No one selected!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				Please select at least one person!
+				</p>
+			</div>
 
-		<div id="both_username_password_error" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			Please enter both Username and Password (LDAP Credentials) !
-			</p>
-		</div>
+			<div id="both_fname_lname_error" title="Ooops!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				<!--Do you want to search using both first-name and last-name?-->
+				Please enter both First Name and Last Name !
+				</p>
+			</div>
 
-		<div id="http_error" title="Ooops!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			HTTP Error. Unable to connect to server.
-			</p>
-		</div>
+			<div id="both_username_password_error" title="Ooops!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				Please enter both Username and Password (LDAP Credentials) !
+				</p>
+			</div>
 
-		<div id="url_undefined" title="Sorry!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-exclamation-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The public profile for this person is not available!
-			</p>
-		</div>
-		
-		<div id="common_connections_are_private" title="Sorry!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-exclamation-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The names of common connections are private!
-			</p>
-		</div>
+			<div id="http_error" title="Ooops!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				HTTP Error. Unable to connect to server.
+				</p>
+			</div>
 
-		<div id="throttle_limit_reached" title="Sorry!" class="ui-helper-hidden">
-			<p>Throttle limit for this application has reached. Please come back <b>after 5.30 am</b>. Thank you.</p>
-		</div>
+			<div id="url_undefined" title="Sorry!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-exclamation-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				The public profile for this person is not available!
+				</p>
+			</div>
+			
+			<div id="common_connections_are_private" title="Sorry!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-exclamation-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				The names of common connections are private!
+				</p>
+			</div>
 
-		<div id="invitation_sent" title="Success!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
-			The invitation has been sent successfully.
-			</p>
-		</div>
+			<div id="throttle_limit_reached" title="Sorry!" class="ui-helper-hidden">
+				<p>Throttle limit for this application has reached. Please come back <b>after 5.30 am</b>. Thank you.</p>
+			</div>
 
-		<div id="dead_link" title="Success!" class="ui-helper-hidden">
-			<p><span class="glyphicon glyphicon-comment" style="float: left; margin: 0 7px 50px 0;"></span>
-			This link is dead. Please contact Admin for further details.
-			</p>
-		</div>
+			<div id="no_more_results" title="Ooops!" class="ui-helper-hidden">
+				<p>No more results found on LinkedIn.</p>
+			</div>
 
+			<div id="invitation_sent" title="Success!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-warning-sign" style="float: left; margin: 0 7px 50px 0;"></span>
+				The invitation has been sent successfully.
+				</p>
+			</div>
+
+			<div id="dead_link" title="Success!" class="ui-helper-hidden">
+				<p><span class="glyphicon glyphicon-comment" style="float: left; margin: 0 7px 50px 0;"></span>
+				This link is dead. Please contact Admin for further details.
+				</p>
+			</div>
+		</div>
 		<!----------------------------------------------------------------->
 	
 		<div id="container_div">
@@ -196,7 +209,6 @@
 						Found <b>{{people_search_end}}</b> employees from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
 					</span>
 					
-					<!--Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
 					Leads selected : <b>{{selected_leads_count}}</b>.<br>
 				</div>
 				<center>
@@ -209,10 +221,10 @@
 					<br>
 					<div id="results_summary" class="well well-sm bottom-shadow">
 						<span ng-show="fname || lname">
-							Selected <b>{{people_search_selected_count}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}</b></span> on LinkedIn.<br>
+							Selected <b>{{people_search_selected_count}} {{fname | uppercase}} {{lname | uppercase}}</b><span ng-show="cname"> from <b>{{cname | uppercase}}.</b></span><br>
 						</span>
 						<span ng-show="!fname && !lname">
-							Selected <b>{{people_search_selected_count}}</b> employee(s) from <b><span ng-show="cname">{{cname | uppercase}}</span></b> on LinkedIn.<br>
+							Selected <b>{{people_search_selected_count}}</b> employee(s) from <b><span ng-show="cname">{{cname | uppercase}}.</span></b><br>
 						</span>
 						
 						<!--Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
@@ -229,8 +241,9 @@
 						</span>
 					</div>
 					<center>
-						<button ng-show="done_searching" class="btn btn-blue responsive-button" ng-click="searchAgain()"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Search again</button>
-						<button ng-hide="done_searching" class="btn btn-blue responsive-button" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
+						<button class="btn btn-blue responsive-button-half" ng-click="resultsBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
+						<button ng-show="done_searching" class="btn btn-blue responsive-button-half" ng-click="searchAgain()"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Again</button>
+						<button ng-hide="done_searching" class="btn btn-blue responsive-button-half" ng-click="stopRequests()"><span class="glyphicon glyphicon-stop"></span>&nbsp;&nbsp;Stop</button><br>
 					</center>
 					<hr>
 			</div>
@@ -316,11 +329,10 @@
 			<!-------------------------People Search DIV--------------------->
 			
 			<div id="people_search_div" class="center" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
-				
 				<div id="people_search_table">
 
 					<div style="color:green; font-weight:bold" ng-show="people_search_selected_count">Number of persons selected : {{people_search_selected_count}}</div>
-					<div style="color:red; font-weight:bold" ng-hide="people_search_selected_count">No person is selected yet.</div><br>
+					<div style="color:red; font-weight:bold" ng-hide="people_search_selected_count">No one is selected yet.</div><br>
 					<table class="table">
 						<thead>
 							<tr class="tr_th">
@@ -335,10 +347,15 @@
 						</thead>
 						<tbody>
 							<tr class="my_tr" ng-repeat="person in people_search_profiles" ng-animate="{enter: 'result-enter'}">
-								<td style="vertical-align: middle"><input type="checkbox" ng-click="testPeopleSearchAllNone()" ng-model="person.selected"></td>
-								<td style="vertical-align: middle">{{person.firstName}} {{person.lastName}}</td>
-								<td style="vertical-align: middle" >{{person.headline}}</td>
-								<td><img class="profile_pic" src="{{person.pictureUrl}}" ng-click="viewProfile(person)"></td>
+								<td class="person-selected" ng-show="person.selected" ng-click="toggleSelectPerson(person)" style="vertical-align: middle; cursor:pointer"><span class="glyphicon glyphicon-check"></span></td>
+								<td class="person-selected" ng-show="person.selected" ng-click="toggleSelectPerson(person)" style="vertical-align: middle; cursor:pointer">{{person.firstName}} {{person.lastName}}</td>
+								<td class="person-selected" ng-show="person.selected" ng-click="toggleSelectPerson(person)" style="vertical-align: middle; cursor:pointer" >{{person.headline}}</td>
+								<td class="person-selected" ng-show="person.selected" ><img class="profile_pic" src="{{person.pictureUrl}}" ng-click="viewProfile(person)"></td>
+
+								<td class="person-not-selected" ng-hide="person.selected" ng-click="toggleSelectPerson(person)" style="vertical-align: middle; cursor:pointer"><span class="glyphicon glyphicon-unchecked"></span></td>
+								<td class="person-not-selected" ng-hide="person.selected" ng-click="toggleSelectPerson(person)" style="vertical-align: middle; cursor:pointer">{{person.firstName}} {{person.lastName}}</td>
+								<td class="person-not-selected" ng-hide="person.selected" ng-click="toggleSelectPerson(person)" style="vertical-align: middle; cursor:pointer" >{{person.headline}}</td>
+								<td class="person-not-selected" ng-hide="person.selected" ><img class="profile_pic" src="{{person.pictureUrl}}" ng-click="viewProfile(person)"></td>
 							</tr>
 						</tbody>
 					</table>
