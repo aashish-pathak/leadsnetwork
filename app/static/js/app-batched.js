@@ -56,6 +56,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.connections.third=[];
 	$scope.common_connections = [];
 	
+	$scope.temp_fname = '';
+	$scope.temp_lname = '';
+	
 	$scope.canceler = [];
 
 	// progress calculation
@@ -977,9 +980,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.canceler = [];
 		$scope.promises = [];
 		
-		console.log("lead_number = " + lead_number)
-		console.log("total_leads = " + total_leads)
-		
 		if(lead_number == total_leads)
 			return;
 
@@ -1064,6 +1064,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	$scope.viewConnections = function (connection) {
 		console.log("viewConnections");
+
+		console.log(connection);
+		
+		$scope.temp_fname = connection.firstName;
+		$scope.temp_lname = connection.lastName;
 		
 		var max_connections = 10;
 		
@@ -1071,7 +1076,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		var count = connection.relationToViewer.connections._total;
 		if(count > max_connections)
 			count = max_connections;
-			
+
 		for(var i=0; i<count; i++) {
 			var first_name = connection.relationToViewer.connections.values[i].person.firstName;
 			var last_name = connection.relationToViewer.connections.values[i].person.lastName;
