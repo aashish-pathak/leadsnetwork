@@ -101,6 +101,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	// get the list groups of leads from backend DB
 	$scope.returnGroups = function() {
 		
+		console.log("returnGroups");
 		var groups_url = '/return_groups';
 		$http({method:'GET', url:groups_url})
 		.success(function(data) {
@@ -113,6 +114,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************* Initialize Groups ************************/
 
 	$scope.initGroups = function() {
+		console.log("initGroups");
 		//scan groups list and initialize
 		for(var i=0;i<$scope.groups_list.length;i++){
 			// create object and push into groups_of_leads
@@ -155,6 +157,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	// get the list of leads from backend DB
 	$scope.returnLeads = function() {
+		console.log("returnLeads");
 		
 		var leads_url = '/return_leads';
 		$http({method:'GET', url:leads_url})
@@ -173,6 +176,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* *********************** Fill Groups ****************************/
 	$scope.fillGroups = function() {
+		console.log("fillGroups");
 		
 		// scan global leads_list to fill leads_list of each group
 		for(var current_lead=0; current_lead<$scope.leads_list.length; current_lead++){
@@ -207,6 +211,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.getDisplayNameFromName = function(name){
+		console.log("getDisplayNameFromName");
+		
 		var group_display_name = '';
 		switch(name)
 		{
@@ -242,6 +248,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	// get the list suggestion names from DB
 	$scope.returnSuggestions = function() {
+		console.log("returnSuggestions");
 		
 		var suggestions_url = '/return_suggestions';
 		$http({method:'GET', url:suggestions_url})
@@ -268,6 +275,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************ Select Leads **************************/
 
 	$scope.leadsDiv = function() {
+		console.log("leadsDiv");
+		
 		// check that at least one lead is selected
 		var none = true;
 		for(var i=0;i<$scope.leads_list.length;i++) {
@@ -284,6 +293,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.selectAllLeads = function() {
+		console.log("selectAllLeads");
+		
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = true;
 			
@@ -294,6 +305,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.selectNoneLeads = function() {
+		console.log("selectNoneLeads");
+		
 		for(var i=0;i<$scope.leads_list.length;i++)
 			$scope.leads_list[i][3] = false;		
 			
@@ -305,6 +318,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	
 	$scope.selectBack = function() {
+		console.log("selectBack");
+		
 		// check that at least one lead is selected
 		var none = true;
 		$scope.selected_leads_count = 0;
@@ -338,7 +353,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************* Add Account **************************/
 	
 	$scope.addAccount = function() {
-
+		console.log("addAccount");
+		
 		// stop pending AJAX requests first
 		$scope.stopRequests();
 
@@ -369,6 +385,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* *********************** Stop Requests **************************/
 
 	$scope.stopRequests = function() {
+		console.log("stopRequests");
 		
 		$scope.safeApply(function() {
 		
@@ -387,6 +404,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Go Back *****************************/
 
 	$scope.goBack = function() {
+		console.log("goBack");
+		
 		$scope.searchAgain();
 		$scope.scrollTop();
 	};
@@ -403,6 +422,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* *********************** Select Group ***************************/
 	$scope.selectGroup = function(group){
+		console.log("selectGroup");
 		
 		if(group.leads_empty)
 			return;
@@ -427,6 +447,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ******************* Test Group for Lead ************************/
 	$scope.testGroupForLead = function(lead){
+		console.log("testGroupForLead");
 		
 		// set selected_leads_count for corresponding group
 		var group_id = lead[2];
@@ -461,6 +482,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ****************** Set Selected Leads Count *********************/
 	$scope.setSelectedLeadsCount = function(){
+		console.log("setSelectedLeadsCount");
+		
 		selected_leads_count = 0;
 		for(var i=0; i<$scope.leads_list.length; i++){
 			if($scope.leads_list[i][3] == true)
@@ -492,6 +515,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.sendInvitation = function() {
+		console.log("sendInvitation");
+		
 		var email_address = $scope.email_address;
 		$scope.email_address = '';
 		var invitation_url = "/invite?email=" + email_address;
@@ -542,6 +567,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Sign In *****************************/
 
 	$scope.signIn = function() {
+		console.log("signIn");
 
 		if($scope.login_username == '' || $scope.login_password == '') {
 			$scope.createDialog("#both_username_password_error");
@@ -599,6 +625,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Sign Out ****************************/
 	
 	$scope.signOut = function() {
+		console.log("signOut");
+		
 		// delete cookie
 		delete $cookies.leadsApp;
 		$scope.show_search_form = true;
@@ -626,6 +654,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ************************ Search Again **************************/
 	$scope.searchAgain = function() {
+		console.log("searchAgain");
+		
 		$scope.show_search_form = true;
 		$scope.show_people_search = false;
 		$scope.show_results = false;		
@@ -636,6 +666,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ********************** PeopleSearchBack ************************/
 	$scope.peopleSearchBack = function() {
+		console.log("peopleSearchBack");
+		
 		$scope.show_search_form = true;
 		$scope.show_people_search = false;
 		$scope.show_results = false;
@@ -649,6 +681,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
+		console.log("theSearch");
 
 		$scope.enable_search = true;
 		$scope.selected_leads_count = 0;
@@ -665,6 +698,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
+		console.log("peopleSearch");
 
 		// check if required search parameters are provided
 		if($scope.cname == '') {
@@ -731,6 +765,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ********************* People Search More ************************/
 	$scope.peopleSearchMore = function() {
+		console.log("peopleSearchMore");
 		
 		var list_of_ids = [];
 		var count = 10;
@@ -765,8 +800,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	/* ****************** Get PEOPLE_SEARCH Profiles ******************/
-
 	$scope.getSearchedPeopleProfiles = function(list_of_ids) {
+		console.log("getSearchedPeopleProfiles");
 		//console.log(list_of_ids);
 		
 		$scope.canceler = [];
@@ -825,6 +860,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* **************** Test PeopleSearch All None *********************/
 	$scope.testPeopleSearchAllNone = function(){
+		console.log("testPeopleSearchAllNone");
 		
 		var current_group = i;
 		var all_true = true;
@@ -849,6 +885,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* **************** Toggle Select PeopleSearch *********************/
 	$scope.toggleSelectPeopleSearch = function(){
+		console.log("toggleSelectPeopleSearch");
 
 		$scope.people_search_selected_all = !$scope.people_search_selected_all;
 		
@@ -863,6 +900,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* *********************** PeopleSearchGo *************************/
 	$scope.peopleSearchGo = function() {
+		console.log("peopleSearchGo");
 
 		if($scope.people_search_selected_count == 0) {
 			$scope.createDialog("#at_least_one_person");
@@ -881,6 +919,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************** Find Connections ************************/
 
 	$scope.findConnections = function() {
+		console.log("findConnections");
 		
 		$scope.show_search_form = false;
 		$scope.show_results = true;
@@ -918,17 +957,19 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ****************** Find Connections Batched *********************/
 
 	$scope.findConnectionsBatched = function(lead_number, total_leads, numResults) {
+		console.log("findConnectionsBatched");
 
 		$scope.canceler = [];
 		$scope.promises = [];
 		
-		if(lead_number==total_leads)
-			return;
+		console.log("lead_number = " + lead_number)
+		console.log("total_leads = " + total_leads)
 		
-		else if($scope.leads_list[lead_number][3] == true){
-			
-			// initialize canceler and promises
-			
+		if(lead_number == total_leads)
+			return;
+
+		else {
+
 			for(var i=0; i<numResults; i++) {
 				
 				var lead_num_str = $scope.leads_list[lead_number][0];
@@ -987,17 +1028,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 				$scope.findConnectionsBatched(lead_number, total_leads, numResults);
 			});
 		}
-		
-		else {
-			// current lead is not selected, move on to next lead
-			lead_number++;
-			$scope.findConnectionsBatched(lead_number, total_leads, numResults);
-		}
 	};
 	
 	/* ************************* View Profile *************************/
 	
 	$scope.viewProfile = function (connection) {
+		console.log("viewProfile");
 		
 		if(connection.publicProfileUrl) {
 			window.$windowScope = $scope;
@@ -1012,6 +1048,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************** View Connections ************************/
 
 	$scope.viewConnections = function (connection) {
+		console.log("viewConnections");
+		
 		var max_connections = 10;
 		
 		$scope.common_connections = [];
@@ -1034,13 +1072,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 
 	/* ********************** Calculate Progress **********************/
-	$scope.calculateTotalCalls = function() {		
+	$scope.calculateTotalCalls = function() {
+		console.log("calculateTotalCalls");
+		
 		return $scope.selected_leads_count * $scope.people_search_ids.length;
 	};
 
 	/* ************************* Progress Bar *************************/
 
 	$scope.setProgressBar = function() {
+		console.log("setProgressBar");
 		
 		var value = $scope.progress;
 
@@ -1068,6 +1109,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************* Reset ProgressBar ************************/
 	
 	$scope.resetProgressBar = function() {
+		console.log("resetProgressBar");
+		
 		$scope.safeApply(function() {
 			
 			// reset progress
@@ -1079,6 +1122,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ******************* Finish ProgressBar ***********************/
 	
 	$scope.finishProgressBar = function() {
+		console.log("finishProgressBar");
+		
 		$scope.safeApply(function() {
 			
 			// finish progress
