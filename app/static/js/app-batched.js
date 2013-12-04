@@ -726,7 +726,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.error(function() {
 			$scope.createDialog("#http_error");
 			$scope.enable_search = false;
-		});	};
+		});
+	};
 
 	/* ********************* People Search More ************************/
 	$scope.peopleSearchMore = function() {
@@ -736,7 +737,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.people_search_start = $scope.people_search_start + count;
 
 		if($scope.people_search_start >= $scope.people_search.people._total) {
-			alert("no more results....!");
+			$scope.createDialog("#no_more_results");
 			return;
 		}
 
@@ -747,11 +748,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		.success(function(data) {
 
 			$scope.people_search = data;
-			// create temp array of ids and call getProfiles
-			for(var i=0;i<$scope.people_search.people.values.length;i++)
-				list_of_ids.push($scope.people_search.people.values[i].id);
 			
-			$scope.getSearchedPeopleProfiles(list_of_ids);
+			if(data.people._total > $scope.people_search_start)
+				$scope.people_search_busy = false;
+			else {
+				// create temp array of ids and call getProfiles
+				for(var i=0;i<$scope.people_search.people.values.length;i++)
+					list_of_ids.push($scope.people_search.people.values[i].id);
+				
+				$scope.getSearchedPeopleProfiles(list_of_ids);				
+			}
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");
