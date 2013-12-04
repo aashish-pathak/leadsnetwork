@@ -15,6 +15,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.is_logged_in = false;
 	$scope.is_admin = false;
 	$scope.show_search_form = true;
+	$scope.show_people_search = false;
 	$scope.show_results = false;
 	$scope.show_leads = false;
 	$scope.leads_filter = '';
@@ -44,7 +45,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.enable_search = false;
 	
 	// people search parameters
-	$scope.show_people_search = false;
 	$scope.people_search_busy = true;
 	$scope.people_search_selected_all = false;
 	$scope.people_search_selected_count = 0;
@@ -102,8 +102,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 
 	/* *********************** Return Groups **************************/
+	/* Get all the groups details from backend and store in
+	 * $scope.groups_list.
+	 */
 
-	// get the list groups of leads from backend DB
 	$scope.returnGroups = function() {
 		
 		console.log("returnGroups");
@@ -117,12 +119,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 
 	/* ********************* Initialize Groups ************************/
-
 	$scope.initGroups = function() {
+	/* Scan the list of groups and initialize all the groups.
+	 * Set group_id, names and empty list of leads for corresponding group.
+	 */
+		
 		console.log("initGroups");
-		//scan groups list and initialize
 		for(var i=0;i<$scope.groups_list.length;i++){
-			// create object and push into groups_of_leads
 			var group_obj = {};
 			group_obj.group_id = $scope.groups_list[i][0];
 			group_obj.group_name = $scope.groups_list[i][1];
@@ -134,34 +137,48 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	/* *********************** Return Leads ***************************/
-
-	// compare between two string (needed for alphabetical sorting)
+	 
 	$scope.comparatorAlphabetical = function(a,b) {
+	/* Compare between two records for alphabetical sorting. 'a' and 'b'
+	 * are list objects for leads, containing lead-name at index 1.
+	 */
+
 		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
 		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
 		return 0;
 	};
 
-	// compare between two numbers (needed for numerical sorting)
 	$scope.comparatorNumerical = function(a,b) {
+	/* Compare between two numbers for numerical sorting. 'a' and 'b'
+	 * are list objects for leads, containing group-id (and hence rank)
+	 * at index 2.
+	 */
+
 		if (a[2] < b[2]) return -1;
 		if (a[2] > b[2]) return 1;
 		return 0;
 	};
 
-	// compare between two group_ids (needed for sorting based on group_id)
 	$scope.comparatorGroupId = function(a,b) {
+	/* Compare between two numbers for numerical sorting. 'a' and 'b'
+	 * are list objects for leads, containing group-id (and hence rank)
+	 * at index 2. For same group-id, sorting is done alphabetically; 
+	 * index 1 stores the lead-name.
+	 */
+
 		if (a[2] < b[2]) return -1;
 		if (a[2] > b[2]) return 1;
 		
-		// for same group_id, sort alphabetically
 		if (a[1].toUpperCase() < b[1].toUpperCase()) return -1;
 		if (a[1].toUpperCase() > b[1].toUpperCase()) return 1;
 		return 0;
 	};
 
-	// get the list of leads from backend DB
 	$scope.returnLeads = function() {
+	/* Get the list of all the leads from backend. It returns a list of 
+	 * list objects (for each lead) containing lead-name and group-id.
+	 */
+
 		console.log("returnLeads");
 		
 		var leads_url = '/return_leads';
@@ -181,9 +198,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* *********************** Fill Groups ****************************/
 	$scope.fillGroups = function() {
+	/* Scan global leads_list to fill leads_list for each group. Then 
+	 * based on leads_list in each group, set it's parameters : group-display-name,
+	 * leads_count, selected_leads_count, etc.
+	 */
+	 
 		console.log("fillGroups");
 		
-		// scan global leads_list to fill leads_list of each group
 		for(var current_lead=0; current_lead<$scope.leads_list.length; current_lead++){
 			
 			var group_id = $scope.leads_list[current_lead][2];
@@ -194,8 +215,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			
 			$scope.groups_of_leads[current_group].leads_list.push($scope.leads_list[current_lead]);
 		}
-		
-		// based on leads_list in each group, set it's parameters
+
 		for(var current_group=0; current_group<$scope.groups_of_leads.length; current_group++){
 			$scope.groups_of_leads[current_group].visible = false;
 			$scope.groups_of_leads[current_group].group_display_name = $scope.getDisplayNameFromName($scope.groups_of_leads[current_group].group_name);
@@ -216,6 +236,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.getDisplayNameFromName = function(name){
+	/* Return group-display-name based on group-name.
+	 */
 		console.log("getDisplayNameFromName");
 		
 		var group_display_name = '';
@@ -250,9 +272,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 
 	/* ******************** Return Suggestions ************************/
-
-	// get the list suggestion names from DB
 	$scope.returnSuggestions = function() {
+	/* Get the list of suggestions for fname, lname and cname from
+	 * backend (use them for Typeahead).
+	 */
+	
 		console.log("returnSuggestions");
 		
 		var suggestions_url = '/return_suggestions';
@@ -265,7 +289,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 
 	/* ************************* Start All ****************************/
-
 	$scope.startAll = function() {
 		$scope.returnGroups();
 		$scope.initGroups();
@@ -280,6 +303,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************ Select Leads **************************/
 
 	$scope.leadsDiv = function() {
+	/* Toggle leads DIV (if at least one lead is selected).
+	 */
+
 		console.log("leadsDiv");
 		
 		// check that at least one lead is selected
@@ -298,6 +324,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.selectAllLeads = function() {
+	/* Select all leads in leads_list of each group.
+	 */
+
 		console.log("selectAllLeads");
 		
 		for(var i=0;i<$scope.leads_list.length;i++)
@@ -312,6 +341,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.selectNoneLeads = function() {
+	/* De-select all leads in leads_list of each group.
+	 */
+
 		console.log("selectNoneLeads");
 		
 		for(var i=0;i<$scope.leads_list.length;i++)
@@ -325,9 +357,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	
 	$scope.selectBack = function() {
+	/* To get back from the list of leads (leads DIV), allow it only if
+	 * at least one lead is selected.
+	 */
+
 		console.log("selectBack");
 		
-		// check that at least one lead is selected
 		var none = true;
 		$scope.selected_leads_count = 0;
 		for(var i=0;i<$scope.leads_list.length;i++) {
@@ -360,6 +395,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************* Add Account **************************/
 	
 	$scope.addAccount = function() {
+	/* Call add_account and get the auth_url for linkedin. Redirect to 
+	 * auth_url on success (on getting a non-dead link).
+	 */
+
 		console.log("addAccount");
 		
 		// stop pending AJAX requests first
@@ -379,7 +418,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});
 	};
 	
-	// reload after adding account
+	// reload to homepage after adding a new account to leads_in
 	$scope.$watch(
 		function() {return $location.absUrl();},
 		function() {
@@ -390,8 +429,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	);
 
 	/* *********************** Stop Requests **************************/
-
 	$scope.stopRequests = function() {
+	/* Resolve all the pending requests in $scope.canceler. Also make 
+	 * progress bar complete (100%).
+	 */
+
 		console.log("stopRequests");
 		
 		$scope.safeApply(function() {
@@ -429,6 +471,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* *********************** Select Group ***************************/
 	$scope.selectGroup = function(group){
+	/* If leads_list of corresponding group is not empty, calculate the 
+	 * number of selected_leads from group and assign it to the selected_leads_count
+	 * of that group.
+	 * Also set selected_leads_count overall.
+	 */
+
 		console.log("selectGroup");
 		
 		if(group.leads_empty)
@@ -454,6 +502,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ******************* Test Group for Lead ************************/
 	$scope.testGroupForLead = function(lead){
+	/* Get the group ID of the lead whos selection is changed. Check if 
+	 * group bacame empty after this change and set group's ALL/NONE 
+	 * accordingly.
+	 * Also set selected_leads_count overall.
+	 */
+
 		console.log("testGroupForLead");
 		
 		// set selected_leads_count for corresponding group
@@ -489,6 +543,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ****************** Set Selected Leads Count *********************/
 	$scope.setSelectedLeadsCount = function(){
+	/* Scan global leads_list entirely and set selected_leads_count.
+	 */
+
 		console.log("setSelectedLeadsCount");
 		
 		selected_leads_count = 0;
@@ -522,6 +579,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	};
 	
 	$scope.sendInvitation = function() {
+	/* send email address to backend for sending an invitation email.
+	 */
+
 		console.log("sendInvitation");
 		
 		var email_address = $scope.email_address;
@@ -540,6 +600,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	// function for checking cookie for leadsApp
 	$scope.checkCookie = function() {
+	/* check if leadsApp cookie is set or not, and then show DIV (either
+	 * login-form or search-form) accordingly.
+	 */
+
+
 		if(!$cookies.leadsApp) {
 			$scope.is_logged_in = false;
 			$scope.is_admin = false;
@@ -574,6 +639,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Sign In *****************************/
 
 	$scope.signIn = function() {
+	/* Send ldap credentials to backend for validation. On successful login,
+	 * hide login-form and show search-form. Also set cookie accordingly.
+	 */
+
 		console.log("signIn");
 
 		if($scope.login_username == '' || $scope.login_password == '') {
@@ -632,6 +701,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************** Sign Out ****************************/
 	
 	$scope.signOut = function() {
+	/* Delete leadsApp cookie and clear all the results.
+	 * Hide other DIVs and show login-form only.
+	 * Also cancel all the pending AJAX requests.
+	 */
+
+
 		console.log("signOut");
 		
 		// delete cookie
@@ -661,6 +736,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ************************ Results Back **************************/
 	$scope.resultsBack = function() {
+	/* Hide final results and show people-search again. Also stop pending
+	 * AJAX requests.
+	 */
+
+
 		console.log("resultsBack");
 		
 		// stop pending requests
@@ -672,6 +752,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ************************ Search Again **************************/
 	$scope.searchAgain = function() {
+	/* Reset progress bar. Show search-form again.
+	 */
+
+
 		console.log("searchAgain");
 		
 		$scope.show_search_form = true;
@@ -684,6 +768,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ********************** PeopleSearchBack ************************/
 	$scope.peopleSearchBack = function() {
+	/* Clear people-search results. Show search-form again. Stop pending
+	 * requests and reset progress bar.
+	 */
+
 		console.log("peopleSearchBack");
 		
 		$scope.show_search_form = true;
@@ -700,6 +788,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ************************* The Search ***************************/
 	$scope.theSearch = function() {
+	/* Make 'search' button disabled. Check for number of leads selected.
+	 * Call peopleSearch().
+	 */
+
 		console.log("theSearch");
 
 		$scope.enable_search = true;
@@ -717,6 +809,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
+	/* Call people-search api of linkedin with provided first-name, last-name
+	 * and/or compnay-name. Get first 10 results of linkedin api only.
+	 * Create a temp list of ids for people searched and get their linkedin
+	 * profiles.
+	 */
+
 		console.log("peopleSearch");
 
 		// check if required search parameters are provided
@@ -784,6 +882,13 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* ********************* People Search More ************************/
 	$scope.peopleSearchMore = function() {
+	/* Similar to peopleSearch() except it checks whether more people
+	 * with given query are present on linkedin. It also checks for 
+	 * duplicate ids (which have already been searched) and discard.
+	 * Create a temp list of ids for people searched and get their linkedin
+	 * profiles.
+	 */
+
 		console.log("peopleSearchMore");
 		
 		var list_of_ids = [];
@@ -820,6 +925,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	/* ****************** Get PEOPLE_SEARCH Profiles ******************/
 	$scope.getSearchedPeopleProfiles = function(list_of_ids) {
+	/* Get profiles for people whos ids are stored in list_of_ids.
+	 * Append these results to the table of people-search.
+	 * Use people_search_busy to show that fetching profiles is under
+	 * process. Use HTTP promises to tell when all ids have been fetched.
+	 */
+		
 		console.log("getSearchedPeopleProfiles");
 		//console.log(list_of_ids);
 		
@@ -879,6 +990,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* **************** Test PeopleSearch All None *********************/
 	$scope.testPeopleSearchAllNone = function(){
+	/* Scan the list of people-search results and check which of them are
+	 * selected for further search (findConnections).
+	 */
+
 		console.log("testPeopleSearchAllNone");
 		
 		var current_group = i;
@@ -904,6 +1019,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* **************** Toggle Select PeopleSearch *********************/
 	$scope.toggleSelectPeopleSearch = function(){
+	/* Used to select/de-select people from people-search results.
+	 * Also set/reset people_search_selected_count.
+	 */
+
+
 		console.log("toggleSelectPeopleSearch");
 
 		$scope.people_search_selected_all = !$scope.people_search_selected_all;
@@ -919,6 +1039,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	/* *********************** PeopleSearchGo *************************/
 	$scope.peopleSearchGo = function() {
+	/* Check if at least one person is selected from people-search result.
+	 * Call findConnections() for these persons.
+	 */
+
 		console.log("peopleSearchGo");
 
 		if($scope.people_search_selected_count == 0) {
@@ -941,6 +1065,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************** Find Connections ************************/
 
 	$scope.findConnections = function() {
+	/* Create a list of linkedin profile ids for selected persons. Fetch 
+	 * all these profiles through list of selected leads.
+	 * Calculate total XHR to be made for calculating progress.
+	 * Call findConnectionsBatched() with initial parameters.
+	 */
+
 		console.log("findConnections");
 		
 		$scope.show_search_form = false;
@@ -982,6 +1112,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ****************** Find Connections Batched *********************/
 
 	$scope.findConnectionsBatched = function(lead_number, total_leads, numResults) {
+	/* Fetch all the profiles through single lead (current lead_number).
+	 * After finishing, change lead_number and call recursively.
+	 */
+
 		console.log("findConnectionsBatched");
 
 		$scope.canceler = [];
@@ -1055,6 +1189,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************* View Profile *************************/
 	
 	$scope.viewProfile = function (connection) {
+	/* Open a public linkedin profile for a corresponding person in a new
+	 * window.
+	 */
+
 		console.log("viewProfile");
 		
 		if(connection.publicProfileUrl) {
@@ -1070,6 +1208,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************** View Connections ************************/
 
 	$scope.viewConnections = function (connection) {
+	/* Set temp fname and lname to show on dialog box. Find top 10 common
+	 * connections.
+	 * Check for 'private' fnames and lname; and discard them accordingly.
+	 */
+
 		console.log("viewConnections");
 		
 		$scope.temp_fname = connection.firstName;
@@ -1106,6 +1249,10 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ************************* Progress Bar *************************/
 
 	$scope.setProgressBar = function() {
+	/* Set color codes for progress. Set progressBar values accordingly.
+	 */
+
+
 		console.log("setProgressBar");
 		
 		var value = $scope.progress;
@@ -1134,6 +1281,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ********************* Reset ProgressBar ************************/
 	
 	$scope.resetProgressBar = function() {
+	/* Make progress ZERO.
+	 */
+
 		console.log("resetProgressBar");
 		
 		$scope.safeApply(function() {
@@ -1147,6 +1297,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	/* ******************* Finish ProgressBar ***********************/
 	
 	$scope.finishProgressBar = function() {
+	/* Make progress COMPLETE.
+	 */
+
 		console.log("finishProgressBar");
 		
 		$scope.safeApply(function() {
