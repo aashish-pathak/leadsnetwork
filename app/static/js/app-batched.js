@@ -1064,8 +1064,6 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	$scope.viewConnections = function (connection) {
 		console.log("viewConnections");
-
-		console.log(connection);
 		
 		$scope.temp_fname = connection.firstName;
 		$scope.temp_lname = connection.lastName;
