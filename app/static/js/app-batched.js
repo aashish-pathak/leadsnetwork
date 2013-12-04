@@ -29,6 +29,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.leads_list = [];
 	$scope.leads_empty = false;
 	$scope.selected_leads_count = 0;
+	$scope.selected_leads_count_while_searching = 0;
 	$scope.groups_list = [];
 	$scope.groups_of_leads = [];
 	
@@ -47,6 +48,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.people_search_busy = true;
 	$scope.people_search_selected_all = false;
 	$scope.people_search_selected_count = 0;
+	
 
 	// result sets
 	$scope.connections={};
@@ -305,6 +307,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			$scope.groups_of_leads[i].select_group = true;
 			$scope.groups_of_leads[i].selected_leads_count = $scope.groups_of_leads[i].leads_list.length;
 		}
+		
+		$scope.selected_leads_count = $scope.leads_list.length;
 	};
 	
 	$scope.selectNoneLeads = function() {
@@ -963,6 +967,9 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.connections.first=[];
 		$scope.connections.second=[];
 		$scope.connections.third=[];
+
+		// set count of selected leads while searching
+		$scope.selected_leads_count_while_searching = $scope.selected_leads_count;
 		
 		// find total number of http requests
 		$scope.total_xhr = $scope.calculateTotalCalls();
