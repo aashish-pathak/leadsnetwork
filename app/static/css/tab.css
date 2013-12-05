@@ -98,6 +98,11 @@
 		height: 60px;
 	}
 
+	.app_logo {
+		width: 25px;
+		height: 25px;
+	}
+
 	#leads_list {
 		max-width: 100%;
 		text-align: left;
