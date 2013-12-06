@@ -19,6 +19,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.show_results = false;
 	$scope.show_leads = false;
 	$scope.leads_filter = '';
+	$scope.show_people_search_header_contents = true;
+	$scope.show_results_header_contents = true;
 
 	// login credentials
 	$scope.login_username = '';
@@ -732,6 +734,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		// scroll to the TOP of the page
 		$scope.scrollTop();
 
+	};
+
+	/* ****************** Toggle PeopleSearchHeader *******************/
+	$scope.togglePeopleSearchHeader = function() {
+		$scope.show_people_search_header_contents = !$scope.show_people_search_header_contents;
+	};
+
+	/* ******************** Toggle ResultsHeader **********************/
+	$scope.toggleResultsHeader = function() {
+		$scope.show_results_header_contents = !$scope.show_results_header_contents;
 	};
 
 	/* ************************ Results Back **************************/
