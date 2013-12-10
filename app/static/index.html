@@ -214,7 +214,7 @@
 					</div>
 					<center>
 						<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchBack()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back</button>
-						<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchGo()"><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;Go</button><br>
+						<!--<button class="btn btn-blue responsive-button-half" ng-click="peopleSearchGo()"><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;Go</button><br>-->
 					</center>
 					<hr>
 				</div>
@@ -394,12 +394,8 @@
 					-->
 					<div>
 						<center>
-						<div ng-show="people_search_busy">
-							<button class="btn responsive-button-half" ng-disabled="show_always"><span class="glyphicon glyphicon-import"></span>&nbsp;&nbsp;Loading...</button>
-						</div>
-						<div ng-hide="people_search_busy">
-							<button class="btn responsive-button-half" ng-click="peopleSearchMore()"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;More ?</button>
-						</div>
+							<button ng-show="people_search_busy" class="btn responsive-button-half" ng-disabled="people_search_busy"><span class="glyphicon glyphicon-import"></span>&nbsp;&nbsp;Loading...</button>
+							<button ng-hide="people_search_busy" class="btn responsive-button-half" ng-click="peopleSearchMore()"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;More ?</button>
 						</center>
 					</div>
 					<!--

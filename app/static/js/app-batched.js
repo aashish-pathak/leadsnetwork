@@ -819,6 +819,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.peopleSearch();
 	};
 	
+	$scope.$watch(
+		function() {return $scope.people_search_busy;},
+		function() {
+			alert("people search busy : " + $scope.people_search_busy);
+			}
+	);
 	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
 	/* Call people-search api of linkedin with provided first-name, last-name
