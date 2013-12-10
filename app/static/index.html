@@ -343,7 +343,26 @@
 			
 			<div id="people_search_div" class="center" ng-show="is_logged_in && show_people_search && !show_search_form && !show_results && !show_leads">
 				<div id="people_search_table">
-
+					
+					<div style="color:green; font-weight:bold" ng-show="people_search_selected_count">Number of persons selected : {{people_search_selected_count}}</div>
+					<div style="color:red; font-weight:bold" ng-hide="people_search_selected_count">No one is selected yet.</div><br>
+					<table class="table">
+						<thead>
+							<tr class="tr_th">
+								<td>Name</td>
+								<td>Headline</td>
+								<td>Picture</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="my_tr" ng-repeat="person in people_search_profiles" ng-animate="{enter: 'result-enter'}">
+								<td ng-click="findConnectionsSingle(person)" style="vertical-align: middle; cursor:pointer">{{person.firstName}} {{person.lastName}}</td>
+								<td ng-click="findConnectionsSingle(person)" style="vertical-align: middle; cursor:pointer" >{{person.headline}}</td>
+								<td><img class="profile_pic" src="{{person.pictureUrl}}" ng-click="viewProfile(person)"></td>
+							</tr>
+						</tbody>
+					</table>
+					<!--
 					<div style="color:green; font-weight:bold" ng-show="people_search_selected_count">Number of persons selected : {{people_search_selected_count}}</div>
 					<div style="color:red; font-weight:bold" ng-hide="people_search_selected_count">No one is selected yet.</div><br>
 					<table class="table">
@@ -372,11 +391,24 @@
 							</tr>
 						</tbody>
 					</table>
+					-->
+					<div>
+						<center>
+						<div ng-show="people_search_busy">
+							<button class="btn responsive-button-half" ng-disabled="show_always"><span class="glyphicon glyphicon-import"></span>&nbsp;&nbsp;Loading...</button>
+						</div>
+						<div ng-hide="people_search_busy">
+							<button class="btn responsive-button-half" ng-click="peopleSearchMore()"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;More ?</button>
+						</div>
+						</center>
+					</div>
+					<!--
 					<div>
 						<div style="float: left" ng-show="people_search_busy">Searching....</div>
 						<div style="float: left" ng-hide="people_search_busy">Done !</div>
 						<div style="float:right"><a href="" style="text-decoration: none" ng-click="peopleSearchMore()">More</a></div>
 					</div>
+					-->
 				</div>
 			</div>
 			

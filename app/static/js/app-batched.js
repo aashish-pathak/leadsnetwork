@@ -1074,6 +1074,57 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.findConnections();
 	};
 
+	/* ******************* Find Connections Single *********************/
+
+	$scope.findConnectionsSingle = function(person) {
+	/* Search for a single person passed to the function.
+	 * Fetch his profile through list of selected leads.
+	 * Calculate total XHR to be made for calculating progress.
+	 * Call findConnectionsBatched() with initial parameters.
+	 */
+
+		console.log("findConnectionsSingle");
+		
+		$scope.show_search_form = false;
+		$scope.show_results = true;
+
+		$scope.done_searching = false;
+		$scope.progress = 0;
+		$scope.total_xhr = 0;
+		$scope.current_xhr = 0;
+
+		$scope.people_search_ids = [];
+		$scope.people_search_ids.push(person.id);
+		
+		/*
+		for(var i=0; i<$scope.people_search_profiles.length; i++)
+			if($scope.people_search_profiles[i].selected == true)
+				$scope.people_search_ids.push($scope.people_search_profiles[i].id);
+		*/
+
+		var profile_id="";
+		var fetch_profile_url="";
+		var total_leads = $scope.selected_leads_count;
+		var numResults = $scope.people_search_ids.length;
+		var total_calls = total_leads * numResults;
+		
+		$scope.current_lead="";
+		$scope.connections.all=[];
+		$scope.connections.first=[];
+		$scope.connections.second=[];
+		$scope.connections.third=[];
+
+		// set count of selected leads while searching
+		$scope.selected_leads_count_while_searching = $scope.selected_leads_count;
+		
+		// find total number of http requests
+		$scope.total_xhr = $scope.calculateTotalCalls();
+		//alert("Total calls : " + $scope.total_xhr);
+
+		// call batched form of findConnections
+		$scope.findConnectionsBatched(0, total_leads, numResults);
+	};
+
 	/* ********************** Find Connections ************************/
 
 	$scope.findConnections = function() {
