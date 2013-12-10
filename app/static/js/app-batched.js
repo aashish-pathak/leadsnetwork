@@ -1084,7 +1084,17 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	 */
 
 		console.log("findConnectionsSingle");
+
+		// cancel pending requests of people-search
+		$scope.stopRequests();
 		
+		// reset progressbar
+		$scope.resetProgressBar();
+
+		$scope.show_people_search = false;
+		$scope.show_results = true;
+
+		// findConnectionsSingle logic....
 		$scope.show_search_form = false;
 		$scope.show_results = true;
 
