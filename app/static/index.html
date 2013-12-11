@@ -229,8 +229,8 @@
 						<br>
 						<div id="results_summary" class="well well-sm bottom-shadow">
 							<span ng-show="fname || lname">
-								<span ng-show="query_person.has_headline">Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} ({{query_person.headline}}) </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).<br></span>
-								<span ng-hide="query_person.has_headline">Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).<br></span>
+								<span ng-show="query_person.has_headline">Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} ({{query_person.headline}}) </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).</span>
+								<span ng-hide="query_person.has_headline">Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).</span>
 							</span>							
 
 							<!--
@@ -250,10 +250,10 @@
 						</div>
 						<div id="progress_bar">
 							<span ng-hide="done_searching">
-								<progress percent="progressBar" class="progressbar-height progress-striped active" style="background: transparent"></progress>
+								<progress percent="progressBar" class="progressbar-height progress-striped active" style="background: transparent; height: 10px"></progress>
 							</span>
 							<span ng-show="done_searching">
-								<progress percent="progressBar" class="progressbar-height progress-striped" style="background: transparent"></progress>
+								<progress percent="progressBar" class="progressbar-height progress-striped" style="background: transparent; height: 10px"></progress>
 							</span>
 						</div>
 						<center>
