@@ -1108,6 +1108,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 		$scope.people_search_ids = [];
 		$scope.people_search_ids.push(person.id);
+		$scope.query_person = person;
+		console.log($scope.query_person);
 		
 		/*
 		for(var i=0; i<$scope.people_search_profiles.length; i++)
