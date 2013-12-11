@@ -77,7 +77,7 @@ class MyLinkedIn(Config):
 		l = LinkedinAPI(api_key=self.consumer_key,
 						api_secret=self.consumer_secret,
 						callback_url=self.callback_url,
-						permissions=["r_fullprofile"])
+						permissions=["r_fullprofile", "r_emailaddress", "r_network", "r_contactinfo"])
 		auth_props = l.get_authentication_tokens()
 		auth_url = auth_props['auth_url']
 		#Store this token in a session to use it in callback function
@@ -87,12 +87,11 @@ class MyLinkedIn(Config):
 		
 		return auth_url
 		
-		
 	def get_authorized_tokens(self, oauth_token, oauth_verifier):
 		self.url_access_token = self.get_cfg("LinkedIn", "url_access_token")				
 		l = LinkedinAPI(api_key=self.consumer_key,
 						api_secret=self.consumer_secret,
-						permissions=["r_fullprofile"],
+						permissions=["r_fullprofile", "r_emailaddress", "r_network", "r_contactinfo"],
 						oauth_token=oauth_token,		# from URL
 						oauth_token_secret=session['oauth_token_secret'])	# from session
 		authorized_tokens = l.get_access_token(oauth_verifier)
