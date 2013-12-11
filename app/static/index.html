@@ -229,7 +229,8 @@
 						<br>
 						<div id="results_summary" class="well well-sm bottom-shadow">
 							<span ng-show="fname || lname">
-								Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} {{query_person.headline}} </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).<br>
+								<span ng-show="query_person.has_headline">Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} ({{query_person.headline}}) </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).<br></span>
+								<span ng-hide="query_person.has_headline">Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).<br></span>
 							</span>							
 
 							<!--

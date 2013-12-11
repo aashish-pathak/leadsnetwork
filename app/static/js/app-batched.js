@@ -1108,7 +1108,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 		$scope.people_search_ids = [];
 		$scope.people_search_ids.push(person.id);
-		$scope.query_person = person;
+		$scope.query_person = {};
+		$scope.query_person.firstName = person.firstName;
+		$scope.query_person.lastName = person.lastName;
+		if('headline' in person && person.headline != '--'){
+			$scope.query_person.headline = person.headline;
+			$scope.query_person.has_headline = true;
+		}
+		else
+			$scope.query_person.has_headline = false;
+		
 		console.log($scope.query_person);
 		
 		/*
