@@ -57,6 +57,10 @@
 		top: 55px;
 	}
 
+	.progressbar-height {
+		height: 5px;
+	}
+
 	#people_search_header {
 		color: black;
 		
@@ -149,11 +153,11 @@
 	}
 
 	.responsive-button {
-		width: 80%;
+		max-width: 80%;
 	}
 	
 	.responsive-button-half {
-		min-width: 38%;
+		max-width: 38%;
 	}		
 
 	#leads_div {
