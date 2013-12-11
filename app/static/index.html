@@ -529,7 +529,8 @@
 					</div>
 					
 					<div id="invitation" ng-show="is_admin">
-						<label ng-click="toggleInvite()" style="cursor: pointer">Invite People</label>
+						<label ng-hide="show_invitation_box" ng-click="toggleInvite()" style="cursor: pointer">Invite People</label>
+						<label ng-show="show_invitation_box" ng-click="toggleInvite()" style="cursor: pointer; color:#888888">Invite People</label>
 						<div id="invitation-box" ng-show="show_invitation_box">
 							 <form name="invitationForm" ng-submit="sendInvitation()">
 								<input type="email" name="email" ng-model="email_address" placeholder="example@gslab.com" required>
