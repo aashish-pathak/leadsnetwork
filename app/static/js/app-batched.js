@@ -48,6 +48,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	// people search parameters
 	$scope.people_search_busy = true;
+	$scope.disable_people_search_more = false;
 	$scope.people_search_selected_all = false;
 	$scope.people_search_selected_count = 0;
 	
@@ -818,13 +819,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		$scope.peopleSearch();
 	};
-	
-	$scope.$watch(
-		function() {return $scope.people_search_busy;},
-		function() {
-			alert("people search busy : " + $scope.people_search_busy);
-			}
-	);
+
 	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
 	/* Call people-search api of linkedin with provided first-name, last-name
@@ -845,6 +840,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		}
 
 		$scope.people_search_busy = true;
+		$scope.disable_people_search_more = false;
 
 		//to store profiles of all people from search results
 		$scope.people_search_profiles = [];
@@ -915,6 +911,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 		if($scope.people_search_start >= $scope.people_search.people._total) {
 			$scope.createDialog("#no_more_results");
+			$scope.disable_people_search_more = true;
 			return;
 		}
 

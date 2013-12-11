@@ -332,6 +332,22 @@ tr.t3 td {
 	max-width: 95%;
 }
 
+#people_search_summary_left {
+	max-width: 40%;
+	float:left;
+}
+
+#people_search_summary_right {
+	max-width: 40%;
+	float:right;
+}
+
+.truncate{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .person-selected{
 	background: #666666;
 	color: white;
