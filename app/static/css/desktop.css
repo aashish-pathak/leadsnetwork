@@ -151,11 +151,11 @@
 	}
 
 	.responsive-button {
-		max-width: 50%;
+		width: 50%;
 	}
 
 	.responsive-button-half {
-		max-width: 24%;
+		width: 24%;
 	}		
 
 	#leads_div {
