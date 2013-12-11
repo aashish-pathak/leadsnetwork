@@ -237,8 +237,10 @@
 							
 							<!--Found <b>{{people_search_end}} {{fname | uppercase}} {{lname | uppercase}}<span ng-show="cname"> from {{cname | uppercase}}</span></b> on LinkedIn.<br>-->
 							Leads selected : <b>{{selected_leads_count_while_searching}}</b>.<br>
+							<!--
 							<span ng-hide="done_searching">Searching through : <b>{{current_lead}}</b></span>
 							<span ng-show="done_searching"><b>Searching done !</b></span>
+							-->
 						</div>
 						<div style="width: 98%; margin-left: 1%;">
 							<span ng-hide="done_searching">
@@ -345,7 +347,7 @@
 				<div id="people_search_table">
 					
 					<div style="color:green; font-weight:bold" ng-show="people_search_selected_count">Number of persons selected : {{people_search_selected_count}}</div>
-					<div style="color:red; font-weight:bold" ng-hide="people_search_selected_count">No one is selected yet.</div><br>
+					<!--<div style="color:red; font-weight:bold" ng-hide="people_search_selected_count">No one is selected yet.</div><br>-->
 					<table class="table">
 						<thead>
 							<tr class="tr_th">
