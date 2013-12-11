@@ -906,7 +906,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		console.log("peopleSearchMore");
 		
 		var list_of_ids = [];
-		var count = 10;
+		var count = 25;
 		$scope.people_search_start = $scope.people_search_start + count;
 
 		if($scope.people_search_start >= $scope.people_search.people._total) {
