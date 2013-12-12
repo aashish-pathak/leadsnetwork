@@ -1211,6 +1211,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		if(lead_number == $scope.leads_list.length)
 			return;
 
+		// check whether current lead is selected or not....
 		if($scope.leads_list[lead_number][3] == false)
 			$scope.findConnectionsBatched(lead_number + 1, total_leads, numResults);
 		else {
