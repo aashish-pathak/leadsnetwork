@@ -19,6 +19,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.show_results = false;
 	$scope.show_leads = false;
 	$scope.leads_filter = '';
+	$scope.show_people_search_header_contents = true;
+	$scope.show_results_header_contents = true;
 
 	// login credentials
 	$scope.login_username = '';
@@ -46,6 +48,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	
 	// people search parameters
 	$scope.people_search_busy = true;
+	$scope.disable_people_search_more = false;
 	$scope.people_search_selected_all = false;
 	$scope.people_search_selected_count = 0;
 	
@@ -734,6 +737,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 	};
 
+	/* ****************** Toggle PeopleSearchHeader *******************/
+	$scope.togglePeopleSearchHeader = function() {
+		$scope.show_people_search_header_contents = !$scope.show_people_search_header_contents;
+	};
+
+	/* ******************** Toggle ResultsHeader **********************/
+	$scope.toggleResultsHeader = function() {
+		$scope.show_results_header_contents = !$scope.show_results_header_contents;
+	};
+
 	/* ************************ Results Back **************************/
 	$scope.resultsBack = function() {
 	/* Hide final results and show people-search again. Also stop pending
@@ -806,7 +819,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		
 		$scope.peopleSearch();
 	};
-	
+
 	/* *********************** People Search **************************/
 	$scope.peopleSearch = function() {
 	/* Call people-search api of linkedin with provided first-name, last-name
@@ -827,6 +840,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		}
 
 		$scope.people_search_busy = true;
+		$scope.disable_people_search_more = false;
 
 		//to store profiles of all people from search results
 		$scope.people_search_profiles = [];
@@ -892,11 +906,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		console.log("peopleSearchMore");
 		
 		var list_of_ids = [];
-		var count = 10;
+		var count = 25;
 		$scope.people_search_start = $scope.people_search_start + count;
 
 		if($scope.people_search_start >= $scope.people_search.people._total) {
 			$scope.createDialog("#no_more_results");
+			$scope.disable_people_search_more = true;
 			return;
 		}
 
@@ -1060,6 +1075,78 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.show_results = true;
 		
 		$scope.findConnections();
+	};
+
+	/* ******************* Find Connections Single *********************/
+
+	$scope.findConnectionsSingle = function(person) {
+	/* Search for a single person passed to the function.
+	 * Fetch his profile through list of selected leads.
+	 * Calculate total XHR to be made for calculating progress.
+	 * Call findConnectionsBatched() with initial parameters.
+	 */
+
+		console.log("findConnectionsSingle");
+
+		// cancel pending requests of people-search
+		$scope.stopRequests();
+		
+		// reset progressbar
+		$scope.resetProgressBar();
+
+		$scope.show_people_search = false;
+		$scope.show_results = true;
+
+		// findConnectionsSingle logic....
+		$scope.show_search_form = false;
+		$scope.show_results = true;
+
+		$scope.done_searching = false;
+		$scope.progress = 0;
+		$scope.total_xhr = 0;
+		$scope.current_xhr = 0;
+
+		$scope.people_search_ids = [];
+		$scope.people_search_ids.push(person.id);
+		$scope.query_person = {};
+		$scope.query_person.firstName = person.firstName;
+		$scope.query_person.lastName = person.lastName;
+		if('headline' in person && person.headline != '--'){
+			$scope.query_person.headline = person.headline;
+			$scope.query_person.has_headline = true;
+		}
+		else
+			$scope.query_person.has_headline = false;
+		
+		console.log($scope.query_person);
+		
+		/*
+		for(var i=0; i<$scope.people_search_profiles.length; i++)
+			if($scope.people_search_profiles[i].selected == true)
+				$scope.people_search_ids.push($scope.people_search_profiles[i].id);
+		*/
+
+		var profile_id="";
+		var fetch_profile_url="";
+		var total_leads = $scope.selected_leads_count;
+		var numResults = $scope.people_search_ids.length;
+		var total_calls = total_leads * numResults;
+		
+		$scope.current_lead="";
+		$scope.connections.all=[];
+		$scope.connections.first=[];
+		$scope.connections.second=[];
+		$scope.connections.third=[];
+
+		// set count of selected leads while searching
+		$scope.selected_leads_count_while_searching = $scope.selected_leads_count;
+		
+		// find total number of http requests
+		$scope.total_xhr = $scope.calculateTotalCalls();
+		//alert("Total calls : " + $scope.total_xhr);
+
+		// call batched form of findConnections
+		$scope.findConnectionsBatched(0, total_leads, numResults);
 	};
 
 	/* ********************** Find Connections ************************/

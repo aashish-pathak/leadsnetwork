@@ -55,6 +55,10 @@
 		max-width: 100%;
 		top: 55px;
 	}
+	
+	.progressbar-height {
+		
+	}
 
 	#people_search_header {
 		color: black;
@@ -70,7 +74,7 @@
 	#results_table {
 		color: black;
 		margin-top: 3%;
-		margin-top: 300px;
+		margin-top: 250px;
 		margin-bottom: 100px;
 	}
 
@@ -95,6 +99,11 @@
 	.profile_pic {
 		width: 60px;
 		height: 60px;
+	}
+
+	.app_logo {
+		width: 30px;
+		height: 30px;
 	}
 
 	#leads_list {
