@@ -269,8 +269,12 @@
 				-->
 			</div>
 		</div>
+		<!---------------------------EMPTY DIV------------------------->
+		<div id="empty_div" color="black" style="margin-top:100px" ng-show="!show_always">
+			<center style="color:#888888; font-size:150%">Ooops. Please come back again later.</center>
+		</div>
 		<!---------------------------Main DIV-------------------------->
-		<div id="main_div" class="center">
+		<div id="main_div" class="center" ng-show="show_always">
 		
 			<!-- "Back To Top" button-->
 			<a href="#" class="back-to-top" style="background: transparent; text-decoration: none"><span class="glyphicon glyphicon-arrow-up"></span></a>
