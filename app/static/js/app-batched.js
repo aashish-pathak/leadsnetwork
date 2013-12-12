@@ -1208,9 +1208,11 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.canceler = [];
 		$scope.promises = [];
 		
-		if(lead_number == total_leads)
+		if(lead_number == $scope.leads_list.length)
 			return;
 
+		if($scope.leads_list[lead_number][3] == false)
+			$scope.findConnectionsBatched(lead_number + 1, total_leads, numResults);
 		else {
 
 			for(var i=0; i<numResults; i++) {
