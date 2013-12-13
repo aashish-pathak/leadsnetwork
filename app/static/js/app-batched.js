@@ -852,11 +852,18 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
 			
-			// check if Throttle Limit is reached
+			
 			if('errorCode' in data)
+				// check if Throttle Limit is reached
 				if('message' in data && data.message == 'Throttle limit for calls to this resource is reached.') {
 					$scope.enable_search = false;
 					$scope.createDialog("#throttle_limit_reached");
+					return;
+				}
+				// check if oauth_token is expired
+				else if(('message' in data) && (data.message.indexOf('[unauthorized]. Expired access token.')!=-1)) {					
+					$scope.enable_search = false;
+					$scope.createDialog("#expired_access_token");
 					return;
 				}
 			
@@ -1208,9 +1215,12 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.canceler = [];
 		$scope.promises = [];
 		
-		if(lead_number == total_leads)
+		if(lead_number == $scope.leads_list.length)
 			return;
 
+		// check whether current lead is selected or not....
+		if($scope.leads_list[lead_number][3] == false)
+			$scope.findConnectionsBatched(lead_number + 1, total_leads, numResults);
 		else {
 
 			for(var i=0; i<numResults; i++) {

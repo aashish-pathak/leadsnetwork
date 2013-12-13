@@ -141,6 +141,10 @@
 				<p>Throttle limit for this application has reached. Please come back <b>after 5.30 am</b>. Thank you.</p>
 			</div>
 
+			<div id="expired_access_token" title="Sorry!" class="ui-helper-hidden">
+				<p>Linkedin access token is expired. Please contact ADMIN for more details.</p>
+			</div>
+
 			<div id="no_more_results" title="Ooops!" class="ui-helper-hidden">
 				<p>No more results found on LinkedIn.</p>
 			</div>
@@ -270,8 +274,12 @@
 				-->
 			</div>
 		</div>
+		<!---------------------------EMPTY DIV------------------------->
+		<div id="empty_div" color="black" style="margin-top:100px" ng-show="!show_always">
+			<center style="color:#888888; font-size:150%">Ooops. Please come back again later.</center>
+		</div>
 		<!---------------------------Main DIV-------------------------->
-		<div id="main_div" class="center">
+		<div id="main_div" class="center" ng-show="show_always">
 		
 			<!-- "Back To Top" button-->
 			<a href="#" class="back-to-top" style="background: transparent; text-decoration: none"><span class="glyphicon glyphicon-arrow-up"></span></a>
