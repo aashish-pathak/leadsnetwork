@@ -852,11 +852,18 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$http({method:'GET', url:search_url})
 		.success(function(data) {
 			
-			// check if Throttle Limit is reached
+			
 			if('errorCode' in data)
+				// check if Throttle Limit is reached
 				if('message' in data && data.message == 'Throttle limit for calls to this resource is reached.') {
 					$scope.enable_search = false;
 					$scope.createDialog("#throttle_limit_reached");
+					return;
+				}
+				// check if oauth_token is expired
+				else if(('message' in data) && (data.message.indexOf('[unauthorized]. Expired access token.')!=-1)) {					
+					$scope.enable_search = false;
+					$scope.createDialog("#expired_access_token");
 					return;
 				}
 			
