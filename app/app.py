@@ -193,11 +193,16 @@ def callback():
 			firstName = json_profile['firstName']
 			lastName = json_profile['lastName']
 			name = firstName + " " + lastName
+			email = json_profile['emailAddress']
+			
+			# set current time as token_birth_ts
+			import datetime
+			token_birth_ts = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 			# insert into db
 			from lib import MySQL
 			mysql = MySQL()
-			mysql.insert_into_people(name, linkedin_id, access_token_key, access_token_secret)
+			mysql.insert_into_people(name, linkedin_id, access_token_key, access_token_secret, token_birth_ts, email)
 			
 			# get his group-name from ldap server
 			from lib import MyLDAP
