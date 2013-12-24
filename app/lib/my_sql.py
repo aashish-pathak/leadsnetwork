@@ -101,13 +101,13 @@ class MySQL(Config):
         
 	def fetch_random(self):
 		import random
-		sql = "SELECT COUNT(*) FROM people;"
+		sql = "SELECT COUNT(*) FROM people WHERE is_token_expired='no';"
 		row = self.fetch_one(sql)
 		
 		leads_count = row[0]
 		random_number = random.randint(1, leads_count)
 
-		sql = "select * from people"
+		sql = "select * from people WHERE is_token_expired='no';"
 		rows = self.cursor.execute(sql)
 		for x in range(1, random_number):
 			row = self.cursor.fetchone()
