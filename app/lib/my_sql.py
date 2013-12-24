@@ -53,7 +53,6 @@ class MySQL(Config):
 			print "unable to insert (INVITATIONS) !!!!!!!!!!!!!!!!!!!!!!"
 			print e
 
-
 	def update_invitations_set_used(self, random_string):
 		try:
 			self.cursor.execute("""UPDATE invitations SET used = %s WHERE random_string = %s;""",(True, random_string))
