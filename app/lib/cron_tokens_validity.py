@@ -17,6 +17,7 @@ connection = mdb.connect(domain, user, password, db)
 
 with connection:
 
+	# fetch name, linkedin_id, and token_birth_ts for all leads from people
 	fetch_cursor = connection.cursor()
 	fetch_cursor.execute("SELECT name, linkedin_id, unix_timestamp(token_birth_ts) FROM people")
 	rows = fetch_cursor.fetchall()
@@ -25,6 +26,8 @@ with connection:
 		
 		name = row[0]
 		linkedin_id = row[1]
+		
+		# for each lead, calculate elapsed time of tokens since their birth timestamp
 		current_unix_timestamp = time.mktime(datetime.datetime.now().timetuple())
 		token_birth_unix_timestamp = float(row[2])
 		elapsed_seconds = current_unix_timestamp - token_birth_unix_timestamp
@@ -35,7 +38,7 @@ with connection:
 		# LinkedIn access tokens are valid for 60 days (so stop using them after 59 days)
 		lifetime = 60 * 60 * 24 * 59
 		
-		# check if alert is to be sent
+		# check if alert is needed to be sent
 		if(elapsed_seconds > allowed_seconds):
 			print "Send alert email to " + row[0]
 		else:
