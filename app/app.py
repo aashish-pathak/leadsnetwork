@@ -29,7 +29,7 @@ def return_leads():
 	from lib import MySQL
 	lead = []
 	leads = []
-	sql = "select * from people"
+	sql = "SELECT * FROM people WHERE is_token_expired='no';"
 	mysql = MySQL()
 	rows = mysql.fetch_all(sql)
 	for row in rows:
