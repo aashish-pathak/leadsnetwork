@@ -119,10 +119,11 @@ def invite():
 	print add_account_url
 	
 	# send invitation email
-	u = Util()
+	from lib import Alerts
+	emailer = Alerts()
 	subject = "Invitation to join Leads' In"
 	text = "Hello, \nPlease click " + add_account_url + " to add yourself to the list of leads in \"Leads' In\". \nThank you."
-	u.send_invitation_email(email, subject, text)
+	emailer.send_invitation_email(email, subject, text)
 	
 	return jsonify({'response':True, 'email':email})
 
