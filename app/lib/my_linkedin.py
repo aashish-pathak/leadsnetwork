@@ -69,7 +69,7 @@ class MyLinkedIn(Config):
 		self.url_self = self.get_cfg("LinkedIn", "url_self")
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
-		resp, content = self.client.request(self.url_self + ":(id,first-name,last-name)?oauth2_access_token=%@?&format=json")
+		resp, content = self.client.request(self.url_self + ":(id,first-name,last-name,email-address)?oauth2_access_token=%@?&format=json")
 		print "get_profile_using_token()"
 		return content
 

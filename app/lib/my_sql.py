@@ -26,9 +26,9 @@ class MySQL(Config):
 			self.__connect_db()
 		self.cursor = self.connection.cursor()
 
-	def insert_into_people(self, name, linkedin_id, access_token_key, access_token_secret):
+	def insert_into_people(self, name, linkedin_id, access_token_key, access_token_secret, token_birth_ts, email):
 		try:
-			self.cursor.execute("""INSERT INTO people (name, linkedin_id, access_token, access_secret) VALUES (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE access_token = %s, access_secret = %s;""",(name, linkedin_id, access_token_key, access_token_secret, access_token_key, access_token_secret))
+			self.cursor.execute("""INSERT INTO people (name, linkedin_id, access_token, access_secret, token_birth_ts, email) VALUES (%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE access_token = %s, access_secret = %s, token_birth_ts = %s, email = %s;""",(name, linkedin_id, access_token_key, access_token_secret, token_birth_ts, email, access_token_key, access_token_secret, token_birth_ts, email))
 			self.connection.commit()
 			print "insert_into_people()"
 		except Exception as e:
@@ -52,7 +52,6 @@ class MySQL(Config):
 		except Exception as e:
 			print "unable to insert (INVITATIONS) !!!!!!!!!!!!!!!!!!!!!!"
 			print e
-
 
 	def update_invitations_set_used(self, random_string):
 		try:
@@ -102,13 +101,13 @@ class MySQL(Config):
         
 	def fetch_random(self):
 		import random
-		sql = "SELECT COUNT(*) FROM people;"
+		sql = "SELECT COUNT(*) FROM people WHERE is_token_expired='no';"
 		row = self.fetch_one(sql)
 		
 		leads_count = row[0]
 		random_number = random.randint(1, leads_count)
 
-		sql = "select * from people"
+		sql = "select * from people WHERE is_token_expired='no';"
 		rows = self.cursor.execute(sql)
 		for x in range(1, random_number):
 			row = self.cursor.fetchone()

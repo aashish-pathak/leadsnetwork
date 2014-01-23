@@ -34,7 +34,7 @@ def return_leads():
 	from lib import MySQL
 	lead = []
 	leads = []
-	sql = "select * from people"
+	sql = "SELECT * FROM people WHERE is_token_expired='no';"
 	mysql = MySQL()
 	rows = mysql.fetch_all(sql)
 	for row in rows:
@@ -124,10 +124,11 @@ def invite():
 	print add_account_url
 	
 	# send invitation email
-	u = Util()
+	from lib import Alerts
+	emailer = Alerts()
 	subject = "Invitation to join Leads' In"
 	text = "Hello, \nPlease click " + add_account_url + " to add yourself to the list of leads in \"Leads' In\". \nThank you."
-	u.send_invitation_email(email, subject, text)
+	emailer.send_invitation_email(email, subject, text)
 	
 	return jsonify({'response':True, 'email':email})
 
@@ -198,11 +199,16 @@ def callback():
 			firstName = json_profile['firstName']
 			lastName = json_profile['lastName']
 			name = firstName + " " + lastName
+			email = json_profile['emailAddress']
+			
+			# set current time as token_birth_ts
+			import datetime
+			token_birth_ts = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 			# insert into db
 			from lib import MySQL
 			mysql = MySQL()
-			mysql.insert_into_people(name, linkedin_id, access_token_key, access_token_secret)
+			mysql.insert_into_people(name, linkedin_id, access_token_key, access_token_secret, token_birth_ts, email)
 			
 			# get his group-name from ldap server
 			from lib import MyLDAP
