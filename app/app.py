@@ -121,8 +121,8 @@ def invite():
 	# send invitation email
 	from lib import Alerts
 	emailer = Alerts()
-	subject = "Invitation to join Leads' In"
-	text = "Hello, \nPlease click " + add_account_url + " to add yourself to the list of leads in \"Leads' In\". \nThank you."
+	subject = "Invitation to join \"Leads' In!\""
+	text = "Hello, \nPlease follow the link given below to be a part of leads, through which \"Leads' In!\" will try to find nearest possible connections on LinkedIn.\n\n" + add_account_url + "\n\n (You may need to authenticate yourself, if you are not already signed in to LinkedIn.)\n\nThank You, \n\"Leads' In!\" Team."
 	emailer.send_invitation_email(email, subject, text)
 	
 	return jsonify({'response':True, 'email':email})
