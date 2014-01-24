@@ -53,5 +53,8 @@ with connection:
 		if(elapsed_seconds > lifetime):
 			update_cursor = connection.cursor()
 			update_cursor.execute("UPDATE people SET is_token_expired='yes' WHERE linkedin_id='" + row[1] + "'")
-		
+		else:
+			update_cursor = connection.cursor()
+			update_cursor.execute("UPDATE people SET is_token_expired='no' WHERE linkedin_id='" + row[1] + "'")
+
 	print "\n"
