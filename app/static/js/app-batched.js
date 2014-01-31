@@ -1407,6 +1407,16 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});
 	};
 
+	/* ********************** View Connections ************************/
+
+	$scope.getReport = function () {
+	/* Send result data to server and recieve a downloadable report back.
+	 */
+
+		console.log("getReport");
+		alert("get report");
+	};
+
 	/* ********************* Clear Search Box *************************/
 	
 	$scope.clearSearchBox = function() {
