@@ -1411,7 +1411,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		});
 	};
 
-	/* ********************** View Connections ************************/
+	/* ************************* Get Report ***************************/
 
 	$scope.getReport = function () {
 	/* Send result data to server and recieve a downloadable report back.
@@ -1419,15 +1419,23 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 		console.log("getReport");
 
-		console.log($scope.report_data);
+		var report_url = '/report';
+		var content_type = 'application/x-www-form-urlencoded';
+		
+		var post_data = new Object();
+		post_data.query_name = $scope.query_person.firstName + ' ' + $scope.query_person.lastName;
+		post_data.report_data = JSON.stringify($scope.report_data);
+		
 
-		var report_url = 'http://10.71.71.167:5000/report';
-		var report_data = JSON.stringify($scope.report_data);
-		var query_name = $scope.query_person.firstName + ' ' + $scope.query_person.lastName;
-
-		var location = report_url + '?query_name=' + encodeURI(query_name) + '&report_data=' + encodeURI(report_data);
-	
-		$window.location.href = location;
+		$http({method:'POST', url:report_url, data:post_data, headers: {'Content-Type':content_type}})
+		.success(function(data) {
+			$scope.report_url = data;
+			alert($scope.report_url);
+			//$window.location.href = $scope.report_url;
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
+		});
 	};
 
 	/* ********************* Clear Search Box *************************/
