@@ -1419,19 +1419,15 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 		console.log("getReport");
 
-		var report_url = '/report';
-		var report_data = $scope.report_data;
-		
-		alert(report_data);
+		console.log($scope.report_data);
 
-		var hiddenElement = document.createElement('a');
+		var report_url = 'http://10.71.71.167:5000/report';
+		var report_data = JSON.stringify($scope.report_data);
+		var query_name = $scope.query_person.firstName + ' ' + $scope.query_person.lastName;
 
-		hiddenElement.href = 'data:attachment/csv,' + encodeURI(content);
-		hiddenElement.target = '_blank';
-		hiddenElement.download = 'leadsin_report?result_data=' + report_data.toSource() + '.csv';
-		hiddenElement.click();
-		
-		// alert("get report");
+		var location = report_url + '?query_name=' + encodeURI(query_name) + '&report_data=' + encodeURI(report_data);
+	
+		$window.location.href = location;
 	};
 
 	/* ********************* Clear Search Box *************************/

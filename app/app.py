@@ -320,20 +320,29 @@ def fetch_profile_random():
 #########################__GENERATE REPORT__############################
 @app.route('/report')
 def report():
-    csv = """"REVIEW_DATE","AUTHOR","ISBN","DISCOUNTED_PRICE"
-			"1985/01/21","Douglas Adams",0345391802,5.95
-			"1990/01/12","Douglas Hofstadter",0465026567,9.95
-			"1998/07/15","Timothy ""The Parser"" Campbell",0968411304,18.99
-			"1999/12/03","Richard Friedman",0060630353,5.95
-			"2004/10/04","Randel Helms",0879755725,4.50"""
+	csv = """"REVIEW_DATE","AUTHOR","ISBN","DISCOUNTED_PRICE"
+	"1985/01/21","Douglas Adams",0345391802,5.95
+	"1990/01/12","Douglas Hofstadter",0465026567,9.95
+	"1998/07/15","Timothy ""The Parser"" Campbell",0968411304,18.99
+	"1999/12/03","Richard Friedman",0060630353,5.95
+	"2004/10/04","Randel Helms",0879755725,4.50"""
+
+	query_name = request.args.get('query_name')
+	report_data = request.args.get('report_data')
+	
+	query_name = query_name.replace(' ', '-')
+	
+	print query_name
+	print report_data
 
     # We need to modify the response, so the first thing we 
     # need to do is create a response out of the CSV string
-    response = make_response(csv)
+	response = make_response(csv)
     # This is the key: Set the right header for the response
     # to be downloaded, instead of just printed on the browser
-    response.headers["Content-Disposition"] = "attachment; filename=leads_report.csv"
-    return response
+	response.headers["Content-Disposition"] = "attachment; filename=" + query_name + ".csv"
+	return response
+
 
 ###########################__For Testing Multiple AJAX Requests__###############################
 @app.route('/xhr')
