@@ -11,6 +11,7 @@
 	
 	<script src="static/js/jquery.min.js" ></script>
 	<script src="static/js/jquery-ui-leads.min.js" ></script>
+	<script src="static/js/jquery.fileDownload.js" ></script>
 	<script src="static/lib/angular/angular.min.js"></script>
 	<script src="static/js/ng-infinite-scroll.min.js"></script>
 	<script src="static/lib/angular/angular-cookies.min.js"></script>
@@ -470,13 +471,17 @@
 						</tbody>
 					</table>
 				</div>
-			
-				<div id="reporting" ng-show="done_searching">
-					<center><button class="btn btn-blue" ng-click="getReport()"><span class="glyphicon glyphicon-download"></span></button></center>
-				</div>
+
 			
 			</div>
 
+				<center>
+					<div id="report_form" method="get">
+						<!--<a target="_self" href="http://localhost:5000/report" download="report.csv"><span class="glyphicon glyphicon-download"></span></a>-->
+						<a ng-click="getReport()"><span class="glyphicon glyphicon-download"></span></a>
+					</div>
+				</center>
+			
 			<!--------------------------Leads DIV---------------------->
 			<div id="leads_div" class="center" ng-show="is_logged_in && show_leads">
 				<center>

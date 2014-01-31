@@ -332,7 +332,7 @@ def report():
     response = make_response(csv)
     # This is the key: Set the right header for the response
     # to be downloaded, instead of just printed on the browser
-    response.headers["Content-Disposition"] = "attachment; filename=books.csv"
+    response.headers["Content-Disposition"] = "attachment; filename=leads_report.csv"
     return response
 
 ###########################__For Testing Multiple AJAX Requests__###############################

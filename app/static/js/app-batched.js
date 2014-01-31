@@ -60,6 +60,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.connections.second=[];
 	$scope.connections.third=[];
 	$scope.common_connections = [];
+	$scope.report_data = [];
 	
 	$scope.temp_fname = '';
 	$scope.temp_lname = '';
@@ -1144,6 +1145,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.connections.first=[];
 		$scope.connections.second=[];
 		$scope.connections.third=[];
+		$scope.report_data = [];
 
 		// set count of selected leads while searching
 		$scope.selected_leads_count_while_searching = $scope.selected_leads_count;
@@ -1191,6 +1193,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.connections.first=[];
 		$scope.connections.second=[];
 		$scope.connections.third=[];
+		$scope.report_data = [];
 
 		// set count of selected leads while searching
 		$scope.selected_leads_count_while_searching = $scope.selected_leads_count;
@@ -1258,6 +1261,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 							if(data.distance >= 1 && data.distance <=3)
 							{
 								$scope.connections.all.push(data);
+								$scope.report_data.push(data);
 							}
 						});
 					})
@@ -1414,7 +1418,20 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	 */
 
 		console.log("getReport");
-		alert("get report");
+
+		var report_url = '/report';
+		var report_data = $scope.report_data;
+		
+		alert(report_data);
+
+		var hiddenElement = document.createElement('a');
+
+		hiddenElement.href = 'data:attachment/csv,' + encodeURI(content);
+		hiddenElement.target = '_blank';
+		hiddenElement.download = 'leadsin_report?result_data=' + report_data.toSource() + '.csv';
+		hiddenElement.click();
+		
+		// alert("get report");
 	};
 
 	/* ********************* Clear Search Box *************************/
