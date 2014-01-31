@@ -470,8 +470,13 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
 			
+				<div id="reporting" ng-show="done_searching">
+					<center><button class="btn btn-blue" ng-click="getReport()"><span class="glyphicon glyphicon-download"></span></button></center>
+				</div>
+			
+			</div>
+
 			<!--------------------------Leads DIV---------------------->
 			<div id="leads_div" class="center" ng-show="is_logged_in && show_leads">
 				<center>
@@ -548,9 +553,6 @@
 						</div>
 					</div>
 				</center>
-			</div>
-			<div>
-				<button class="btn btn-blue" ng-click="getReport()"><span class="glyphicon glyphicon-download"></span></button>
 			</div>
 		</div>
 		<!-----------------------------Footer-------------------------->
