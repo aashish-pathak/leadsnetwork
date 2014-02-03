@@ -408,7 +408,7 @@
 						</tbody>
 					</table>
 					-->
-					<div id="download_button">
+					<div>
 						<center ng-show="people_search_busy"><button class="btn responsive-button-half" ng-disabled="people_search_busy"><span class="glyphicon glyphicon-import"></span>&nbsp;&nbsp;Loading...</button></center>
 						<center ng-hide="show_always"><button class="btn responsive-button-half" ng-click="peopleSearchMore()"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;More ?</button></center>
 						<center ng-hide="people_search_busy"><button ng-hide="disable_people_search_more" class="btn responsive-button-half" ng-click="peopleSearchMore()"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;More ?</button></center>
@@ -470,16 +470,13 @@
 						</tbody>
 					</table>
 				</div>
-
-			
-			</div>
-
 				<center>
-					<div id="reporting">
+					<div id="reporting" ng-show="done_searching">
 						<!--<a target="_self" href="http://localhost:5000/report" download="report.csv"><span class="glyphicon glyphicon-download"></span></a>-->
 						<a ng-click="getReport()"><span class="glyphicon glyphicon-download"></span></a>
 					</div>
 				</center>
+			</div>
 			
 			<!--------------------------Leads DIV---------------------->
 			<div id="leads_div" class="center" ng-show="is_logged_in && show_leads">
