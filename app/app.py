@@ -350,18 +350,19 @@ def generate_report():
 	result_single = []
 
 	# for each record in record_data, extract distance, through and connections and push them a in LIST
+	import unicodedata
 	for json_record in json_record_data:
 		result_single = []
 
 		result_single.append(json_record[u'distance'])
 		#print 'Distance : ' + str(json_record[u'distance'])
 
-		result_single.append(str(json_record[u'through']))
+		result_single.append(unicodedata.normalize('NFKD', json_record[u'through']).encode('ascii','ignore'))		
 		#print 'Connected through : ' + json_record[u'through']
 
 		result_single_connections = []
 		for connection in json_record[u'relationToViewer'][u'connections'][u'values']:
-			connection_string = str(connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName'])
+			connection_string = unicodedata.normalize('NFKD', connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']).encode('ascii','ignore')
 			result_single_connections.append(connection_string)
 			#print connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']
 		
