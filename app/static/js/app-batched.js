@@ -60,6 +60,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 	$scope.connections.second=[];
 	$scope.connections.third=[];
 	$scope.common_connections = [];
+	$scope.report_data = [];
 	
 	$scope.temp_fname = '';
 	$scope.temp_lname = '';
@@ -1144,6 +1145,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.connections.first=[];
 		$scope.connections.second=[];
 		$scope.connections.third=[];
+		$scope.report_data = [];
 
 		// set count of selected leads while searching
 		$scope.selected_leads_count_while_searching = $scope.selected_leads_count;
@@ -1191,6 +1193,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 		$scope.connections.first=[];
 		$scope.connections.second=[];
 		$scope.connections.third=[];
+		$scope.report_data = [];
 
 		// set count of selected leads while searching
 		$scope.selected_leads_count_while_searching = $scope.selected_leads_count;
@@ -1258,6 +1261,7 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 							if(data.distance >= 1 && data.distance <=3)
 							{
 								$scope.connections.all.push(data);
+								$scope.report_data.push(data);
 							}
 						});
 					})
@@ -1404,6 +1408,32 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 			// finish progress
 			$scope.progress = 100;
 			$scope.setProgressBar();							
+		});
+	};
+
+	/* ************************* Get Report ***************************/
+
+	$scope.getReport = function () {
+	/* Send result data to server and recieve a downloadable report back.
+	 */
+
+		console.log("getReport");
+
+		var report_url = '/report';
+		var content_type = 'application/x-www-form-urlencoded';
+		
+		var post_data = new Object();
+		post_data.query_name = $scope.query_person.firstName + ' ' + $scope.query_person.lastName;
+		post_data.report_data = JSON.stringify($scope.report_data);
+		
+
+		$http({method:'POST', url:report_url, data:post_data, headers: {'Content-Type':content_type}})
+		.success(function(data) {
+			$scope.report = data;
+			$window.location.href = $scope.report.report_url;
+		})
+		.error(function() {
+			$scope.createDialog("#http_error");
 		});
 	};
 
