@@ -348,6 +348,7 @@ def generate_report():
 	# store final result in a list result_set
 	result_set = []
 	result_single = []
+
 	# for each record in record_data, extract distance, through and connections and push them a in LIST
 	for json_record in json_record_data:
 		result_single = []
@@ -373,46 +374,18 @@ def generate_report():
 	result_set.sort(key=itemgetter(0))
 	print result_set
 
-	return "testURL"
-	"""
-	query_name = request.args.get('query_name')
-	report_data = request.args.get('report_data')
-
-	report_url = 'static/reports/' + query_name.replace(' ', '-') + '.csv'
+	# write to a file
+	report_url = 'static/reports/' + query_name.replace(' ','-') + '.csv'
 	report_file = open(report_url, 'w')
-	report_file.write(report_data)
+	report_file.write("Degree;Connected through;Reachable via\n");
+	for record in result_set:
+		report_file.write(str(record[0]) + ';' + record[1] + ';')
+		for connection_string in record[2]:
+			report_file.write(connection_string + '. ')
+		report_file.write('\n')
 
-	return report_url
-	"""
-	"""
-    # We need to modify the response, so the first thing we 
-    # need to do is create a response out of the CSV string
-	response = make_response(csv)
-    # This is the key: Set the right header for the response
-    # to be downloaded, instead of just printed on the browser
-	response.headers["Content-Disposition"] = "attachment; filename=" + query_name + ".csv"
-	return response
-	"""
-"""
-############################__GET REPORT__##############################
-@app.route('/get_report')
-def get_report():
+	return jsonify({'report_url' : report_url})
 
-	report_name = request.args.get('report_name')
-	
-	query_name = query_name.replace(' ', '-')
-	
-	print query_name
-	print report_data
-
-    # We need to modify the response, so the first thing we 
-    # need to do is create a response out of the CSV string
-	response = make_response(csv)
-    # This is the key: Set the right header for the response
-    # to be downloaded, instead of just printed on the browser
-	response.headers["Content-Disposition"] = "attachment; filename=" + query_name + ".csv"
-	return response
-"""
 ###########################__For Testing Multiple AJAX Requests__###############################
 @app.route('/xhr')
 def xhr():
