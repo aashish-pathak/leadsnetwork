@@ -332,21 +332,46 @@ def generate_report():
 	report_data = request.args.get('report_data')
 	"""
 	
+	# extract post_string from HTTP request
 	post_string = request.form.items()[0][0]
 
+	# convert it to JSON
 	json_post_string = json.loads(post_string)
 
-	print json_post_string[u'query_name']
+	# extract query_name (which will be a filename too)
+	query_name = str(json_post_string[u'query_name'])
+	print query_name
+
+	# extract record data in JSON format
 	json_record_data = json.loads(json_post_string[u'report_data'])
 
-
+	# store final result in a list result_set
+	result_set = []
+	result_single = []
+	# for each record in record_data, extract distance, through and connections and push them a in LIST
 	for json_record in json_record_data:
-		print 'Distance : ' + str(json_record[u'distance'])
-		print 'Connected through : ' + json_record[u'through']
-		print 'Reachable via : \n'
+		result_single = []
+
+		result_single.append(json_record[u'distance'])
+		#print 'Distance : ' + str(json_record[u'distance'])
+
+		result_single.append(str(json_record[u'through']))
+		#print 'Connected through : ' + json_record[u'through']
+
+		result_single_connections = []
 		for connection in json_record[u'relationToViewer'][u'connections'][u'values']:
-			print connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']
-	
+			connection_string = str(connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName'])
+			result_single_connections.append(connection_string)
+			#print connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']
+		
+		result_single.append(result_single_connections)
+
+		result_set.append(result_single)
+
+	# sort result_set based on distance
+	from operator import itemgetter
+	result_set.sort(key=itemgetter(0))
+	print result_set
 
 	return "testURL"
 	"""
