@@ -1429,9 +1429,8 @@ leadsApp.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$cookies', '$
 
 		$http({method:'POST', url:report_url, data:post_data, headers: {'Content-Type':content_type}})
 		.success(function(data) {
-			$scope.report_url = data;
-			alert($scope.report_url);
-			//$window.location.href = $scope.report_url;
+			$scope.report = data;
+			$window.location.href = $scope.report.report_url;
 		})
 		.error(function() {
 			$scope.createDialog("#http_error");
