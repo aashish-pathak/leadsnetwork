@@ -333,7 +333,20 @@ def generate_report():
 	"""
 	
 	post_string = request.form.items()[0][0]
-	print post_string
+
+	json_post_string = json.loads(post_string)
+
+	print json_post_string[u'query_name']
+	json_record_data = json.loads(json_post_string[u'report_data'])
+
+
+	for json_record in json_record_data:
+		print 'Distance : ' + str(json_record[u'distance'])
+		print 'Connected through : ' + json_record[u'through']
+		print 'Reachable via : \n'
+		for connection in json_record[u'relationToViewer'][u'connections'][u'values']:
+			print connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']
+	
 
 	return "testURL"
 	"""
