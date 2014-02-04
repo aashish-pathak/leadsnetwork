@@ -363,7 +363,8 @@ def generate_report():
 		result_single_connections = []
 		for connection in json_record[u'relationToViewer'][u'connections'][u'values']:
 			connection_string = unicodedata.normalize('NFKD', connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']).encode('ascii','ignore')
-			result_single_connections.append(connection_string)
+			if(connection_string != 'private private'):
+				result_single_connections.append(connection_string)
 			#print connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']
 		
 		result_single.append(result_single_connections)
@@ -378,11 +379,11 @@ def generate_report():
 	# write to a file
 	report_url = 'static/reports/' + query_name.replace(' ','-') + '.csv'
 	report_file = open(report_url, 'w')
-	report_file.write("Degree;Connected through;Reachable via\n");
+	report_file.write("Degree,Connected through,Reachable via\n")
 	for record in result_set:
-		report_file.write(str(record[0]) + ';' + record[1] + ';')
+		report_file.write(str(record[0]) + ',' + record[1] + ',')
 		for connection_string in record[2]:
-			report_file.write(connection_string + '. ')
+			report_file.write(connection_string + ';  ')
 		report_file.write('\n')
 
 	return jsonify({'report_url' : report_url})
