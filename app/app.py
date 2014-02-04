@@ -320,17 +320,6 @@ def fetch_profile_random():
 #########################__GENERATE REPORT__############################
 @app.route('/report', methods=['POST'])
 def generate_report():
-	csv = """"REVIEW_DATE","AUTHOR","ISBN","DISCOUNTED_PRICE"
-	"1985/01/21","Douglas Adams",0345391802,5.95
-	"1990/01/12","Douglas Hofstadter",0465026567,9.95
-	"1998/07/15","Timothy ""The Parser"" Campbell",0968411304,18.99
-	"1999/12/03","Richard Friedman",0060630353,5.95
-	"2004/10/04","Randel Helms",0879755725,4.50"""
-
-	"""
-	query_name = request.args.get('query_name')
-	report_data = request.args.get('report_data')
-	"""
 	
 	# extract post_string from HTTP request
 	post_string = request.form.items()[0][0]
@@ -340,7 +329,6 @@ def generate_report():
 
 	# extract query_name (which will be a filename too)
 	query_name = str(json_post_string[u'query_name'])
-	print query_name
 
 	# extract record data in JSON format
 	json_record_data = json.loads(json_post_string[u'report_data'])
@@ -355,17 +343,14 @@ def generate_report():
 		result_single = []
 
 		result_single.append(json_record[u'distance'])
-		#print 'Distance : ' + str(json_record[u'distance'])
 
 		result_single.append(unicodedata.normalize('NFKD', json_record[u'through']).encode('ascii','ignore'))		
-		#print 'Connected through : ' + json_record[u'through']
 
 		result_single_connections = []
 		for connection in json_record[u'relationToViewer'][u'connections'][u'values']:
 			connection_string = unicodedata.normalize('NFKD', connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']).encode('ascii','ignore')
 			if(connection_string != 'private private'):
 				result_single_connections.append(connection_string)
-			#print connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']
 		
 		result_single.append(result_single_connections)
 
@@ -374,7 +359,6 @@ def generate_report():
 	# sort result_set based on distance
 	from operator import itemgetter
 	result_set.sort(key=itemgetter(0))
-	print result_set
 
 	# write to a file
 	report_url = 'static/reports/' + query_name.replace(' ','-') + '.csv'
