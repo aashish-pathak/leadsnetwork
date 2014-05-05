@@ -233,10 +233,10 @@
 				<div id="results_header_contents" ng-show="show_results_header_contents">
 						<br>
 						<div id="results_summary" class="well well-sm bottom-shadow">
-							<span ng-show="fname || lname">
+							<span>
 								<span ng-show="query_person.has_headline">Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} ({{query_person.headline}}) </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).</span>
 								<span ng-hide="query_person.has_headline">Searching for <b>{{query_person.firstName | uppercase}} {{query_person.lastName | uppercase}} </b>through<b> {{selected_leads_count_while_searching}} </b>lead(s).</span>
-							</span>							
+							</span>
 
 							<!--
 							<span ng-show="fname || lname">
@@ -474,7 +474,7 @@
 				<center>
 					<div id="reporting" ng-show="done_searching">
 						<!--<a target="_self" href="http://localhost:5000/report" download="report.csv"><span class="glyphicon glyphicon-download"></span></a>-->
-						<a ng-click="getReport()"><span class="glyphicon glyphicon-download"></span></a>
+						<a ng-click="getReport()"><label style="cursor:pointer">Download Report &nbsp;<span class="glyphicon glyphicon-download">
 					</div>
 				</center>
 			</div>
