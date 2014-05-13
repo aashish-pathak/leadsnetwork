@@ -127,6 +127,7 @@ input[type="email"]
 .login_image {
 	max-width: 100%;
 	opacity: 0.7;
+	max-height: 300px;
 }
 
 .max_width_element {
