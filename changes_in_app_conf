@@ -1,0 +1,15 @@
+1) [LinkedIn]
+    - consumer key
+    - consumer secret
+    - callback url ( from http://localhost:5000/callback to http://server-address:8080/callback
+
+2) [MySql]
+    - username
+    - password
+
+3) [Application]
+    - http://localhost:5000/ to http://server-address:8080
+
+4) [LeadsInAccount]
+    - gmail username : leadsin.gslab@gmail.com
+    - gmail password : **********
