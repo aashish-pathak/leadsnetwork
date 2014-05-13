@@ -26,8 +26,8 @@ virtualenv LEADSNETWORK
 source ~/LEADSNETWORK/bin/activate
 # Virtual env is activated.
 
-# Install prereqs defined in leadsnetwork/py.prereqs
-pip install -r ~/leadsnetwork/py.prereqs
-
 cd ~/
 git clone git@github.com:aashish-pathak/leadsnetwork.git
+
+# Install prereqs defined in leadsnetwork/py.prereqs
+pip install -r ~/leadsnetwork/py.prereqs
