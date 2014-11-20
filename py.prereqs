@@ -3,3 +3,4 @@ oauth2
 linkedin
 mysql-python
 requests
+uwsgi

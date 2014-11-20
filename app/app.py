@@ -34,7 +34,7 @@ def return_leads():
 	from lib import MySQL
 	lead = []
 	leads = []
-	sql = "select * from people"
+	sql = "SELECT * FROM people WHERE is_token_expired='no';"
 	mysql = MySQL()
 	rows = mysql.fetch_all(sql)
 	for row in rows:
@@ -45,6 +45,36 @@ def return_leads():
 		leads.append(lead)
 		
 	return json.dumps(leads)
+
+#######################__RETURN_SUGGESTIONS__###########################
+@app.route('/return_suggestions')
+def return_suggestions():
+
+	# read all leads from 'people' table and return their names
+	from lib import MySQL
+	mysql = MySQL()
+	
+	suggestions = {}
+
+	suggestions['fnames'] = []
+	sql = "select * from fnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['fnames'].append(row[0])
+
+	suggestions['lnames'] = []
+	sql = "select * from lnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['lnames'].append(row[0])
+
+	suggestions['cnames'] = []
+	sql = "select * from cnames"
+	rows = mysql.fetch_all(sql)
+	for row in rows:
+		suggestions['cnames'].append(row[0])
+			
+	return json.dumps(suggestions)
 
 ############################__LOG IN__##################################
 @app.route('/login', methods=['POST'])
@@ -94,10 +124,11 @@ def invite():
 	print add_account_url
 	
 	# send invitation email
-	u = Util()
-	subject = "Invitation to join Leads' In"
-	text = "Hello, \nPlease click " + add_account_url + " to add yourself to the list of leads in \"Leads' In\". \nThank you."
-	u.send_invitation_email(email, subject, text)
+	from lib import Alerts
+	emailer = Alerts()
+	subject = "Invitation to join \"Leads' In!\""
+	text = "Hello, \nPlease follow the link given below to be a part of leads, through which \"Leads' In!\" will try to find nearest possible connections on LinkedIn.\n\n" + add_account_url + "\n\n (You may need to authenticate yourself, if you are not already signed in to LinkedIn.)\n\nThank You, \n\"Leads' In!\" Team."
+	emailer.send_invitation_email(email, subject, text)
 	
 	return jsonify({'response':True, 'email':email})
 
@@ -105,6 +136,15 @@ def invite():
 @app.route('/add_account/<add_account_parameter>')
 def add_account(add_account_parameter):
 
+	# auth_url is allowed to be used multiple times
+	from lib import MyLinkedIn
+	lnkdin = MyLinkedIn()
+	auth_url = lnkdin.get_auth_url()
+	print auth_url
+	return redirect(auth_url)
+	
+	"""
+	# auth_url is allowed to be used only once
 	from lib import MySQL
 	mysql = MySQL()
 	query = "SELECT * FROM invitations WHERE random_string='" + add_account_parameter + "'"
@@ -126,6 +166,8 @@ def add_account(add_account_parameter):
 		print e
 	
 	return make_response(open('static/dead_link.html').read())
+	"""
+
 ############################__CALLBACK__################################
 @app.route('/callback')
 def callback():
@@ -157,11 +199,16 @@ def callback():
 			firstName = json_profile['firstName']
 			lastName = json_profile['lastName']
 			name = firstName + " " + lastName
+			email = json_profile['emailAddress']
+			
+			# set current time as token_birth_ts
+			import datetime
+			token_birth_ts = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 			# insert into db
 			from lib import MySQL
 			mysql = MySQL()
-			mysql.insert_into_people(name, linkedin_id, access_token_key, access_token_secret)
+			mysql.insert_into_people(name, linkedin_id, access_token_key, access_token_secret, token_birth_ts, email)
 			
 			# get his group-name from ldap server
 			from lib import MyLDAP
@@ -177,17 +224,16 @@ def callback():
 ########################__PEOPLE SEARCH API__###########################
 @app.route('/search')
 def people_search():
-	
 
 	# get parameters : fname, lname and cname
 	fname = request.args.get('fname')
 	lname = request.args.get('lname')
 	cname = request.args.get('cname')
+	start = request.args.get('start')
 	
-	# fetch random lead through which a people_search api will be called
+	# fetch random lead through which a people_search api will be called	
 	from lib import MySQL
 	mysql = MySQL()
-	
 	row = mysql.fetch_random()
 	
 	name = row[1]
@@ -199,7 +245,18 @@ def people_search():
 	lnkdin = MyLinkedIn()
 	lnkdin.create_token(token_key, token_secret)
 	lnkdin.prepare_client()
-	searched_people = lnkdin.call_people_search(token_key, token_secret, fname, lname, cname)
+	searched_people = lnkdin.call_people_search(token_key, token_secret, fname, lname, cname, start)
+
+	# insert names into suggestion tables
+	searched_people_json = json.loads(searched_people)
+	if(u'numResults' in searched_people_json):
+		if(searched_people_json[u'numResults'] > 0):
+			if(len(fname) > 1):
+				mysql.insert_into_fnames(fname)
+			if(len(lname) > 1):
+				mysql.insert_into_lnames(lname)
+			if(len(cname) > 1):
+				mysql.insert_into_cnames(cname)
 
 	return searched_people
 
@@ -236,6 +293,89 @@ def fetch_profile():
 	json_profile['through'] = lead_name
 	
 	return json.dumps(json_profile)
+
+#####################__FETCH PROFILE RANDOM API__#######################
+# /fetch_profile_random?profile_id=abcd
+@app.route('/fetch_profile_random')
+def fetch_profile_random():
+
+	# read parameter : profile_id
+	profile_id = request.args.get('profile_id')
+
+	# fetch random lead through which a profile will be fetched
+	from lib import MySQL
+	mysql = MySQL()
+	row = mysql.fetch_random()
+	
+	name = row[1]
+	oauth_token_key = row[3]
+	oauth_token_secret = row[4]
+
+	# fetch profile with 'profile_id' through corresponding lead's 'access_tokens'
+	from lib import MyLinkedIn
+	lnkdin = MyLinkedIn()
+	profile = lnkdin.get_profile_using_id_random(oauth_token_key, oauth_token_secret, profile_id)
+	json_profile = json.loads(profile)
+	
+	json_profile['selected'] = False
+
+	return json.dumps(json_profile)
+
+
+#########################__GENERATE REPORT__############################
+@app.route('/report', methods=['POST'])
+def generate_report():
+	
+	# extract post_string from HTTP request
+	post_string = request.form.items()[0][0]
+
+	# convert it to JSON
+	json_post_string = json.loads(post_string)
+
+	# extract query_name (which will be a filename too)
+	query_name = str(json_post_string[u'query_name'])
+
+	# extract record data in JSON format
+	json_record_data = json.loads(json_post_string[u'report_data'])
+
+	# store final result in a list result_set
+	result_set = []
+	result_single = []
+
+	# for each record in record_data, extract distance, through and connections and push them a in LIST
+	import unicodedata
+	for json_record in json_record_data:
+		result_single = []
+
+		result_single.append(json_record[u'distance'])
+
+		result_single.append(unicodedata.normalize('NFKD', json_record[u'through']).encode('ascii','ignore'))		
+
+		result_single_connections = []
+		for connection in json_record[u'relationToViewer'][u'connections'][u'values']:
+			connection_string = unicodedata.normalize('NFKD', connection[u'person'][u'firstName'] + ' ' + connection[u'person'][u'lastName']).encode('ascii','ignore')
+			if(connection_string != 'private private'):
+				result_single_connections.append(connection_string)
+		
+		result_single.append(result_single_connections)
+
+		result_set.append(result_single)
+
+	# sort result_set based on distance
+	from operator import itemgetter
+	result_set.sort(key=itemgetter(0))
+
+	# write to a file
+	report_url = 'static/reports/' + query_name.replace(' ','-') + '.csv'
+	report_file = open(report_url, 'w')
+	report_file.write("Degree,Connected through,Reachable via\n")
+	for record in result_set:
+		report_file.write(str(record[0]) + ',' + record[1] + ',')
+		for connection_string in record[2]:
+			report_file.write(connection_string + ';  ')
+		report_file.write('\n')
+
+	return jsonify({'report_url' : report_url})
 
 ###########################__For Testing Multiple AJAX Requests__###############################
 @app.route('/xhr')

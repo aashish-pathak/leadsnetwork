@@ -1,0 +1,20 @@
+    # add this to http{} in /etc/nginx/nginx.conf
+    # configuration for "Leads' In!" application
+    server {
+
+            # Running port
+            listen 8080;
+
+            # Settings to by-pass for static files
+            location / {
+
+            # for flask application
+            include uwsgi_params;
+            uwsgi_pass unix:/tmp/leadsnetwork.sock;
+            }
+
+        location /static {
+            
+            root /home/gslab/leadsnetwork/app/;
+        }
+    }

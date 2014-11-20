@@ -57,11 +57,36 @@
 		top: 55px;
 	}
 
+	.progressbar-height {
+		
+	}
+
+	#people_search_header {
+		color: black;
+	
+		background-color: #f1f1f1;
+		background-color: #f9f9f9;
+
+		/*margin-left: 1%;*/
+		max-width: 100%;
+		top: 55px;
+	}
 
 	#results_table {
 		color: black;
 		margin-top: 7%;
-		margin-top: 300px;
+		margin-top: 250px;
+		margin-bottom: 10px;
+	}
+
+	#reporting {
+		margin-bottom: 100px;
+	}
+
+	#people_search_table {
+		color: black;
+		margin-top: 7%;
+		margin-top: 250px;
 		margin-bottom: 100px;
 	}
 	
@@ -79,6 +104,11 @@
 	.profile_pic {
 		width: 60px;
 		height: 60px;
+	}
+
+	.app_logo {
+		width: 25px;
+		height: 25px;
 	}
 
 	#leads_list {

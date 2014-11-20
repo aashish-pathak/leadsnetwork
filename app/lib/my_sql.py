@@ -26,9 +26,9 @@ class MySQL(Config):
 			self.__connect_db()
 		self.cursor = self.connection.cursor()
 
-	def insert_into_people(self, name, linkedin_id, access_token_key, access_token_secret):
+	def insert_into_people(self, name, linkedin_id, access_token_key, access_token_secret, token_birth_ts, email):
 		try:
-			self.cursor.execute("""INSERT INTO people (name, linkedin_id, access_token, access_secret) VALUES (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE access_token = %s, access_secret = %s;""",(name, linkedin_id, access_token_key, access_token_secret, access_token_key, access_token_secret))
+			self.cursor.execute("""INSERT INTO people (name, linkedin_id, access_token, access_secret, token_birth_ts, email) VALUES (%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE access_token = %s, access_secret = %s, token_birth_ts = %s, email = %s;""",(name, linkedin_id, access_token_key, access_token_secret, token_birth_ts, email, access_token_key, access_token_secret, token_birth_ts, email))
 			self.connection.commit()
 			print "insert_into_people()"
 		except Exception as e:
@@ -53,7 +53,6 @@ class MySQL(Config):
 			print "unable to insert (INVITATIONS) !!!!!!!!!!!!!!!!!!!!!!"
 			print e
 
-
 	def update_invitations_set_used(self, random_string):
 		try:
 			self.cursor.execute("""UPDATE invitations SET used = %s WHERE random_string = %s;""",(True, random_string))
@@ -61,6 +60,33 @@ class MySQL(Config):
 			print "update_invitations_set_used()"
 		except Exception as e:
 			print "unable to update (INVITATIONS) !!!!!!!!!!!!!!!!!!!!!!"
+			print e
+
+	def insert_into_fnames(self, fname):
+		try:
+			self.cursor.execute("""INSERT INTO fnames (fname) VALUES (%s);""",(fname))
+			self.connection.commit()
+			print "insert_into_fnames()"
+		except Exception as e:
+			print "unable to insert (FNAMES) !"
+			print e
+
+	def insert_into_lnames(self, lname):
+		try:
+			self.cursor.execute("""INSERT INTO lnames (lname) VALUES (%s);""",(lname))
+			self.connection.commit()
+			print "insert_into_lnames()"
+		except Exception as e:
+			print "unable to insert (LNAMES) !"
+			print e
+
+	def insert_into_cnames(self, cname):
+		try:
+			self.cursor.execute("""INSERT INTO cnames (cname) VALUES (%s);""",(cname))
+			self.connection.commit()
+			print "insert_into_cnames()"
+		except Exception as e:
+			print "unable to insert (CNAMES) !"
 			print e
 
 	def fetch_all(self, sql):
@@ -75,18 +101,21 @@ class MySQL(Config):
         
 	def fetch_random(self):
 		import random
-		sql = "SELECT COUNT(*) FROM people;"
+		sql = "SELECT COUNT(*) FROM people WHERE is_token_expired='no';"
 		row = self.fetch_one(sql)
 		
 		leads_count = row[0]
 		random_number = random.randint(1, leads_count)
-		print 'Random Lead Number : ' + str(random_number)
-		sql = "select * from people"
+
+		sql = "select * from people WHERE is_token_expired='no';"
 		rows = self.cursor.execute(sql)
 		for x in range(1, random_number):
 			row = self.cursor.fetchone()
 
 		row = self.cursor.fetchone()
+		
+		print 'Random Lead : ' + row[1]
+		
 		print "fetch_random()"
 		return row
 		

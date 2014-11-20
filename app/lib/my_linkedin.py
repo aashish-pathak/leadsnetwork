@@ -27,7 +27,7 @@ class MyLinkedIn(Config):
 		self.client = oauth.Client(self.consumer, self.token)
 		print "prepare_client()"
 
-	def call_people_search(self, oauth_key, oauth_secret, first_name, last_name, company_name):
+	def call_people_search(self, oauth_key, oauth_secret, first_name, last_name, company_name, start):
 		self.url_search = self.get_cfg("LinkedIn", "url_search")
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
@@ -40,6 +40,9 @@ class MyLinkedIn(Config):
 		if company_name != "":
 			search_query += "&company-name=" + company_name
 			
+		search_query += "&current-company=true"
+		search_query += "&start=" + start
+		
 		resp, content = self.client.request(self.url_search + search_query)
 		print "call_people_search()"
 		return content
@@ -53,11 +56,20 @@ class MyLinkedIn(Config):
 		print "get_profile_using_id()"
 		return content
 
+	def get_profile_using_id_random(self, oauth_key, oauth_secret, profile_id):
+		self.url_profile = self.get_cfg("LinkedIn", "url_profile")
+		self.create_token(oauth_key, oauth_secret)
+		self.prepare_client()
+		self.fetch_profile_query = profile_id + ":(id,first-name,last-name,headline,public-profile-url,picture-url::(original))?format=json&count=20"
+		resp, content = self.client.request(self.url_profile + self.fetch_profile_query)
+		print "get_profile_using_id()"
+		return content
+
 	def get_profile_using_token(self, oauth_key, oauth_secret):
 		self.url_self = self.get_cfg("LinkedIn", "url_self")
 		self.create_token(oauth_key, oauth_secret)
 		self.prepare_client()
-		resp, content = self.client.request(self.url_self + ":(id,first-name,last-name)?oauth2_access_token=%@?&format=json")
+		resp, content = self.client.request(self.url_self + ":(id,first-name,last-name,email-address)?oauth2_access_token=%@?&format=json")
 		print "get_profile_using_token()"
 		return content
 
@@ -65,7 +77,7 @@ class MyLinkedIn(Config):
 		l = LinkedinAPI(api_key=self.consumer_key,
 						api_secret=self.consumer_secret,
 						callback_url=self.callback_url,
-						permissions=["r_network"])
+						permissions=["r_fullprofile", "r_emailaddress", "r_network", "r_contactinfo"])
 		auth_props = l.get_authentication_tokens()
 		auth_url = auth_props['auth_url']
 		#Store this token in a session to use it in callback function
@@ -75,12 +87,11 @@ class MyLinkedIn(Config):
 		
 		return auth_url
 		
-		
 	def get_authorized_tokens(self, oauth_token, oauth_verifier):
 		self.url_access_token = self.get_cfg("LinkedIn", "url_access_token")				
 		l = LinkedinAPI(api_key=self.consumer_key,
 						api_secret=self.consumer_secret,
-						permissions=["r_fullprofile"],
+						permissions=["r_fullprofile", "r_emailaddress", "r_network", "r_contactinfo"],
 						oauth_token=oauth_token,		# from URL
 						oauth_token_secret=session['oauth_token_secret'])	# from session
 		authorized_tokens = l.get_access_token(oauth_verifier)
